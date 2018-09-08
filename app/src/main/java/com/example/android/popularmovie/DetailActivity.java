@@ -47,11 +47,14 @@ public class DetailActivity extends AppCompatActivity {
 
         if (bundle != null && bundle.containsKey(parcelableName)) {
             Movie movie = bundle.getParcelable(parcelableName);
-            Picasso.with(this).load(posterBaseUrl + movie.posterPath).into(posterImageView);
-            originalTitleTextView.setText(movie.originalTitle);
-            releaseDateTextView.setText(new SimpleDateFormat("MMMM d, yyyy", Locale.US).format(movie.releaseDate));
-            userRatingTextView.setText(String.valueOf(movie.userRating));
-            plotSynopsisTitleTextView.setText(movie.plotSynopsis);
+
+            if (movie != null) {
+                Picasso.with(this).load(posterBaseUrl + movie.posterPath).into(posterImageView);
+                originalTitleTextView.setText(movie.originalTitle);
+                releaseDateTextView.setText(new SimpleDateFormat("MMMM d, yyyy", Locale.US).format(movie.releaseDate));
+                userRatingTextView.setText(String.valueOf(movie.userRating));
+                plotSynopsisTitleTextView.setText(movie.plotSynopsis);
+            }
         }
     }
 }
