@@ -14,15 +14,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-
-    final private ClickListener clickListener;
-
-    public interface ClickListener {
-        void onClick(int index);
-    }
-
-    private final List<Movie> movies;
     private final String posterBaseUrl;
+    private final List<Movie> movies;
+    private final ClickListener clickListener;
 
     MovieAdapter(Context context, List<Movie> movies, ClickListener clickListener) {
         posterBaseUrl = context.getString(R.string.poster_base_url);
@@ -46,8 +40,12 @@ final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
         return movies.size();
     }
 
+    interface ClickListener {
+        void onClick(int index);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        ImageView imageView;
+        final ImageView imageView;
 
         ViewHolder(View view) {
             super(view);
