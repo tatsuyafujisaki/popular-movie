@@ -8,7 +8,6 @@
     <string name="user_rating_label">User rating</string>
     <string name="release_date_label">Release date</string>
     <string name="parcelable_key">movie</string>
-    <string name="parcelable_arraylist_key">movies</string>
     <string name="poster_base_url">http://image.tmdb.org/t/p/w185</string>
     <string name="popular_movies_base_url">http://api.themoviedb.org/3/movie/popular</string>
     <string name="top_rated_movies_base_url">http://api.themoviedb.org/3/movie/top_rated</string>

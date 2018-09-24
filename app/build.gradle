@@ -43,10 +43,6 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
 
-    def butterknifeVersion = "8.8.1"
-    implementation "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
-
     // https://developer.android.com/training/testing/set-up-project
     // AndroidJUnitRunner and JUnit Rules
     def junitBasedLibrariesVersion = "1.0.2"

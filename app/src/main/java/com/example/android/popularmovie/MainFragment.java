@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,11 +22,11 @@ import com.example.android.popularmovie.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
 
-public final class MainFragment extends Fragment implements AsyncTaskCallback {
+public final class MainFragment extends Fragment implements AsyncTaskCallback, MovieAdapter.ClickListener {
 
+    private final String parcelableArrayListKey = getClass().getSimpleName();
     private FragmentMainBinding binding;
     private ArrayList<Movie> movies;
-    private String parcelableArrayListKey;
     private String popularMoviesQueryUrl;
     private String topRatedMoviesQueryUrl;
 
@@ -40,9 +41,10 @@ public final class MainFragment extends Fragment implements AsyncTaskCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        binding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main);
 
-        parcelableArrayListKey = getString(R.string.parcelable_arraylist_key);
+        binding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main);
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getContext().getResources().getInteger(R.integer.grid_column_count)));
 
         popularMoviesQueryUrl = Uri.parse(getString(R.string.popular_movies_base_url))
                 .buildUpon()
@@ -59,7 +61,7 @@ public final class MainFragment extends Fragment implements AsyncTaskCallback {
         }
 
         if (movies != null) {
-            binding.gridView.setAdapter(new PosterAdapter(getContext(), movies));
+            binding.recyclerView.setAdapter(new MovieAdapter(getContext(), movies, this));
         } else if (Network.isNetworkAvailable(getContext())) {
             new DownloadAsyncTask(this).execute(popularMoviesQueryUrl);
         } else {
@@ -67,19 +69,13 @@ public final class MainFragment extends Fragment implements AsyncTaskCallback {
             return rootView;
         }
 
-        binding.gridView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(getContext(), DetailActivity.class);
-            intent.putExtra(getString(R.string.parcelable_key), movies.get(i));
-            startActivity(intent);
-        });
-
         setHasOptionsMenu(true);
 
         return rootView;
     }
 
     private void showError(String errorMessaage) {
-        binding.gridView.setVisibility(View.INVISIBLE);
+        binding.recyclerView.setVisibility(View.INVISIBLE);
         binding.errorMessageTextView.setText(errorMessaage);
         binding.errorMessageTextView.setVisibility(View.VISIBLE);
     }
@@ -119,6 +115,13 @@ public final class MainFragment extends Fragment implements AsyncTaskCallback {
         }
 
         movies = Converter.toArrayList(GsonWrapper.fromJson(result, "results", Movie[].class));
-        binding.gridView.setAdapter(new PosterAdapter(getContext(), movies));
+        binding.recyclerView.setAdapter(new MovieAdapter(getContext(), movies, this));
+    }
+
+    @Override
+    public void onClick(int index) {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra(getString(R.string.parcelable_key), movies.get(index));
+        startActivity(intent);
     }
 }
