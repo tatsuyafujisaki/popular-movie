@@ -5,26 +5,25 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
+// Suppress "can be private" warning in error because members are required to be public for data binding in activty_detail.xml
+@SuppressWarnings("WeakerAccess")
 public final class Movie implements Parcelable {
-
     @SerializedName("original_title")
-    final String originalTitle;
+    public final String originalTitle;
 
     @SerializedName("poster_path")
-    final String posterPath;
+    public String posterPath;
 
     @SerializedName("release_date")
-    final Date releaseDate;
+    public final Date releaseDate;
 
     @SerializedName("vote_average")
-    final double userRating;
+    public final double userRating;
 
     @SerializedName("overview")
-    final String plotSynopsis;
+    public final String plotSynopsis;
 
     private Movie(Parcel parcel) {
         originalTitle = parcel.readString();
@@ -37,11 +36,6 @@ public final class Movie implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public String toString() {
-        return String.join(",", originalTitle, posterPath, new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(releaseDate), String.valueOf(userRating), plotSynopsis);
     }
 
     @Override

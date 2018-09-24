@@ -1,6 +1,5 @@
 package com.example.android.popularmovie;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,12 +13,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private final String posterBaseUrl;
     private final List<Movie> movies;
     private final ClickListener clickListener;
 
-    MovieAdapter(Context context, List<Movie> movies, ClickListener clickListener) {
-        posterBaseUrl = context.getString(R.string.poster_base_url);
+    MovieAdapter(List<Movie> movies, ClickListener clickListener) {
         this.movies = movies;
         this.clickListener = clickListener;
     }
@@ -32,7 +29,7 @@ final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Picasso.get().load(posterBaseUrl + movies.get(position).posterPath).into(holder.imageView);
+        Picasso.get().load(movies.get(position).posterPath).into(holder.imageView);
     }
 
     @Override

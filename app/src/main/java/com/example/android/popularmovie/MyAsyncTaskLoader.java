@@ -19,11 +19,11 @@ class MyAsyncTaskLoader extends AsyncTaskLoader<String> {
 
     @Override
     protected void onStartLoading() {
-        if (cachedResponse == null) {
-            forceLoad();
-        } else {
+        if (cachedResponse != null) {
             // Falls here when a user presses HOME button during loadInBackground, and comes back after the data is downloaded.
             deliverResult(cachedResponse);
+        } else {
+            forceLoad();
         }
     }
 

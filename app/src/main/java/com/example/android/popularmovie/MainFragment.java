@@ -1,6 +1,5 @@
 package com.example.android.popularmovie;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
@@ -68,8 +68,8 @@ public final class MainFragment extends Fragment implements LoaderManager.Loader
         }
 
         if (movies != null) {
-            binding.recyclerView.setAdapter(new MovieAdapter(getContext(), movies, this));
-        } else if (Network.isNetworkAvailable(getContext())) {
+            binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
+        } else if (Network.isNetworkAvailable(getContextNonNull())) {
             DownloadMovies(popularMoviesQueryUrl);
         } else {
             showError("Network unavailable");
@@ -85,7 +85,7 @@ public final class MainFragment extends Fragment implements LoaderManager.Loader
         Bundle bundle = new Bundle();
         bundle.putString(bundleExtraKey, url);
 
-        LoaderManager loaderManager = getActivity().getSupportLoaderManager();
+        LoaderManager loaderManager = getActivityNonNull().getSupportLoaderManager();
         if (loaderManager.getLoader(LOADER_ID) == null) {
             loaderManager.initLoader(LOADER_ID, bundle, this);
         } else {
@@ -122,6 +122,10 @@ public final class MainFragment extends Fragment implements LoaderManager.Loader
     @NonNull
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
+        if (args == null) {
+            throw new RuntimeException("args is null");
+        }
+
         binding.progressBar.setVisibility(View.VISIBLE);
         return new MyAsyncTaskLoader(getContextNonNull(), args.getString(bundleExtraKey));
     }
@@ -136,7 +140,12 @@ public final class MainFragment extends Fragment implements LoaderManager.Loader
         }
 
         movies = Converter.toArrayList(GsonWrapper.fromJson(data, "results", Movie[].class));
-        binding.recyclerView.setAdapter(new MovieAdapter(getContextNonNull(), movies, this));
+
+        for (Movie movie : movies) {
+            movie.posterPath = getString(R.string.poster_base_url).concat(movie.posterPath);
+        }
+
+        binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
     }
 
     @Override
@@ -160,8 +169,8 @@ public final class MainFragment extends Fragment implements LoaderManager.Loader
         return context;
     }
 
-    private Activity getActivityNonNull() {
-        Activity activity = getActivity();
+    private FragmentActivity getActivityNonNull() {
+        FragmentActivity activity = getActivity();
 
         if (activity == null) {
             throw new RuntimeException("getActivity() returns nulll");
