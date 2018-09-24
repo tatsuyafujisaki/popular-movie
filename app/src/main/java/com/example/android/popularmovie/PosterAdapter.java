@@ -1,6 +1,6 @@
 package com.example.android.popularmovie;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +17,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 final class PosterAdapter extends ArrayAdapter<Movie> {
+
     @BindView(R.id.poster_thumbnail_view)
     ImageView posterThumbnailView;
 
     @BindString(R.string.poster_base_url)
     String posterBaseUrl;
 
-    PosterAdapter(Activity context, List<Movie> movie) {
+    PosterAdapter(Context context, List<Movie> movie) {
         super(context, 0, movie);
     }
 
@@ -39,7 +40,7 @@ final class PosterAdapter extends ArrayAdapter<Movie> {
         Movie movie = getItem(position);
 
         if (movie != null) {
-            Picasso.with(getContext()).load(posterBaseUrl + movie.posterPath).into(posterThumbnailView);
+            Picasso.get().load(posterBaseUrl + movie.posterPath).into(posterThumbnailView);
         }
 
         return convertView;
