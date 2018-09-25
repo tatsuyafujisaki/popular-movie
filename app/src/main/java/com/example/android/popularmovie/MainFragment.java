@@ -1,6 +1,5 @@
 package com.example.android.popularmovie;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.android.popularmovie.Utils.Converter;
 import com.example.android.popularmovie.Utils.GsonWrapper;
+import com.example.android.popularmovie.Utils.MovieDownloader;
 import com.example.android.popularmovie.Utils.Network;
 import com.example.android.popularmovie.databinding.FragmentMainBinding;
 
@@ -36,9 +36,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
-
-        Context context = Objects.requireNonNull(getContext());
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(context, getResources().getInteger(R.integer.grid_column_count)));
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_column_count)));
         binding.recyclerView.setHasFixedSize(true);
 
         setHasOptionsMenu(true);
@@ -47,42 +45,46 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
             movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
         }
 
-        super.onActivityCreated(savedInstanceState);
         if (movies != null) {
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
-        } else if (Network.isNetworkAvailable(context)) {
-            TmdbServiceWrapper.init(getString(R.string.tmdb_base_url), new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        try {
-                            movies = Converter.toArrayList(GsonWrapper.fromJson(GsonWrapper.getJsonArray(Objects.requireNonNull(response.body()).string(), getString(R.string.tmdb_json_results_element)), Movie[].class));
-                        } catch (IOException e) {
-                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+        } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
+            MovieDownloader.init(getString(R.string.tmdb_base_url),
+                    () -> binding.progressBar.setVisibility(View.VISIBLE),
+                    new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            binding.progressBar.setVisibility(View.INVISIBLE);
+
+                            if (response.isSuccessful()) {
+                                try {
+                                    movies = Converter.toArrayList(GsonWrapper.fromJson(GsonWrapper.getJsonArray(Objects.requireNonNull(response.body()).string(), getString(R.string.tmdb_json_results_element)), Movie[].class));
+                                } catch (IOException e) {
+                                    showToast(e.getMessage());
+                                }
+
+                                for (Movie movie : movies) {
+                                    movie.posterPath = getString(R.string.poster_base_url).concat(movie.posterPath);
+                                }
+
+                                binding.recyclerView.setAdapter(new MovieAdapter(movies, MainFragment.this));
+                            } else {
+                                try {
+                                    showToast(Objects.requireNonNull(response.errorBody()).string());
+                                } catch (IOException e) {
+                                    showToast(e.getMessage());
+                                }
+                            }
                         }
 
-                        for (Movie movie : movies) {
-                            movie.posterPath = getString(R.string.poster_base_url).concat(movie.posterPath);
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            binding.progressBar.setVisibility(View.INVISIBLE);
+                            showToast(t.getMessage());
                         }
-
-                        binding.recyclerView.setAdapter(new MovieAdapter(movies, MainFragment.this));
-                    } else {
-                        try {
-                            Toast.makeText(context, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_LONG).show();
-                        } catch (IOException e) {
-                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-            TmdbServiceWrapper.DownloadPopularMovies();
+                    });
+            MovieDownloader.DownloadPopularMovies();
         } else {
-            Toast.makeText(context, getString(R.string.network_unavailable_error), Toast.LENGTH_LONG).show();
+            showToast(getString(R.string.network_unavailable_error));
         }
 
         return binding.getRoot();
@@ -106,10 +108,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.order_by_most_popular:
-                TmdbServiceWrapper.DownloadPopularMovies();
+                MovieDownloader.DownloadPopularMovies();
                 return true;
             case R.id.order_by_highest_rated:
-                TmdbServiceWrapper.DownloadTopRatedMovies();
+                MovieDownloader.DownloadTopRatedMovies();
                 return true;
         }
 
@@ -121,5 +123,9 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         Intent intent = new Intent(getContext(), DetailActivity.class);
         intent.putExtra(getString(R.string.intent_extra_key), movies.get(index));
         startActivity(intent);
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
     }
 }

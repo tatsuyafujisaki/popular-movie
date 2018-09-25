@@ -5,7 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface TmdbService {
+public interface TheMovieDatabaseAPI {
     @GET("3/movie/popular")
     Call<ResponseBody> getPopularMovies(@Query("api_key") String apiKey);
 

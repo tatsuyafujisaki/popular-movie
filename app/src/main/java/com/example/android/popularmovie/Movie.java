@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-// Suppress "can be private" warning in error because members are required to be public for data binding in activty_detail.xml
+// Suppress "can be private" warning because the class members are required to be public for data binding in activty_detail.xml
 @SuppressWarnings("WeakerAccess")
 public final class Movie implements Parcelable {
     @SerializedName("original_title")
