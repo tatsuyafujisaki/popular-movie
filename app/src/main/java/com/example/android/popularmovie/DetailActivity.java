@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,11 +24,20 @@ public class DetailActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        String parcelableKey = getString(R.string.parcelable_key);
+        String intentExtraKey = getString(R.string.intent_extra_key);
 
-        if (bundle != null && bundle.containsKey(parcelableKey)) {
-            binding.setMovie(bundle.getParcelable(parcelableKey));
+        if (bundle != null && bundle.containsKey(intentExtraKey)) {
+            binding.setMovie(bundle.getParcelable(intentExtraKey));
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @BindingAdapter("android:src")
