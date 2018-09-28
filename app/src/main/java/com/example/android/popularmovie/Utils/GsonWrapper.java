@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.Utils;
+package com.example.android.popularmovie.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

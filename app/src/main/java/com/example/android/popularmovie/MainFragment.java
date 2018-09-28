@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.android.popularmovie.Utils.Converter;
-import com.example.android.popularmovie.Utils.GsonWrapper;
-import com.example.android.popularmovie.Utils.Network;
 import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.databinding.FragmentMainBinding;
+import com.example.android.popularmovie.utils.Converter;
+import com.example.android.popularmovie.utils.GsonWrapper;
+import com.example.android.popularmovie.utils.Network;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,13 +48,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         if (movies != null) {
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
         } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
-            TheMovieDatabaseClient.init(getString(R.string.tmdb_base_url),
-                    () -> binding.progressBar.setVisibility(View.VISIBLE),
+            TmdbClient.init(getString(R.string.tmdb_base_url),
                     new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            binding.progressBar.setVisibility(View.INVISIBLE);
-
                             if (response.isSuccessful()) {
                                 try {
                                     movies = Converter.toArrayList(GsonWrapper.fromJson(GsonWrapper.getJsonArray(Objects.requireNonNull(response.body()).string(), getString(R.string.tmdb_json_results_element)), Movie[].class));
@@ -78,11 +75,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            binding.progressBar.setVisibility(View.INVISIBLE);
                             showToast(t.getMessage());
                         }
                     });
-            TheMovieDatabaseClient.DownloadPopularMovies();
+            TmdbClient.DownloadPopularMovies();
         } else {
             showToast(getString(R.string.network_unavailable_error));
         }
@@ -108,10 +104,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.order_by_most_popular:
-                TheMovieDatabaseClient.DownloadPopularMovies();
+                TmdbClient.DownloadPopularMovies();
                 return true;
             case R.id.order_by_highest_rated:
-                TheMovieDatabaseClient.DownloadTopRatedMovies();
+                TmdbClient.DownloadTopRatedMovies();
                 return true;
         }
 

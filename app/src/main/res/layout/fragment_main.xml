@@ -13,12 +13,5 @@
             android:clipToPadding="false"
             android:numColumns="auto_fit"
             tools:context=".MainFragment" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
     </FrameLayout>
 </layout>

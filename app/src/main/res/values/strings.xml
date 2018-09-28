@@ -9,7 +9,7 @@
     <string name="release_date_label">Release date</string>
     <string name="poster_base_url">http://image.tmdb.org/t/p/w185</string>
     <string name="tmdb_base_url">http://api.themoviedb.org</string>
-    <string name="tmdb_json_results_element">results</string>
     <string name="intent_extra_key">movie</string>
+    <string name="tmdb_json_results_element">results</string>
     <string name="network_unavailable_error">Network unavailable</string>
 </resources>
