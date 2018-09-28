@@ -32,15 +32,11 @@ dependencies {
     implementation "com.android.support:preference-v7:$supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
     implementation "com.android.support:exifinterface:$supportLibraryVersion"
-    androidTestImplementation "com.android.support:support-annotations:$supportLibraryVersion"
 
-    // https://developer.android.com/topic/libraries/architecture/adding-components#lifecycle
-    // Lifecycle including LiveData and ViewModel
     def lifecycleVersion = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
     implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
 
-    // https://developer.android.com/topic/libraries/architecture/adding-components#room
     def roomVersion = "1.1.1"
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
@@ -49,14 +45,26 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    // https://developer.android.com/training/testing/set-up-project
-    // AndroidJUnitRunner and JUnit Rules
-    def junitBasedLibrariesVersion = "1.0.2"
-    androidTestImplementation "com.android.support.test:runner:$junitBasedLibrariesVersion"
-    androidTestImplementation "com.android.support.test:rules:$junitBasedLibrariesVersion"
+    def daggerVersion = "2.17"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-    androidTestImplementation "junit:junit:4.12"
+    // Misc
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation "com.squareup.picasso:picasso:2.71828"
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    implementation "com.facebook.stetho:stetho:1.5.0"
+
+    /*
+     * Test
+     */
+
+    androidTestImplementation "junit:junit:4.12"
+    androidTestImplementation "com.android.support:support-annotations:$supportLibraryVersion"
+
+    def junitBasedLibrariesVersion = "1.0.2"
+    androidTestImplementation "com.android.support.test:runner:$junitBasedLibrariesVersion"
+    androidTestImplementation "com.android.support.test:rules:$junitBasedLibrariesVersion"
 }

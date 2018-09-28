@@ -1,4 +1,4 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-// Suppress "can be private" warning because the class members are required to be public for data binding in activty_detail.xml
-@SuppressWarnings("WeakerAccess")
 public final class Movie implements Parcelable {
+    public final int id;
+
     @SerializedName("original_title")
     public final String originalTitle;
 
@@ -26,6 +26,7 @@ public final class Movie implements Parcelable {
     public final String plotSynopsis;
 
     private Movie(Parcel parcel) {
+        id = parcel.readInt();
         originalTitle = parcel.readString();
         posterPath = parcel.readString();
         releaseDate = (Date) parcel.readSerializable();
@@ -40,6 +41,7 @@ public final class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(originalTitle);
         parcel.writeString(posterPath);
         parcel.writeSerializable(releaseDate);

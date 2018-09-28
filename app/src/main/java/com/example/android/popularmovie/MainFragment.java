@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.example.android.popularmovie.Utils.Converter;
 import com.example.android.popularmovie.Utils.GsonWrapper;
-import com.example.android.popularmovie.Utils.MovieDownloader;
 import com.example.android.popularmovie.Utils.Network;
+import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.databinding.FragmentMainBinding;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         if (movies != null) {
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
         } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
-            MovieDownloader.init(getString(R.string.tmdb_base_url),
+            TheMovieDatabaseClient.init(getString(R.string.tmdb_base_url),
                     () -> binding.progressBar.setVisibility(View.VISIBLE),
                     new Callback<ResponseBody>() {
                         @Override
@@ -82,7 +82,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
                             showToast(t.getMessage());
                         }
                     });
-            MovieDownloader.DownloadPopularMovies();
+            TheMovieDatabaseClient.DownloadPopularMovies();
         } else {
             showToast(getString(R.string.network_unavailable_error));
         }
@@ -108,10 +108,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.order_by_most_popular:
-                MovieDownloader.DownloadPopularMovies();
+                TheMovieDatabaseClient.DownloadPopularMovies();
                 return true;
             case R.id.order_by_highest_rated:
-                MovieDownloader.DownloadTopRatedMovies();
+                TheMovieDatabaseClient.DownloadTopRatedMovies();
                 return true;
         }
 

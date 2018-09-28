@@ -5,7 +5,7 @@
 
         <variable
             name="movie"
-            type="com.example.android.popularmovie.Movie" />
+            type="com.example.android.popularmovie.data.Movie" />
     </data>
 
     <ScrollView
