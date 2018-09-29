@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
+import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Converter;
 import com.example.android.popularmovie.utils.GsonWrapper;
 
@@ -33,7 +34,7 @@ public class MovieRepository {
         this.posterBaseUrl = posterBaseUrl;
     }
 
-    LiveData<List<Movie>> getPopularMovies() {
+    ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
         tmdbService.getPopularMovies(BuildConfig.API_KEY).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -41,16 +42,15 @@ public class MovieRepository {
                 if (response.isSuccessful()) {
                     try {
                         movies = Converter.toArrayList(GsonWrapper.fromJson(GsonWrapper.getJsonArray(Objects.requireNonNull(response.body()).string(), tmdbJsonResultsElement), Movie[].class));
+
+                        for (Movie movie : movies) {
+                            movie.posterPath = posterBaseUrl.concat(movie.posterPath);
+                        }
+
+                        executor.execute(() -> movieDao.save(movies));
                     } catch (IOException e) {
                         errorMessage = e.getMessage();
-                        return;
                     }
-
-                    for (Movie movie : movies) {
-                        movie.posterPath = posterBaseUrl.concat(movie.posterPath);
-                    }
-
-                    executor.execute(() -> movieDao.save(movies));
                 } else {
                     try {
                         errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -66,6 +66,6 @@ public class MovieRepository {
             }
         });
 
-        return movieDao.load();
+        return errorMessage == null ? ApiResponse.success(movieDao.load()) : ApiResponse.failure(errorMessage);
     }
 }

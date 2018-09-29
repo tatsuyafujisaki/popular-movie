@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.TmdbService;
+import com.example.android.popularmovie.utils.ApiResponse;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -14,8 +15,8 @@ import java.util.concurrent.Executors;
 import retrofit2.Retrofit;
 
 public class MovieViewModel extends AndroidViewModel {
-    private LiveData<List<Movie>> popularMovies;
-    private LiveData<List<Movie>> topRatedMovies;
+    private ApiResponse<LiveData<List<Movie>>> popularMovies;
+    private ApiResponse<LiveData<List<Movie>>> topRatedMovies;
     private final MovieRepository movieRepository;
 
     MovieViewModel(Application application) {
@@ -29,7 +30,7 @@ public class MovieViewModel extends AndroidViewModel {
                 context.getString(R.string.poster_base_url));
     }
 
-    public LiveData<List<Movie>> getPopularMovies() {
+    public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
         if (popularMovies == null) {
             popularMovies = movieRepository.getPopularMovies();
         }
@@ -37,7 +38,7 @@ public class MovieViewModel extends AndroidViewModel {
         return popularMovies;
     }
 
-    public LiveData<List<Movie>> getTopRatedMovies() {
+    public ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
         if (topRatedMovies == null) {
             // TODO: FIX LATER
             topRatedMovies = movieRepository.getPopularMovies();

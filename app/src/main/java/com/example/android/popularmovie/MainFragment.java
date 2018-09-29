@@ -1,5 +1,6 @@
 package com.example.android.popularmovie;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +19,10 @@ import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.data.MovieViewModel;
 import com.example.android.popularmovie.databinding.FragmentMainBinding;
 import com.example.android.popularmovie.utils.Network;
+import com.example.android.popularmovie.utils.ApiResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class MainFragment extends Fragment implements MovieAdapter.ClickListener {
@@ -34,18 +37,15 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_column_count)));
         binding.recyclerView.setHasFixedSize(true);
 
-        setHasOptionsMenu(true);
+        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableArrayListKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
-        }
-
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-
-        if (movies != null) {
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
-        } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
+            setHasOptionsMenu(true);
+        }  else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))){
             populateMovies();
+            setHasOptionsMenu(true);
         } else {
             showToast(getString(R.string.network_unavailable_error));
         }
@@ -89,10 +89,16 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     }
 
     private void populateMovies() {
-        movieViewModel.getPopularMovies().observe(this, movies -> {
-            this.movies = (ArrayList<Movie>) movies;
-            binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
-        });
+        ApiResponse<LiveData<List<Movie>>> response = movieViewModel.getPopularMovies();
+
+        if (response.isSuccessful) {
+            response.data.observe(this, movies -> {
+                this.movies = (ArrayList<Movie>) movies;
+                binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
+            });
+        } else{
+            showToast(response.errorMessage);
+        }
     }
 
     private void showToast(String text) {
