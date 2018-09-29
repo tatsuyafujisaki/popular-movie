@@ -1,14 +1,15 @@
 package com.example.android.popularmovie;
 
-import okhttp3.ResponseBody;
+import com.example.android.popularmovie.data.Movie;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface TmdbService {
     @GET("3/movie/popular")
-    Call<ResponseBody> getPopularMovies(@Query("api_key") String apiKey);
+    Call<Movie[]> getPopularMovies(@Query("api_key") String apiKey);
 
     @GET("3/movie/top_rated")
-    Call<ResponseBody> getTopRatedMovies(@Query("api_key") String apiKey);
+    Call<Movie[]> getTopRatedMovies(@Query("api_key") String apiKey);
 }
