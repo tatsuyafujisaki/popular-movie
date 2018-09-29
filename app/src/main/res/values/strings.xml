@@ -4,8 +4,8 @@
     <string name="order_by_highest_rated">Order by highest rated</string>
     <string name="poster_description">Movie poster</string>
     <string name="original_title_label">Original title</string>
-    <string name="plot_synopsis_label">Plot synopsis</string>
-    <string name="user_rating_label">User rating</string>
+    <string name="overview_label">Overview</string>
+    <string name="vote_average_label">Vote average</string>
     <string name="release_date_label">Release date</string>
     <string name="poster_base_url">http://image.tmdb.org/t/p/w185</string>
     <string name="tmdb_base_url">http://api.themoviedb.org</string>

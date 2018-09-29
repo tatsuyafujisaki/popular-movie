@@ -85,18 +85,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:text="@string/user_rating_label"
+                    android:text="@string/vote_average_label"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/user_rating_text_view"
+                    android:id="@+id/vote_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:text="@{String.valueOf(movie.userRating)}" />
+                    android:text="@{String.valueOf(movie.voteAverage)}" />
             </LinearLayout>
 
             <LinearLayout
@@ -109,18 +109,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:text="@string/plot_synopsis_label"
+                    android:text="@string/overview_label"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/plot_synopsis_text_view"
+                    android:id="@+id/overview_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:text="@{movie.plotSynopsis}" />
+                    android:text="@{movie.overview}" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

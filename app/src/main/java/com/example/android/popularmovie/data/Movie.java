@@ -1,5 +1,8 @@
 package com.example.android.popularmovie.data;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,7 +10,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+@Entity
 public final class Movie implements Parcelable {
+    @PrimaryKey
     public final int id;
 
     @SerializedName("original_title")
@@ -20,18 +25,27 @@ public final class Movie implements Parcelable {
     public final Date releaseDate;
 
     @SerializedName("vote_average")
-    public final double userRating;
+    public final double voteAverage;
+    
+    public final String overview;
 
-    @SerializedName("overview")
-    public final String plotSynopsis;
+    Movie(int id, String originalTitle, String posterPath, Date releaseDate, double voteAverage, String overview) {
+        this.id = id;
+        this.originalTitle = originalTitle;
+        this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+    }
 
+    @Ignore
     private Movie(Parcel parcel) {
         id = parcel.readInt();
         originalTitle = parcel.readString();
         posterPath = parcel.readString();
         releaseDate = (Date) parcel.readSerializable();
-        userRating = parcel.readDouble();
-        plotSynopsis = parcel.readString();
+        voteAverage = parcel.readDouble();
+        overview = parcel.readString();
     }
 
     @Override
@@ -45,8 +59,8 @@ public final class Movie implements Parcelable {
         parcel.writeString(originalTitle);
         parcel.writeString(posterPath);
         parcel.writeSerializable(releaseDate);
-        parcel.writeDouble(userRating);
-        parcel.writeString(plotSynopsis);
+        parcel.writeDouble(voteAverage);
+        parcel.writeString(overview);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
