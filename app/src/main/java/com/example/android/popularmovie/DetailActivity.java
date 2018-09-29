@@ -11,23 +11,30 @@ import android.widget.TextView;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DetailActivity extends AppCompatActivity {
+    @BindingAdapter("android:src")
+    public static void bingStringToImageView(ImageView imageView, String posterPath) {
+        Picasso.get().load(posterPath).into(imageView);
+    }
+
+    @BindingAdapter("android:text")
+    public static void bindLocalDateToTextView(TextView textView, LocalDate releaseDate) {
+        textView.setText(releaseDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         Bundle bundle = getIntent().getExtras();
 
         String intentExtraKey = getString(R.string.intent_extra_key);
 
         if (bundle != null && bundle.containsKey(intentExtraKey)) {
-            binding.setMovie(bundle.getParcelable(intentExtraKey));
+            ((ActivityDetailBinding) DataBindingUtil.setContentView(this, R.layout.activity_detail)).setMovie(bundle.getParcelable(intentExtraKey));
         }
     }
 
@@ -38,15 +45,5 @@ public class DetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @BindingAdapter("android:src")
-    public static void setSrc(ImageView imageView, String posterPath) {
-        Picasso.get().load(posterPath).into(imageView);
-    }
-
-    @BindingAdapter("android:text")
-    public static void setText(TextView textView, Date releaseDate) {
-        textView.setText(new SimpleDateFormat("MMMM d, yyyy", Locale.US).format(releaseDate));
     }
 }

@@ -8,28 +8,40 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public final class Movie implements Parcelable {
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel parcel) {
+            return new Movie(parcel);
+        }
+
+        @Override
+        public Movie[] newArray(int i) {
+            return new Movie[i];
+        }
+    };
+
     @PrimaryKey
     public final int id;
 
     @SerializedName("original_title")
     public final String originalTitle;
 
-    @SerializedName("poster_path")
-    public String posterPath;
-
     @SerializedName("release_date")
-    public final Date releaseDate;
+    public final LocalDate releaseDate;
 
     @SerializedName("vote_average")
     public final double voteAverage;
-    
+
     public final String overview;
 
-    Movie(int id, String originalTitle, String posterPath, Date releaseDate, double voteAverage, String overview) {
+    @SerializedName("poster_path")
+    public String posterPath;
+
+    Movie(int id, String originalTitle, String posterPath, LocalDate releaseDate, double voteAverage, String overview) {
         this.id = id;
         this.originalTitle = originalTitle;
         this.posterPath = posterPath;
@@ -43,7 +55,7 @@ public final class Movie implements Parcelable {
         id = parcel.readInt();
         originalTitle = parcel.readString();
         posterPath = parcel.readString();
-        releaseDate = (Date) parcel.readSerializable();
+        releaseDate = (LocalDate) parcel.readSerializable();
         voteAverage = parcel.readDouble();
         overview = parcel.readString();
     }
@@ -62,16 +74,4 @@ public final class Movie implements Parcelable {
         parcel.writeDouble(voteAverage);
         parcel.writeString(overview);
     }
-
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel parcel) {
-            return new Movie(parcel);
-        }
-
-        @Override
-        public Movie[] newArray(int i) {
-            return new Movie[i];
-        }
-    };
 }

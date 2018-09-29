@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieRepository {
+class MovieRepository {
     private final TmdbService tmdbService;
     private final MovieDao movieDao;
     private final Executor executor;

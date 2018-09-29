@@ -38,7 +38,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         binding.recyclerView.setHasFixedSize(true);
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        
+
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableArrayListKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));

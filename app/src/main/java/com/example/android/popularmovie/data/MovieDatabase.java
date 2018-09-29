@@ -6,8 +6,10 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.example.android.popularmovie.utils.LocalDateConverter;
+
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
-@TypeConverters(DateConverter.class)
+@TypeConverters(LocalDateConverter.class)
 public abstract class MovieDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "Movies.db";
     private static MovieDatabase instance;
