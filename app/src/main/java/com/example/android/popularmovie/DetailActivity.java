@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DetailActivity extends AppCompatActivity {
     @BindingAdapter("android:src")
-    public static void bingStringToImageView(ImageView imageView, String posterPath) {
+    public static void bindStringToImageView(ImageView imageView, String posterPath) {
         Picasso.get().load(posterPath).into(imageView);
     }
 
