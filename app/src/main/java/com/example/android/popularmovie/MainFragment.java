@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.data.MovieViewModel;
 import com.example.android.popularmovie.databinding.FragmentMainBinding;
-import com.example.android.popularmovie.utils.Network;
 import com.example.android.popularmovie.utils.ApiResponse;
+import com.example.android.popularmovie.utils.Network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +38,12 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         binding.recyclerView.setHasFixedSize(true);
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-
+        
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableArrayListKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
             setHasOptionsMenu(true);
-        }  else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))){
+        } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
             populateMovies();
             setHasOptionsMenu(true);
         } else {
@@ -96,7 +96,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
                 this.movies = (ArrayList<Movie>) movies;
                 binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
             });
-        } else{
+        } else {
             showToast(response.errorMessage);
         }
     }

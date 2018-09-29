@@ -9,13 +9,15 @@ import android.content.Context;
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class MovieDatabase extends RoomDatabase {
-    private static MovieDatabase instance;
     private static final String DATABASE_NAME = "Movies.db";
+    private static MovieDatabase instance;
 
-    public static MovieDatabase getInstance(Context context) {
+    static MovieDatabase getInstance(Context context) {
         if (instance == null) {
             synchronized (MovieDatabase.class) {
-                instance = Room.databaseBuilder(context.getApplicationContext(), MovieDatabase.class, MovieDatabase.DATABASE_NAME).build();
+                if (instance == null) {
+                    instance = Room.databaseBuilder(context.getApplicationContext(), MovieDatabase.class, MovieDatabase.DATABASE_NAME).build();
+                }
             }
         }
 
