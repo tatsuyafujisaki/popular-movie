@@ -9,10 +9,10 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-public class MoviesDeserializer implements JsonDeserializer<Movie[]>  {
-    final String resultsElementName;
+public class MoviesDeserializer implements JsonDeserializer<Movie[]> {
+    private final String resultsElementName;
 
-    public MoviesDeserializer(String resultsElementName){
+    public MoviesDeserializer(String resultsElementName) {
         this.resultsElementName = resultsElementName;
     }
 

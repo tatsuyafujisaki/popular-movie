@@ -16,13 +16,18 @@ import java.time.format.DateTimeFormatter;
 
 public class DetailActivity extends AppCompatActivity {
     @BindingAdapter("android:src")
-    public static void bindStringToImageView(ImageView imageView, String posterPath) {
-        Picasso.get().load(posterPath).into(imageView);
+    public static void setStringToImageView(ImageView imageView, String path) {
+        Picasso.get().load(path).into(imageView);
     }
 
     @BindingAdapter("android:text")
-    public static void bindLocalDateToTextView(TextView textView, LocalDate releaseDate) {
-        textView.setText(releaseDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
+    public static void setDoubleToTextView(TextView textView, Double d) {
+        textView.setText(String.valueOf(d));
+    }
+
+    @BindingAdapter("android:text")
+    public static void setLocalDateToTextView(TextView textView, LocalDate date) {
+        textView.setText(date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
     }
 
     @Override

@@ -38,7 +38,7 @@ class MovieRepository {
                     List<Movie> movies = Converter.toArrayList(response.body());
 
                     for (Movie movie : movies) {
-                        movie.posterPath = posterBaseUrl.concat(movie.posterPath);
+                        movie.setPosterPath(posterBaseUrl.concat(movie.getPosterPath()));
                     }
 
                     executor.execute(() -> movieDao.save(movies));
