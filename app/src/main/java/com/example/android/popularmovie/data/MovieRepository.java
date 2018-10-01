@@ -1,6 +1,7 @@
 package com.example.android.popularmovie.data;
 
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.NonNull;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
@@ -33,7 +34,7 @@ public class MovieRepository {
     public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
         tmdbService.getPopularMovies(BuildConfig.API_KEY).enqueue(new Callback<Movie[]>() {
             @Override
-            public void onResponse(Call<Movie[]> call, Response<Movie[]> response) {
+            public void onResponse(@NonNull Call<Movie[]> call, @NonNull Response<Movie[]> response) {
                 if (response.isSuccessful()) {
                     List<Movie> movies = Converter.toArrayList(response.body());
 
@@ -52,7 +53,7 @@ public class MovieRepository {
             }
 
             @Override
-            public void onFailure(Call<Movie[]> call, Throwable t) {
+            public void onFailure(@NonNull Call<Movie[]> call, @NonNull Throwable t) {
                 errorMessage = t.getMessage();
             }
         });

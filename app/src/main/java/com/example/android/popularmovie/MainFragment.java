@@ -1,10 +1,10 @@
 package com.example.android.popularmovie;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
@@ -24,19 +24,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
+
 public final class MainFragment extends Fragment implements MovieAdapter.ClickListener {
     private final String parcelableArrayListKey = getClass().getSimpleName();
     private FragmentMainBinding binding;
-    private MainViewModel mainViewModel;
     private ArrayList<Movie> movies;
+
+    @Inject
+    MainViewModel mainViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        AndroidSupportInjection.inject(this);
+
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_column_count)));
         binding.recyclerView.setHasFixedSize(true);
-
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableArrayListKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
@@ -48,8 +60,6 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         } else {
             showToast(getString(R.string.network_unavailable_error));
         }
-
-        return binding.getRoot();
     }
 
     @Override
