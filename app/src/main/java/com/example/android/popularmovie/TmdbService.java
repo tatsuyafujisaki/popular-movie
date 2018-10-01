@@ -12,4 +12,7 @@ public interface TmdbService {
 
     @GET("3/movie/top_rated")
     Call<Movie[]> getTopRatedMovies(@Query("api_key") String apiKey);
+
+    @GET("3/movie/{id}/videos")
+    Call<Movie[]> getTrailers(@Query("api_key") String apiKey);
 }

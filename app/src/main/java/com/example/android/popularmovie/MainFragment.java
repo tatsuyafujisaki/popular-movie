@@ -81,10 +81,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         switch (item.getItemId()) {
             case R.id.order_by_most_popular:
                 populateMovies();
-                return true;
+                break;
             case R.id.order_by_highest_rated:
                 populateMovies();
-                return true;
+                break;
         }
 
         return super.onOptionsItemSelected(item);
