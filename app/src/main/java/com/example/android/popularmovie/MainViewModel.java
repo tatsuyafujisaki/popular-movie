@@ -22,6 +22,8 @@ public class MainViewModel extends ViewModel {
     }
 
     ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
+        topRatedMovies = null;
+
         if (popularMovies == null) {
             popularMovies = movieRepository.getPopularMovies();
         }
@@ -30,9 +32,10 @@ public class MainViewModel extends ViewModel {
     }
 
     ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
+        popularMovies = null;
+
         if (topRatedMovies == null) {
-            // TODO: FIX LATER
-            topRatedMovies = movieRepository.getPopularMovies();
+            topRatedMovies = movieRepository.getTopRatedMovies();
         }
 
         return topRatedMovies;

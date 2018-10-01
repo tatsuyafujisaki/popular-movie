@@ -49,7 +49,7 @@ class ApplicationModule {
 
         return new MovieRepository(
                 tmdbService,
-                MovieDatabase.getInstance(context).movieDao(),
+                MovieDatabase.getInstance(context),
                 Executors.newSingleThreadExecutor(),
                 context.getString(R.string.poster_base_url));
     }

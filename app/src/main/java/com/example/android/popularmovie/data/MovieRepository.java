@@ -20,60 +20,84 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieRepository {
+    public enum MovieType { POPULAR, TOP_RATED }
+
     private LocalDateTime lastUpdate;
+    private MovieType lastUpdatedMovieType;
 
     private final TmdbService tmdbService;
-    private final MovieDao movieDao;
+    private final MovieDatabase movieDatabase;
     private final Executor executor;
-    private final String posterBaseUrl;
+    private final Callback<Movie[]> callback;
     private String errorMessage;
 
-    public MovieRepository(TmdbService tmdbService, MovieDao movieDao, Executor executor, String posterBaseUrl) {
+    public MovieRepository(TmdbService tmdbService, MovieDatabase movieDatabase, Executor executor, String posterBaseUrl) {
         this.tmdbService = tmdbService;
-        this.movieDao = movieDao;
+        this.movieDatabase = movieDatabase;
         this.executor = executor;
-        this.posterBaseUrl = posterBaseUrl;
+
+        callback = new Callback<Movie[]>() {
+            @Override
+            public void onResponse(@NonNull Call<Movie[]> call, @NonNull Response<Movie[]> response) {
+                if (response.isSuccessful()) {
+                    List<Movie> movies = Converter.toArrayList(response.body());
+
+                    for (Movie movie : movies) {
+                        movie.setPosterPath(posterBaseUrl.concat(movie.getPosterPath()));
+                    }
+
+                    executor.execute(() -> movieDatabase.movieDao().save(movies));
+                } else {
+                    try {
+                        errorMessage = Objects.requireNonNull(response.errorBody()).string();
+                    } catch (IOException e) {
+                        errorMessage = e.getMessage();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Movie[]> call, @NonNull Throwable t) {
+                errorMessage = t.getMessage();
+            }
+        };
     }
 
     public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
-        if (hasExpired()) {
-            errorMessage = null;
+        return getMovies(MovieType.POPULAR);
+    }
 
-            tmdbService.getPopularMovies(BuildConfig.API_KEY).enqueue(new Callback<Movie[]>() {
-                @Override
-                public void onResponse(@NonNull Call<Movie[]> call, @NonNull Response<Movie[]> response) {
-                    if (response.isSuccessful()) {
-                        List<Movie> movies = Converter.toArrayList(response.body());
+    public ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
+        return getMovies(MovieType.TOP_RATED);
+    }
 
-                        for (Movie movie : movies) {
-                            movie.setPosterPath(posterBaseUrl.concat(movie.getPosterPath()));
-                        }
+    private ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
+        errorMessage = null;
 
-                        executor.execute(() -> movieDao.save(movies));
-                    } else {
-                        try {
-                            errorMessage = Objects.requireNonNull(response.errorBody()).string();
-                        } catch (IOException e) {
-                            errorMessage = e.getMessage();
-                        }
-                    }
-                }
+        if (lastUpdatedMovieType != movieType || hasExpired()) {
+            executor.execute(() -> movieDatabase.clearAllTables());
 
-                @Override
-                public void onFailure(@NonNull Call<Movie[]> call, @NonNull Throwable t) {
-                    errorMessage = t.getMessage();
-                }
-            });
+            switch(movieType) {
+                case POPULAR:
+                    tmdbService.getPopularMovies(BuildConfig.API_KEY).enqueue(callback);
+                    break;
+                case TOP_RATED:
+                    tmdbService.getTopRatedMovies(BuildConfig.API_KEY).enqueue(callback);
+                    break;
+                default:
+                    throw new IllegalArgumentException(movieType.toString());
+            }
 
+            lastUpdatedMovieType = movieType;
             lastUpdate = LocalDateTime.now();
         }
 
-        return errorMessage == null ? ApiResponse.success(movieDao.load()) : ApiResponse.failure(errorMessage);
+        return errorMessage == null ? ApiResponse.success(movieDatabase.movieDao().load()) : ApiResponse.failure(errorMessage);
     }
+
 
     private boolean hasExpired(){
         final int MINUTES_TO_EXPIRE = 1;
-
         return lastUpdate == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdate, LocalDateTime.now());
     }
 }

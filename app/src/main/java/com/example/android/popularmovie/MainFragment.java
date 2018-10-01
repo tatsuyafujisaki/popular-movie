@@ -55,7 +55,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
             setHasOptionsMenu(true);
         } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
-            populateMovies();
+            populateMovies(mainViewModel.getPopularMovies());
             setHasOptionsMenu(true);
         } else {
             showToast(getString(R.string.network_unavailable_error));
@@ -80,10 +80,10 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.order_by_most_popular:
-                populateMovies();
+                populateMovies(mainViewModel.getPopularMovies());
                 break;
             case R.id.order_by_highest_rated:
-                populateMovies();
+                populateMovies(mainViewModel.getTopRatedMovies());
                 break;
         }
 
@@ -97,9 +97,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         startActivity(intent);
     }
 
-    private void populateMovies() {
-        ApiResponse<LiveData<List<Movie>>> response = mainViewModel.getPopularMovies();
-
+    private void populateMovies(ApiResponse<LiveData<List<Movie>>> response) {
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
                 this.movies = (ArrayList<Movie>) movies;
