@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.popularmovie.data.Movie;
-import com.example.android.popularmovie.data.MovieViewModel;
 import com.example.android.popularmovie.databinding.FragmentMainBinding;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Network;
@@ -28,7 +27,7 @@ import java.util.Objects;
 public final class MainFragment extends Fragment implements MovieAdapter.ClickListener {
     private final String parcelableArrayListKey = getClass().getSimpleName();
     private FragmentMainBinding binding;
-    private MovieViewModel movieViewModel;
+    private MainViewModel mainViewModel;
     private ArrayList<Movie> movies;
 
     @Override
@@ -37,7 +36,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_column_count)));
         binding.recyclerView.setHasFixedSize(true);
 
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableArrayListKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
@@ -89,7 +88,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     }
 
     private void populateMovies() {
-        ApiResponse<LiveData<List<Movie>>> response = movieViewModel.getPopularMovies();
+        ApiResponse<LiveData<List<Movie>>> response = mainViewModel.getPopularMovies();
 
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {

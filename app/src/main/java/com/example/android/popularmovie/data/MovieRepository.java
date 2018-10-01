@@ -16,21 +16,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-class MovieRepository {
+public class MovieRepository {
     private final TmdbService tmdbService;
     private final MovieDao movieDao;
     private final Executor executor;
     private final String posterBaseUrl;
     private String errorMessage;
 
-    MovieRepository(TmdbService tmdbService, MovieDao movieDao, Executor executor, String posterBaseUrl) {
+    public MovieRepository(TmdbService tmdbService, MovieDao movieDao, Executor executor, String posterBaseUrl) {
         this.tmdbService = tmdbService;
         this.movieDao = movieDao;
         this.executor = executor;
         this.posterBaseUrl = posterBaseUrl;
     }
 
-    ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
+    public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
         tmdbService.getPopularMovies(BuildConfig.API_KEY).enqueue(new Callback<Movie[]>() {
             @Override
             public void onResponse(Call<Movie[]> call, Response<Movie[]> response) {

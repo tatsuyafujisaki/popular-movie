@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class LocalDateDeserializer implements JsonDeserializer<LocalDate> {
     @Override
-    public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return LocalDate.parse(json.getAsString());
+    public LocalDate deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+        return LocalDate.parse(json.getAsJsonPrimitive().getAsString());
     }
 }
