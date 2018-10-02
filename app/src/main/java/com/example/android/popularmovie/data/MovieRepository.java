@@ -75,7 +75,7 @@ public class MovieRepository {
         errorMessage = null;
 
         if (lastUpdatedMovieType != movieType || hasExpired()) {
-            executor.execute(() -> movieDatabase.clearAllTables());
+            executor.execute(movieDatabase::clearAllTables);
 
             switch(movieType) {
                 case POPULAR:

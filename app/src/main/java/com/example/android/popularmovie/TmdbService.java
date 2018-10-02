@@ -4,6 +4,7 @@ import com.example.android.popularmovie.data.Movie;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface TmdbService {
@@ -14,5 +15,8 @@ public interface TmdbService {
     Call<Movie[]> getTopRatedMovies(@Query("api_key") String apiKey);
 
     @GET("3/movie/{id}/videos")
-    Call<Movie[]> getTrailers(@Query("api_key") String apiKey);
+    Call<Movie[]> getTrailers(@Query("api_key") String apiKey, @Path("id") int id);
+
+    @GET("3/movie/{id}/reviews")
+    Call<Movie[]> getReviews(@Query("api_key") String apiKey, @Path("id") int id);
 }
