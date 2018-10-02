@@ -7,14 +7,19 @@ import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.data.MovieRepository;
 import com.example.android.popularmovie.utils.ApiResponse;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class MainViewModel extends ViewModel {
-    private ApiResponse<LiveData<List<Movie>>> popularMovies;
-    private ApiResponse<LiveData<List<Movie>>> topRatedMovies;
+    private enum MovieType { POPULAR, TOP_RATED };
+
     private final MovieRepository movieRepository;
+    private ApiResponse<LiveData<List<Movie>>> movies;
+    private MovieType lastUpdatedMovieType;
+    private LocalDateTime lastUpdate;
 
     @Inject
     public MainViewModel(MovieRepository movieRepository) {
@@ -22,22 +27,29 @@ public class MainViewModel extends ViewModel {
     }
 
     ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
-        topRatedMovies = null;
+        if (lastUpdatedMovieType != MovieType.POPULAR || hasExpired()) {
+            movies = movieRepository.getPopularMovies();
 
-        if (popularMovies == null) {
-            popularMovies = movieRepository.getPopularMovies();
+            lastUpdatedMovieType = MovieType.POPULAR;
+            lastUpdate = LocalDateTime.now();
         }
 
-        return popularMovies;
+        return movies;
     }
 
     ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
-        popularMovies = null;
+        if (lastUpdatedMovieType != MovieType.TOP_RATED || hasExpired()) {
+            movies = movieRepository.getTopRatedMovies();
 
-        if (topRatedMovies == null) {
-            topRatedMovies = movieRepository.getTopRatedMovies();
+            lastUpdatedMovieType = MovieType.TOP_RATED;
+            lastUpdate = LocalDateTime.now();
         }
 
-        return topRatedMovies;
+        return movies;
+    }
+
+    private boolean hasExpired(){
+        final int MINUTES_TO_EXPIRE = 1;
+        return lastUpdate == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdate, LocalDateTime.now());
     }
 }
