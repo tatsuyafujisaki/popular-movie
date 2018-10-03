@@ -14,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class MainViewModel extends ViewModel {
-    private enum MovieType { POPULAR, TOP_RATED };
+    private enum MovieType {POPULAR, TOP_RATED}
 
     private final MovieRepository movieRepository;
     private ApiResponse<LiveData<List<Movie>>> movies;
@@ -48,8 +48,8 @@ public class MainViewModel extends ViewModel {
         return movies;
     }
 
-    private boolean hasExpired(){
-        final int MINUTES_TO_EXPIRE = 1;
+    private boolean hasExpired() {
+        int MINUTES_TO_EXPIRE = 1;
         return lastUpdate == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdate, LocalDateTime.now());
     }
 }

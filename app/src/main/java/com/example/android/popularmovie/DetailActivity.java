@@ -8,11 +8,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.squareup.picasso.Picasso;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
     @BindingAdapter("android:src")
@@ -34,13 +36,18 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ActivityDetailBinding activityDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+
         Bundle bundle = getIntent().getExtras();
-
         String intentExtraKey = getString(R.string.intent_extra_key);
-
-        if (bundle != null && bundle.containsKey(intentExtraKey)) {
-            ((ActivityDetailBinding) DataBindingUtil.setContentView(this, R.layout.activity_detail)).setMovie(bundle.getParcelable(intentExtraKey));
+        Movie movie = Objects.requireNonNull(bundle).getParcelable(intentExtraKey);
+        if (bundle.containsKey(intentExtraKey)) {
+            activityDetailBinding.setMovie(movie);
         }
+
+        setSupportActionBar(activityDetailBinding.toolbar);
+        activityDetailBinding.toolbar.setTitle(Objects.requireNonNull(movie).getOriginalTitle());
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+@SuppressWarnings("WeakerAccess")
 @Singleton
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -20,6 +21,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         this.creators = creators;
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
@@ -33,12 +35,12 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             }
         }
 
-        if (creator == null){
+        if (creator == null) {
             throw new IllegalStateException("Unknown model class" + modelClass);
         }
 
         try {
-            return (T)creator.get();
+            return (T) creator.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

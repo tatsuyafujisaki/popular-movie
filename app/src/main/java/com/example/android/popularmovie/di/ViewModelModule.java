@@ -9,6 +9,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
+@SuppressWarnings("unused")
 @Module
 public abstract class ViewModelModule {
     @Binds

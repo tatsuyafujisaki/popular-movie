@@ -14,6 +14,7 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module
 abstract class ActivityModule {
+    @SuppressWarnings("unused")
     @ContributesAndroidInjector(modules = FragmentModule.class)
     abstract MainActivity contributeMainActivity();
 

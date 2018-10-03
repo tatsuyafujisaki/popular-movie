@@ -33,6 +33,7 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
     private FragmentMainBinding binding;
     private ArrayList<Movie> movies;
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     MainViewModel mainViewModel;
 
