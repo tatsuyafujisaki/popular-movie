@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         setSupportActionBar(activityDetailBinding.toolbar);
-        activityDetailBinding.toolbar.setTitle(Objects.requireNonNull(movie).getOriginalTitle());
+        activityDetailBinding.toolbar.setTitle(Objects.requireNonNull(movie).originalTitle);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 

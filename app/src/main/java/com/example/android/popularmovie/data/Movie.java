@@ -1,5 +1,6 @@
 package com.example.android.popularmovie.data;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
@@ -12,21 +13,25 @@ import java.time.LocalDate;
 @Entity
 public final class Movie implements Parcelable {
     @PrimaryKey
-    private  int id;
+    public int id;
 
     @SerializedName("poster_path")
-    private String posterPath;
+    @ColumnInfo(name = "poster_path")
+    public String posterPath;
 
     @SerializedName("original_title")
-    private  String originalTitle;
+    @ColumnInfo(name = "original_title")
+    public String originalTitle;
 
     @SerializedName("release_date")
-    private LocalDate releaseDate;
+    @ColumnInfo(name = "release_date")
+    public LocalDate releaseDate;
 
     @SerializedName("vote_average")
-    private double voteAverage;
+    @ColumnInfo(name = "vote_average")
+    public double voteAverage;
 
-    private String overview;
+    public String overview;
 
     public Movie(){
     }
@@ -41,62 +46,6 @@ public final class Movie implements Parcelable {
     }
 
     /*
-     * Getter
-     */
-
-    public int getId() {
-        return id;
-    }
-
-    public String getPosterPath() {
-        return posterPath;
-    }
-
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public double getVoteAverage() {
-        return voteAverage;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    /*
-     * Setter
-     */
-
-    void setId(int id) {
-        this.id = id;
-    }
-
-    void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
-    }
-
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setVoteAverage(double voteAverage) {
-        this.voteAverage = voteAverage;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    /*
      * implements Parcelable
      */
 
@@ -106,7 +55,7 @@ public final class Movie implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(id);
         parcel.writeString(originalTitle);
         parcel.writeString(posterPath);

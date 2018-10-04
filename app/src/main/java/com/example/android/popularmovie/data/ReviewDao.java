@@ -10,10 +10,10 @@ import java.util.List;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
-public interface MovieDao {
-    @Query("SELECT * FROM movie")
-    LiveData<List<Movie>> load();
+public interface ReviewDao {
+    @Query("SELECT * FROM review")
+    LiveData<List<Review>> load();
 
     @Insert(onConflict = REPLACE)
-    void save(List<Movie> movies);
+    void save(List<Review> reviews);
 }

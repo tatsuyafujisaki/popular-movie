@@ -30,7 +30,7 @@ final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Picasso.get().load(movies.get(position).getPosterPath()).into(holder.binding.movieImageView);
+        Picasso.get().load(movies.get(position).posterPath).into(holder.binding.movieImageView);
     }
 
     @Override

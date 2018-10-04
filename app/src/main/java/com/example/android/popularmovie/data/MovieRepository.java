@@ -43,7 +43,8 @@ public class MovieRepository {
                     List<Movie> movies = Converter.toArrayList(response.body());
 
                     for (Movie movie : movies) {
-                        movie.setPosterPath(posterBaseUrl.concat(movie.getPosterPath()));
+                        // Convert relative URL to absolute URL
+                        movie.posterPath = posterBaseUrl.concat(movie.posterPath);
                     }
 
                     executor.execute(() -> movieDatabase.movieDao().save(movies));
@@ -94,7 +95,6 @@ public class MovieRepository {
 
         return errorMessage == null ? ApiResponse.success(movieDatabase.movieDao().load()) : ApiResponse.failure(errorMessage);
     }
-
 
     private boolean hasExpired(){
         final int MINUTES_TO_EXPIRE = 1;
