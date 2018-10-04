@@ -76,7 +76,7 @@ class ApplicationModule {
     @Named("GsonWithReviewArrayAdapter")
     static Gson provideGsonWithReviewArrayAdapter(Context context, @Named("GsonWithLocalDateAdapter") Gson gson) {
         return new GsonBuilder()
-                .registerTypeAdapter(Review[].class, (JsonDeserializer<Movie[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_results_element)), type))
+                .registerTypeAdapter(Review[].class, (JsonDeserializer<Review[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_results_element)), type))
                 .create();
     }
 

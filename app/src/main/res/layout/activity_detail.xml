@@ -104,19 +104,33 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView style="@style/cardview">
+                    <LinearLayout style="@style/cardview_linearlayout">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/overview_label" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:text="@{movie.overview}" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView style="@style/cardview">
 
                     <LinearLayout style="@style/cardview_linearlayout">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/overview_label" />
+                            android:text="Review" />
 
                         <TextView
+                            android:id="@+id/review"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:text="@{movie.overview}" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>

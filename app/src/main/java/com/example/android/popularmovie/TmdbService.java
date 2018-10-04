@@ -16,8 +16,8 @@ public interface TmdbService {
     Call<Movie[]> getTopRatedMovies(@Query("api_key") String apiKey);
 
     @GET("3/movie/{id}/videos")
-    Call<Movie[]> getTrailers(@Query("api_key") String apiKey, @Path("id") int id);
+    Call<Movie[]> getTrailers(@Path("id") int id, @Query("api_key") String apiKey);
 
     @GET("3/movie/{id}/reviews")
-    Call<Review[]> getReviews(@Query("api_key") String apiKey, @Path("id") int id);
+    Call<Review[]> getReviews(@Path("id") int id, @Query("api_key") String apiKey);
 }

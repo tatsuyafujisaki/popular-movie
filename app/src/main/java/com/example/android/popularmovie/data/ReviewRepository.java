@@ -37,11 +37,13 @@ public class ReviewRepository {
         errorMessage = null;
 
         if (hasExpired()) {
-            tmdbService.getReviews(BuildConfig.API_KEY, movieId).enqueue(new Callback<Review[]>() {
+            tmdbService.getReviews(movieId, BuildConfig.API_KEY).enqueue(new Callback<Review[]>() {
                 @Override
                 public void onResponse(@NonNull Call<Review[]> call, @NonNull Response<Review[]> response) {
                     if (response.isSuccessful()) {
                         List<Review> reviews = Converter.toArrayList(response.body());
+
+                        reviews.forEach(review -> review.movieId = movieId);
 
                         executor.execute(() -> reviewDao.save(reviews));
                     } else {

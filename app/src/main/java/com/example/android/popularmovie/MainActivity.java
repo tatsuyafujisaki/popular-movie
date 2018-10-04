@@ -12,7 +12,6 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 public final class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
-    @SuppressWarnings("WeakerAccess")
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
