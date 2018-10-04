@@ -13,8 +13,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
 import java.time.LocalDate;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -32,25 +34,59 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    static MovieRepository provideMovieRepository(Context context) {
-        Gson gson = new GsonBuilder()
+    @Named("GsonWithLocalDateAdater")
+    static Gson provideGsonWithLocalDateAdapter() {
+        return new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json1, type1, context) -> LocalDate.parse(json1.getAsJsonPrimitive().getAsString()))
+                .create();
+    }
+
+    @Singleton
+    @Provides
+    @Named("GsonWithMovieArrayAdapter")
+    static Gson provideGsonWithMovieArrayAdapter(Context context, Gson gson) {
+        return new GsonBuilder()
+                .registerTypeAdapter(Movie[].class, (JsonDeserializer<Movie[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_results_element)), type))
+                .create();
+    }
+
+    @Singleton
+    @Provides
+    static Gson provideGson(Context context) {
+        return new GsonBuilder()
                 .registerTypeAdapter(Movie[].class,
                         (JsonDeserializer<Movie[]>) (json, type, context1) -> new GsonBuilder()
                                 .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json1, type1, context2) -> LocalDate.parse(json1.getAsJsonPrimitive().getAsString()))
                                 .create()
                                 .fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_results_element)), type))
                 .create();
+    }
 
-        TmdbService tmdbService = new Retrofit.Builder()
+    @Singleton
+    @Provides
+    static TmdbService provideTmdbService(Context context, Gson gson) {
+        return new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.tmdb_base_url))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(TmdbService.class);
+    }
 
-        return new MovieRepository(
-                tmdbService,
-                MovieDatabase.getInstance(context),
-                Executors.newSingleThreadExecutor(),
-                context.getString(R.string.poster_base_url));
+    @Singleton
+    @Provides
+    static MovieDatabase provideMovieDatabase(Context context) {
+        return MovieDatabase.getInstance(context);
+    }
+
+    @Singleton
+    @Provides
+    static Executor provideExecutor() {
+        return Executors.newSingleThreadExecutor();
+    }
+
+    @Singleton
+    @Provides
+    static MovieRepository provideMovieRepository(Context context, TmdbService tmdbService, MovieDatabase movieDatabase, Executor executor) {
+        return new MovieRepository(tmdbService, movieDatabase, executor, context.getString(R.string.poster_base_url));
     }
 }
