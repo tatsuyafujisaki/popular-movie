@@ -20,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieRepository {
-    public enum MovieType { POPULAR, TOP_RATED }
+    public enum MovieType {POPULAR, TOP_RATED}
 
     private LocalDateTime lastUpdate;
     private MovieType lastUpdatedMovieType;
@@ -78,7 +78,7 @@ public class MovieRepository {
         if (lastUpdatedMovieType != movieType || hasExpired()) {
             executor.execute(movieDatabase::clearAllTables);
 
-            switch(movieType) {
+            switch (movieType) {
                 case POPULAR:
                     tmdbService.getPopularMovies(BuildConfig.API_KEY).enqueue(callback);
                     break;
@@ -96,8 +96,8 @@ public class MovieRepository {
         return errorMessage == null ? ApiResponse.success(movieDatabase.movieDao().load()) : ApiResponse.failure(errorMessage);
     }
 
-    private boolean hasExpired(){
-        final int MINUTES_TO_EXPIRE = 1;
+    private boolean hasExpired() {
+        int MINUTES_TO_EXPIRE = 1;
         return lastUpdate == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdate, LocalDateTime.now());
     }
 }
