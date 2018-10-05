@@ -7,9 +7,6 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-
-import java.util.Objects;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -19,26 +16,27 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         onDelete = CASCADE,
         onUpdate = CASCADE),
         indices = { @Index("movie_id") })
-public final class Review implements Parcelable {
-    @PrimaryKey
-    @NonNull
-    public String id;
+public final class Trailer implements Parcelable {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
-    public String author;
-    public String content;
-    public String url;
+    public String name;
+    public String size;
+    public String source;
+    public String type;
 
     @ColumnInfo(name = "movie_id")
     public int movieId;
 
-    public Review(){
+    public Trailer(){
     }
 
-    private Review(Parcel parcel) {
-        id = Objects.requireNonNull(parcel.readString());
-        author = parcel.readString();
-        content = parcel.readString();
-        url  = parcel.readString();
+    private Trailer(Parcel parcel) {
+        id = parcel.readInt();
+        name = parcel.readString();
+        size = parcel.readString();
+        source = parcel.readString();
+        type = parcel.readString();
     }
 
     @Override
@@ -48,21 +46,22 @@ public final class Review implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(author);
-        dest.writeString(content);
-        dest.writeString(url);
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(size);
+        dest.writeString(source);
+        dest.writeString(type);
     }
 
-    public static final Parcelable.Creator<Review> CREATOR = new Parcelable.Creator<Review>() {
+    public static final Parcelable.Creator<Trailer> CREATOR = new Parcelable.Creator<Trailer>() {
         @Override
-        public Review createFromParcel(Parcel source) {
-            return new Review(source);
+        public Trailer createFromParcel(Parcel source) {
+            return new Trailer(source);
         }
 
         @Override
-        public Review[] newArray(int size) {
-            return new Review[size];
+        public Trailer[] newArray(int size) {
+            return new Trailer[size];
         }
     };
 }

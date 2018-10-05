@@ -45,10 +45,6 @@ public final class Movie implements Parcelable {
         overview = parcel.readString();
     }
 
-    /*
-     * implements Parcelable
-     */
-
     @Override
     public int describeContents() {
         return 0;
@@ -66,13 +62,13 @@ public final class Movie implements Parcelable {
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
         @Override
-        public Movie createFromParcel(Parcel parcel) {
-            return new Movie(parcel);
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
         }
 
         @Override
-        public Movie[] newArray(int i) {
-            return new Movie[i];
+        public Movie[] newArray(int size) {
+            return new Movie[size];
         }
     };
 }
