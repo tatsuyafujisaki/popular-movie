@@ -2,6 +2,7 @@ package com.example.android.popularmovie.data;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.util.SparseArray;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
@@ -20,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReviewRepository {
-    private LocalDateTime lastUpdate;
+    private final SparseArray<LocalDateTime> lastUpdates = new SparseArray<>();
 
     private final TmdbService tmdbService;
     private final ReviewDao reviewDao;
@@ -36,7 +37,7 @@ public class ReviewRepository {
     public ApiResponse<LiveData<List<Review>>> getReviews(int movieId) {
         errorMessage = null;
 
-        if (hasExpired()) {
+        if (hasExpired(movieId)) {
             tmdbService.getReviews(movieId, BuildConfig.API_KEY).enqueue(new Callback<Review[]>() {
                 @Override
                 public void onResponse(@NonNull Call<Review[]> call, @NonNull Response<Review[]> response) {
@@ -61,14 +62,17 @@ public class ReviewRepository {
                 }
             });
 
-            lastUpdate = LocalDateTime.now();
+            lastUpdates.put(movieId, LocalDateTime.now());
         }
 
-        return errorMessage == null ? ApiResponse.success(reviewDao.load()) : ApiResponse.failure(errorMessage);
+        return errorMessage == null ? ApiResponse.success(reviewDao.load(movieId)) : ApiResponse.failure(errorMessage);
     }
 
-    private boolean hasExpired() {
-        int MINUTES_TO_EXPIRE = 1;
+    private boolean hasExpired(int movieId) {
+        int MINUTES_TO_EXPIRE = 60;
+
+        LocalDateTime lastUpdate = lastUpdates.get(movieId);
+
         return lastUpdate == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdate, LocalDateTime.now());
     }
 }

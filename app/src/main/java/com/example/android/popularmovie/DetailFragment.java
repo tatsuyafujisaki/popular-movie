@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,8 @@ public class DetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         AndroidSupportInjection.inject(this);
 
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         setMovie(savedInstanceState);
         setReviews(savedInstanceState);
 
@@ -94,16 +97,15 @@ public class DetailFragment extends Fragment {
     private void setReviews(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableReviewsKey)) {
             reviews = savedInstanceState.getParcelableArrayList(parcelableReviewsKey);
-            binding.review.setText(reviews.get(0).content);
+            binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
         } else{
             ApiResponse<LiveData<List<Review>>> response = detailViewModel.getReviews(movie.id);
 
             if (response.isSuccessful) {
                 response.data.observe(this, reviews -> {
-                    this.reviews = (ArrayList<Review>) reviews;
-
                     if(!reviews.isEmpty()) {
-                        binding.review.setText(reviews.get(0).content);
+                        this.reviews = (ArrayList<Review>) reviews;
+                        binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
                     }
                 });
             }

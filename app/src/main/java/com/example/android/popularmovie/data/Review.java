@@ -9,6 +9,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.Objects;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(foreignKeys = @ForeignKey(entity = Movie.class,
@@ -33,7 +35,7 @@ public final class Review implements Parcelable {
     }
 
     private Review(Parcel parcel) {
-        id = parcel.readString();
+        id = Objects.requireNonNull(parcel.readString());
         author = parcel.readString();
         content = parcel.readString();
         url  = parcel.readString();

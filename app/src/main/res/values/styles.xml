@@ -15,4 +15,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
+
+    <style name="textview_for_value">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:layout_marginTop">@dimen/textview_margin_top</item>
+    </style>
 </resources>

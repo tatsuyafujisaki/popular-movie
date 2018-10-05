@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.data.Movie;
-import com.example.android.popularmovie.databinding.GridItemBinding;
+import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,7 +25,7 @@ final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(GridItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(MovieRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -43,9 +43,9 @@ final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        final GridItemBinding binding;
+        final MovieRecyclerviewItemBinding binding;
 
-        ViewHolder(GridItemBinding binding) {
+        ViewHolder(MovieRecyclerviewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);

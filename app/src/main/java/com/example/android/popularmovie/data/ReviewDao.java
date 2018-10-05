@@ -11,8 +11,8 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface ReviewDao {
-    @Query("SELECT * FROM review")
-    LiveData<List<Review>> load();
+    @Query("SELECT * FROM review WHERE movie_id = :movieId")
+    LiveData<List<Review>> load(int movieId);
 
     @Insert(onConflict = REPLACE)
     void save(List<Review> reviews);
