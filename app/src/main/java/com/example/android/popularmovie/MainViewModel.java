@@ -21,7 +21,7 @@ public class MainViewModel extends ViewModel {
     private MovieType lastUpdatedMovieType;
     private LocalDateTime lastUpdate;
 
-    @Inject
+   @Inject
     public MainViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
