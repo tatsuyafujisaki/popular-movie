@@ -43,23 +43,38 @@ public class DetailFragment extends Fragment {
     private Movie movie;
     private ArrayList<Review> reviews;
 
+    @BindingAdapter("android:src")
+    public static void setStringToImageView(ImageView imageView, String path) {
+        Picasso.get().load(path).into(imageView);
+    }
+
+    @BindingAdapter("android:text")
+    public static void setDoubleToTextView(TextView textView, Double d) {
+        textView.setText(String.valueOf(d));
+    }
+
+    @BindingAdapter("android:text")
+    public static void setLocalDateToTextView(TextView textView, LocalDate date) {
+        textView.setText(date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDetailBinding.inflate(inflater, container, false);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        AndroidSupportInjection.inject(this);
 
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        AndroidSupportInjection.inject(this);
 
         setMovie(savedInstanceState);
         setReviews(savedInstanceState);
 
-        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         activity.setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(Objects.requireNonNull(movie).originalTitle);
@@ -98,12 +113,12 @@ public class DetailFragment extends Fragment {
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableReviewsKey)) {
             reviews = savedInstanceState.getParcelableArrayList(parcelableReviewsKey);
             binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
-        } else{
+        } else {
             ApiResponse<LiveData<List<Review>>> response = detailViewModel.getReviews(movie.id);
 
             if (response.isSuccessful) {
                 response.data.observe(this, reviews -> {
-                    if(!reviews.isEmpty()) {
+                    if (!reviews.isEmpty()) {
                         this.reviews = (ArrayList<Review>) reviews;
                         binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
                     }
@@ -119,20 +134,5 @@ public class DetailFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @BindingAdapter("android:src")
-    public static void setStringToImageView(ImageView imageView, String path) {
-        Picasso.get().load(path).into(imageView);
-    }
-
-    @BindingAdapter("android:text")
-    public static void setDoubleToTextView(TextView textView, Double d) {
-        textView.setText(String.valueOf(d));
-    }
-
-    @BindingAdapter("android:text")
-    public static void setLocalDateToTextView(TextView textView, LocalDate date) {
-        textView.setText(date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
     }
 }
