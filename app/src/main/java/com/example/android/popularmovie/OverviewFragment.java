@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.data.Review;
-import com.example.android.popularmovie.databinding.FragmentTabBinding;
+import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
 import com.example.android.popularmovie.utils.ApiResponse;
 
 import java.time.LocalDate;
@@ -28,14 +28,14 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
-public class TabFragment extends Fragment {
+public class OverviewFragment extends Fragment {
     private final String parcelableMovieKey = "movie";
     private final String parcelableReviewsKey = "reviews";
 
     @Inject
     DetailViewModel detailViewModel;
 
-    private FragmentTabBinding binding;
+    private FragmentOverviewBinding binding;
 
     private Movie movie;
     private ArrayList<Review> reviews;
@@ -58,7 +58,7 @@ public class TabFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentTabBinding.inflate(inflater, container, false);
+        binding = FragmentOverviewBinding.inflate(inflater, container, false);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return binding.getRoot();
     }

@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList("Info", "Trailers", "Reviews"),
-                Arrays.asList(new TabFragment(), new TabFragment(), new TabFragment())));
+                Arrays.asList(new OverviewFragment(), new OverviewFragment(), new OverviewFragment())));
 
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 

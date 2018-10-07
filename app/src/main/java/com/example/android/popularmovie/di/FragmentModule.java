@@ -1,6 +1,6 @@
 package com.example.android.popularmovie.di;
 
-import com.example.android.popularmovie.TabFragment;
+import com.example.android.popularmovie.OverviewFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -8,5 +8,5 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract TabFragment contributeTabFragment();
+    abstract OverviewFragment contributeTabFragment();
 }
