@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.example.android.popularmovie.DetailActivity;
 import com.example.android.popularmovie.MainActivity;
-import com.example.android.popularmovie.MainViewModel;
+import com.example.android.popularmovie.MovieViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,7 +22,7 @@ abstract class ActivityModule {
     abstract DetailActivity contributeDetailActivity();
 
     @Provides
-    static ViewModel provideViewModel(FragmentActivity activity, Class<MainViewModel> modelClass, ViewModelProvider.Factory factory) {
+    static ViewModel provideViewModel(FragmentActivity activity, Class<MovieViewModel> modelClass, ViewModelProvider.Factory factory) {
         return ViewModelProviders.of(activity, factory).get(modelClass);
     }
 }

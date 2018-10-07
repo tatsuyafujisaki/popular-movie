@@ -21,7 +21,7 @@ import dagger.android.AndroidInjection;
 
 public class DetailActivity extends AppCompatActivity {
     @Inject
-    DetailViewModel detailViewModel;
+    MovieViewModel movieViewModel;
 
     private final String parcelableMovieKey = "movie";
 
@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList("Info", "Trailers", "Reviews"),
-                Arrays.asList(new OverviewFragment(), new OverviewFragment(), new OverviewFragment())));
+                Arrays.asList(new OverviewFragment(), new OverviewFragment(), new ReviewFragment())));
 
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 

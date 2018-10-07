@@ -3,7 +3,7 @@
     <dimen name="detail_backdrop_height">600dp</dimen>
     <dimen name="card_margin">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="linearlayout_padding_top">24dp</dimen>
+    <dimen name="tab_content_padding_top">24dp</dimen>
     <dimen name="textview_margin_top">8dp</dimen>
     <dimen name="textview_margin_vertical">8dp</dimen>
 </resources>

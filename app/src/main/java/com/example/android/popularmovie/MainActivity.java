@@ -29,7 +29,7 @@ public final class MainActivity extends AppCompatActivity implements MovieAdapte
     private ArrayList<Movie> movies;
 
     @Inject
-    MainViewModel mainViewModel;
+    MovieViewModel movieViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public final class MainActivity extends AppCompatActivity implements MovieAdapte
             movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
         } else if (Network.isNetworkAvailable(this)) {
-            populateMovies(mainViewModel.getPopularMovies());
+            populateMovies(movieViewModel.getPopularMovies());
         } else {
             showToast(getString(R.string.network_unavailable_error));
         }
@@ -59,10 +59,10 @@ public final class MainActivity extends AppCompatActivity implements MovieAdapte
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.order_by_most_popular:
-                populateMovies(mainViewModel.getPopularMovies());
+                populateMovies(movieViewModel.getPopularMovies());
                 break;
             case R.id.order_by_highest_rated:
-                populateMovies(mainViewModel.getTopRatedMovies());
+                populateMovies(movieViewModel.getTopRatedMovies());
                 break;
         }
 
