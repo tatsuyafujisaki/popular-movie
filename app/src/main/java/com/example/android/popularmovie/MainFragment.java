@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 public final class MainFragment extends Fragment implements MovieAdapter.ClickListener {
-    private final String parcelableArrayListKey = getClass().getSimpleName();
+    private final String parcelableMoviesKey = "movies";
     private FragmentMainBinding binding;
     private ArrayList<Movie> movies;
 
@@ -48,8 +48,8 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
         super.onActivityCreated(savedInstanceState);
         AndroidSupportInjection.inject(this);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableArrayListKey)) {
-            movies = savedInstanceState.getParcelableArrayList(parcelableArrayListKey);
+        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMoviesKey)) {
+            movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
             binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
             setHasOptionsMenu(true);
         } else if (Network.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
@@ -62,8 +62,9 @@ public final class MainFragment extends Fragment implements MovieAdapter.ClickLi
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        // movies can be null when the app starts when the network is unavailable, then the device rotates.
         if (movies != null) {
-            outState.putParcelableArrayList(parcelableArrayListKey, movies);
+            outState.putParcelableArrayList(parcelableMoviesKey, movies);
         }
         super.onSaveInstanceState(outState);
     }

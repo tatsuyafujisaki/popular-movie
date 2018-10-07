@@ -18,7 +18,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         childColumns = "movie_id",
         onDelete = CASCADE,
         onUpdate = CASCADE),
-        indices = { @Index("movie_id") })
+        indices = {@Index("movie_id")})
 public final class Review implements Parcelable {
     @PrimaryKey
     @NonNull
@@ -31,14 +31,14 @@ public final class Review implements Parcelable {
     @ColumnInfo(name = "movie_id")
     public int movieId;
 
-    public Review(){
+    public Review() {
     }
 
     private Review(Parcel parcel) {
         id = Objects.requireNonNull(parcel.readString());
         author = parcel.readString();
         content = parcel.readString();
-        url  = parcel.readString();
+        url = parcel.readString();
     }
 
     @Override

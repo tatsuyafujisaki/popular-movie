@@ -4,15 +4,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-    private final List<String> titles = new ArrayList<>();
-    private final List<Fragment> fragments = new ArrayList<>();
+    private final List<String> titles;
+    private final List<Fragment> fragments;
 
-    MyFragmentPagerAdapter(FragmentManager fragmentManager) {
+    MyFragmentPagerAdapter(FragmentManager fragmentManager, List<String> titles, List<Fragment> fragments) {
         super(fragmentManager);
+        this.titles = titles;
+        this.fragments = fragments;
     }
 
     @Override
@@ -28,10 +29,5 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return titles.get(position);
-    }
-
-    void addFragment(String title, Fragment fragment) {
-        titles.add(title);
-        fragments.add(fragment);
     }
 }

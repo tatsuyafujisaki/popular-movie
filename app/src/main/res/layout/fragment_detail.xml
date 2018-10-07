@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
+                android:background="?attr/colorAccent"
                 app:expandedTitleMarginBottom="70dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="@{movie.originalTitle}">
@@ -39,14 +40,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_marginBottom="50dp"
-                    android:padding="0dp" />
+                    android:padding="0dp"
+                    app:titleTextColor="#FFFFFF" />
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="bottom"
-                    app:tabIndicatorColor="@color/colorAccent" />
+                    app:tabIndicatorColor="?attr/colorAccent" />
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -63,7 +65,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@android:drawable/btn_star_big_off"
-            app:backgroundTint="@color/colorAccent"
+            app:backgroundTint="?attr/colorAccent"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="bottom|end" />
     </android.support.design.widget.CoordinatorLayout>

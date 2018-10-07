@@ -15,7 +15,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         childColumns = "movie_id",
         onDelete = CASCADE,
         onUpdate = CASCADE),
-        indices = { @Index("movie_id") })
+        indices = {@Index("movie_id")})
 public final class Trailer implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -28,7 +28,7 @@ public final class Trailer implements Parcelable {
     @ColumnInfo(name = "movie_id")
     public int movieId;
 
-    public Trailer(){
+    Trailer() {
     }
 
     private Trailer(Parcel parcel) {

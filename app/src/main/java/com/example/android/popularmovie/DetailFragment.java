@@ -16,6 +16,7 @@ import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.databinding.FragmentDetailBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -41,12 +42,15 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDetailBinding.inflate(inflater, container, false);
 
-        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
-        adapter.addFragment("Information", new TabFragment());
-        adapter.addFragment("Trailers", new TabFragment());
-        adapter.addFragment("Reviews", new TabFragment());
-        binding.viewPager.setAdapter(adapter);
+        binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(),
+                Arrays.asList("Info", "Trailers", "Reviews"),
+                Arrays.asList(new TabFragment(), new TabFragment(), new TabFragment())));
+
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+
+        Objects.requireNonNull(binding.tabLayout.getTabAt(0)).setIcon(R.drawable.ic_home);
+        Objects.requireNonNull(binding.tabLayout.getTabAt(1)).setIcon(R.drawable.ic_movie);
+        Objects.requireNonNull(binding.tabLayout.getTabAt(2)).setIcon(R.drawable.ic_thumb_up);
 
         return binding.getRoot();
     }
