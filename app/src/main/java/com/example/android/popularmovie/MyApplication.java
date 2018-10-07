@@ -2,6 +2,7 @@ package com.example.android.popularmovie;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.Fragment;
 
 import com.example.android.popularmovie.di.DaggerApplicationComponent;
 
@@ -10,10 +11,14 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
-public class MyApplication extends Application implements HasActivityInjector {
+public class MyApplication extends Application implements HasActivityInjector, HasSupportFragmentInjector {
     @Inject
-    DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+    DispatchingAndroidInjector<Activity> activityInjector;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentInjector;
 
     @Override
     public void onCreate() {
@@ -23,6 +28,11 @@ public class MyApplication extends Application implements HasActivityInjector {
 
     @Override
     public AndroidInjector<Activity> activityInjector() {
-        return dispatchingActivityInjector;
+        return activityInjector;
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentInjector;
     }
 }

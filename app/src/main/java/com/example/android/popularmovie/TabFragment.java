@@ -1,6 +1,7 @@
 package com.example.android.popularmovie;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,6 +51,12 @@ public class TabFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentTabBinding.inflate(inflater, container, false);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -59,7 +66,6 @@ public class TabFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        AndroidSupportInjection.inject(this);
 
         setMovie(savedInstanceState);
         setReviews(savedInstanceState);

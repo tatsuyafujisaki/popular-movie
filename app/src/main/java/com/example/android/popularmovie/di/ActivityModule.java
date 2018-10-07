@@ -15,10 +15,10 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module
 abstract class ActivityModule {
-    @ContributesAndroidInjector(modules = FragmentModule.class)
+    @ContributesAndroidInjector
     abstract MainActivity contributeMainActivity();
 
-    @ContributesAndroidInjector(modules = FragmentModule.class)
+    @ContributesAndroidInjector
     abstract DetailActivity contributeDetailActivity();
 
     @Provides

@@ -12,7 +12,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
-@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, ActivityModule.class})
+@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, ActivityModule.class, FragmentModule.class})
 public interface ApplicationComponent extends AndroidInjector<MyApplication> {
     @Component.Builder
     interface Builder {

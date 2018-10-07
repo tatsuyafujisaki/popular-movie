@@ -1,29 +1,102 @@
 package com.example.android.popularmovie;
 
+import android.arch.lifecycle.LiveData;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.example.android.popularmovie.data.Movie;
+import com.example.android.popularmovie.databinding.ActivityMainBinding;
+import com.example.android.popularmovie.utils.ApiResponse;
+import com.example.android.popularmovie.utils.Network;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 
-public final class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public final class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListener {
+    private final String parcelableMoviesKey = "movies";
+    private ActivityMainBinding binding;
+    private ArrayList<Movie> movies;
+
     @Inject
-    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+    MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         AndroidInjection.inject(this);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_column_count)));
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMoviesKey)) {
+            movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
+            binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
+        } else if (Network.isNetworkAvailable(this)) {
+            populateMovies(mainViewModel.getPopularMovies());
+        } else {
+            showToast(getString(R.string.network_unavailable_error));
+        }
     }
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentDispatchingAndroidInjector;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.order_by_most_popular:
+                populateMovies(mainViewModel.getPopularMovies());
+                break;
+            case R.id.order_by_highest_rated:
+                populateMovies(mainViewModel.getTopRatedMovies());
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        // movies can be null when the app starts when the network is unavailable, then the device rotates.
+        if (movies != null) {
+            outState.putParcelableArrayList(parcelableMoviesKey, movies);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onClick(int index) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra(getString(R.string.intent_extra_key), movies.get(index));
+        startActivity(intent);
+    }
+
+    private void populateMovies(ApiResponse<LiveData<List<Movie>>> response) {
+        if (response.isSuccessful) {
+            response.data.observe(this, movies -> {
+                this.movies = (ArrayList<Movie>) movies;
+                binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
+            });
+        } else {
+            showToast(response.errorMessage);
+        }
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }
