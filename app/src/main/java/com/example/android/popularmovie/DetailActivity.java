@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.example.android.popularmovie.adapter.MyFragmentPagerAdapter;
 import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.squareup.picasso.Picasso;

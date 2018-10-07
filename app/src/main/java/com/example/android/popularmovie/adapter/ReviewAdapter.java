@@ -1,19 +1,20 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.data.Review;
 import com.example.android.popularmovie.databinding.ReviewRecyclerviewItemBinding;
 
 import java.util.List;
 
-final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
+public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
     private final List<Review> reviews;
 
-    ReviewAdapter(List<Review> reviews) {
+    public ReviewAdapter(List<Review> reviews) {
         this.reviews = reviews;
     }
 

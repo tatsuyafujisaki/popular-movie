@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.android.popularmovie.adapter.MovieAdapter;
 import com.example.android.popularmovie.data.Movie;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;
 import com.example.android.popularmovie.utils.ApiResponse;

@@ -1,4 +1,4 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +10,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private final List<String> titles;
     private final List<Fragment> fragments;
 
-    MyFragmentPagerAdapter(FragmentManager fragmentManager, List<String> titles, List<Fragment> fragments) {
+    public MyFragmentPagerAdapter(FragmentManager fragmentManager, List<String> titles, List<Fragment> fragments) {
         super(fragmentManager);
         this.titles = titles;
         this.fragments = fragments;

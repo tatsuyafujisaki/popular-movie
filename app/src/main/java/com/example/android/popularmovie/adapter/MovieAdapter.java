@@ -1,4 +1,4 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +13,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private final List<Movie> movies;
     private final ClickListener clickListener;
 
-    MovieAdapter(List<Movie> movies, ClickListener clickListener) {
+    public MovieAdapter(List<Movie> movies, ClickListener clickListener) {
         this.movies = movies;
         this.clickListener = clickListener;
     }
@@ -38,7 +38,7 @@ final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
         return movies.size();
     }
 
-    interface ClickListener {
+    public interface ClickListener {
         void onClick(int index);
     }
 
