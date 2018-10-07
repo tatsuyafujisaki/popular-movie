@@ -1,7 +1,6 @@
 package com.example.android.popularmovie;
 
 import android.arch.lifecycle.LiveData;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,7 +23,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
-public final class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListener {
+public final class MainActivity extends AppCompatActivity {
     private final String parcelableMoviesKey = "movies";
     private ActivityMainBinding binding;
     private ArrayList<Movie> movies;
@@ -42,7 +41,7 @@ public final class MainActivity extends AppCompatActivity implements MovieAdapte
 
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMoviesKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
-            binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
+            binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
         } else if (Network.isNetworkAvailable(this)) {
             populateMovies(movieViewModel.getPopularMovies());
         } else {
@@ -79,18 +78,11 @@ public final class MainActivity extends AppCompatActivity implements MovieAdapte
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onClick(int index) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(getString(R.string.intent_extra_key), movies.get(index));
-        startActivity(intent);
-    }
-
     private void populateMovies(ApiResponse<LiveData<List<Movie>>> response) {
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
                 this.movies = (ArrayList<Movie>) movies;
-                binding.recyclerView.setAdapter(new MovieAdapter(movies, this));
+                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
             });
         } else {
             showToast(response.errorMessage);
