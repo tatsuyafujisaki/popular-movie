@@ -1,6 +1,6 @@
 package com.example.android.popularmovie.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +18,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private final Activity activity;
+    private final Context context;
     private final List<Movie> movies;
 
-    public MovieAdapter(Activity activity, List<Movie> movies) {
-        this.activity = activity;
+    public MovieAdapter(Context context, List<Movie> movies) {
+        this.context = context;
         this.movies = movies;
     }
 
@@ -53,9 +53,9 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(activity, DetailActivity.class);
-            intent.putExtra(activity.getString(R.string.intent_extra_key), movies.get(getAdapterPosition()));
-            activity.startActivity(intent);
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(context.getString(R.string.intent_extra_key), movies.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
     }
 }
