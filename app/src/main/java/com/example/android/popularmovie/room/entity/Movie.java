@@ -33,8 +33,14 @@ public final class Movie implements Parcelable {
 
     public String overview;
 
+    @ColumnInfo(name = "is_popular")
     public boolean isPopular;
+
+    @ColumnInfo(name = "is_top_rated")
     public boolean isTopRated;
+
+    @ColumnInfo(name = "is_favorite")
+    public boolean isFavorite;
 
     public Movie(){
     }
@@ -48,6 +54,7 @@ public final class Movie implements Parcelable {
         overview = parcel.readString();
         isPopular = parcel.readInt() != 0;
         isTopRated = parcel.readInt() != 0;
+        isFavorite = parcel.readInt() != 0;
     }
 
     @Override
@@ -65,6 +72,7 @@ public final class Movie implements Parcelable {
         parcel.writeString(overview);
         parcel.writeInt(isPopular ? 1 : 0);
         parcel.writeInt(isTopRated ? 1 : 0);
+        parcel.writeInt(isFavorite ? 1 : 0);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

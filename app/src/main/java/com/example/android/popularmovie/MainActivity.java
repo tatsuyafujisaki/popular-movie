@@ -61,7 +61,7 @@ public final class MainActivity extends AppCompatActivity {
             case R.id.order_by_most_popular:
                 populateMovies(movieViewModel.getPopularMovies());
                 break;
-            case R.id.order_by_highest_rated:
+            case R.id.order_by_top_rated:
                 populateMovies(movieViewModel.getTopRatedMovies());
                 break;
         }

@@ -13,15 +13,33 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface MovieDao {
-    @Query("SELECT * FROM movie")
-    LiveData<List<Movie>> load();
+    @Query("SELECT * FROM movie WHERE is_popular = 1")
+    LiveData<List<Movie>> getPopularMovies();
 
-    @Query("UPDATE movie SET isPopular = 0")
-    void ClearPopularFlag();
+    @Query("SELECT * FROM movie WHERE is_top_rated = 1")
+    LiveData<List<Movie>> getTopRatedMovies();
 
-    @Query("UPDATE movie SET isTopRated = 0")
-    void ClearTopRatedFlag();
+    @Query("SELECT * FROM movie WHERE is_favorite = 1")
+    LiveData<List<Movie>> getFavoriteMovies();
+
+    @Query("SELECT id FROM movie WHERE is_popular = 1")
+    List<Integer> getPopularMovieIds();
+
+    @Query("SELECT id FROM movie WHERE is_top_rated = 1")
+    List<Integer> getTopRatedMovieIds();
+
+    @Query("SELECT id FROM movie WHERE is_favorite = 1")
+    List<Integer> getFavoriteMovieIds();
 
     @Insert(onConflict = REPLACE)
     void save(List<Movie> movies);
+
+    @Query("UPDATE movie SET is_popular = 0")
+    void clearPopularFlag();
+
+    @Query("UPDATE movie SET is_top_rated = 0")
+    void clearTopRatedFlag();
+
+    @Query("UPDATE movie SET is_favorite = 0")
+    void cClearFavoriteFlag();
 }

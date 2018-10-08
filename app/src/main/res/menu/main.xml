@@ -6,7 +6,7 @@
         android:title = "@string/order_by_most_popular"
         android:orderInCategory = "1" />
     <item
-        android:id = "@+id/order_by_highest_rated"
-        android:title = "@string/order_by_highest_rated"
+        android:id = "@+id/order_by_top_rated"
+        android:title = "@string/order_by_top_rated"
         android:orderInCategory = "2" />
 </menu>

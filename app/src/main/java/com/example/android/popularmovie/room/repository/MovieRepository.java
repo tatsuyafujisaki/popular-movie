@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -49,8 +50,6 @@ public class MovieRepository {
             return ApiResponse.success(cached.get(POPULAR));
         }
 
-        executor.execute(movieDao::ClearPopularFlag);
-
         errorMessage = null;
 
         if (hasExpired(POPULAR)) {
@@ -60,15 +59,23 @@ public class MovieRepository {
                     if (response.isSuccessful()) {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
-                        for (Movie movie : movies) {
-                            movie.posterPath = posterBaseUrl.concat(movie.posterPath);
-                            movie.isPopular = true;
-                            movie.isTopRated = false;
-                        }
+                        executor.execute(() -> {
+                            HashSet<Integer> topRatedMovieIds = new HashSet(movieDao.getTopRatedMovieIds());
+                            HashSet<Integer> favoriteMovieIds = new HashSet(movieDao.getFavoriteMovieIds());
 
-                        executor.execute(() -> movieDao.save(movies));
-                        cached.put(POPULAR, movieDao.load());
-                        lastCached.put(POPULAR, LocalDateTime.now());
+                            for (Movie movie : movies) {
+                                movie.posterPath = posterBaseUrl.concat(movie.posterPath);
+                                movie.isPopular = true;
+                                movie.isTopRated = topRatedMovieIds.contains(movie.id);
+                                movie.isFavorite = favoriteMovieIds.contains(movie.id);
+                            }
+
+                            movieDao.clearPopularFlag();
+                            movieDao.save(movies);
+
+                            cached.put(POPULAR, movieDao.getPopularMovies());
+                            lastCached.put(POPULAR, LocalDateTime.now());
+                        });
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -85,15 +92,13 @@ public class MovieRepository {
             });
         }
 
-        return errorMessage == null ? ApiResponse.success(movieDao.load()) : ApiResponse.failure(errorMessage);
+        return errorMessage == null ? ApiResponse.success(movieDao.getPopularMovies()) : ApiResponse.failure(errorMessage);
     }
 
     public ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
         if(cached.containsKey(TOP_RATED)) {
             return ApiResponse.success(cached.get(TOP_RATED));
         }
-
-        executor.execute(movieDao::ClearTopRatedFlag);
 
         errorMessage = null;
 
@@ -104,15 +109,24 @@ public class MovieRepository {
                     if (response.isSuccessful()) {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
-                        for (Movie movie : movies) {
-                            movie.posterPath = posterBaseUrl.concat(movie.posterPath);
-                            movie.isPopular = false;
-                            movie.isTopRated = true;
-                        }
 
-                        executor.execute(() -> movieDao.save(movies));
-                        cached.put(TOP_RATED, movieDao.load());
-                        lastCached.put(TOP_RATED, LocalDateTime.now());
+                        executor.execute(() -> {
+                            HashSet<Integer> popularRatedMovieIds = new HashSet(movieDao.getPopularMovieIds());
+                            HashSet<Integer> favoriteMovieIds = new HashSet(movieDao.getFavoriteMovieIds());
+
+                            for (Movie movie : movies) {
+                                movie.posterPath = posterBaseUrl.concat(movie.posterPath);
+                                movie.isPopular = popularRatedMovieIds.contains(movie.id);
+                                movie.isTopRated = true;
+                                movie.isFavorite = favoriteMovieIds.contains(movie.id);
+                            }
+
+                            movieDao.clearTopRatedFlag();
+                            movieDao.save(movies);
+
+                            cached.put(TOP_RATED, movieDao.getTopRatedMovies());
+                            lastCached.put(TOP_RATED, LocalDateTime.now());
+                        });
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -129,7 +143,7 @@ public class MovieRepository {
             });
         }
 
-        return errorMessage == null ? ApiResponse.success(movieDao.load()) : ApiResponse.failure(errorMessage);
+        return errorMessage == null ? ApiResponse.success(movieDao.getTopRatedMovies()) : ApiResponse.failure(errorMessage);
     }
 
     private boolean hasExpired(MovieType movieType) {
