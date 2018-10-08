@@ -88,7 +88,7 @@ public class ReviewFragment extends Fragment {
     private void setReviews(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableReviewsKey)) {
             reviews = savedInstanceState.getParcelableArrayList(parcelableReviewsKey);
-            binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
+            binding.recyclerView.setAdapter(new ReviewAdapter(getContext(), reviews));
         } else {
             ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(movie.id);
 
@@ -96,7 +96,7 @@ public class ReviewFragment extends Fragment {
                 response.data.observe(this, reviews -> {
                     if (!Objects.requireNonNull(reviews).isEmpty()) {
                         this.reviews = (ArrayList<Review>) reviews;
-                        binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
+                        binding.recyclerView.setAdapter(new ReviewAdapter(getContext(), reviews));
                     }
                 });
             }
