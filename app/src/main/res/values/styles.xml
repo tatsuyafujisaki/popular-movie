@@ -11,7 +11,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="cardview_linearlayout" parent="android:Widget">
+    <style name="linear_layout" parent="android:Widget"> <!-- TODO: Check what andorid:Widget is. -->
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">16dp</item>
@@ -21,7 +21,7 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="cardview">
+    <style name="card_view">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/card_margin</item>
@@ -31,6 +31,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
-        <item name="android:layout_marginTop">@dimen/textview_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/text_view_margin_top</item>
     </style>
 </resources>

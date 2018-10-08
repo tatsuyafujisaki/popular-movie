@@ -11,6 +11,9 @@ import com.example.android.popularmovie.data.MovieRepository;
 import com.example.android.popularmovie.data.Review;
 import com.example.android.popularmovie.data.ReviewDao;
 import com.example.android.popularmovie.data.ReviewRepository;
+import com.example.android.popularmovie.data.Trailer;
+import com.example.android.popularmovie.data.TrailerDao;
+import com.example.android.popularmovie.data.TrailerRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -49,6 +52,12 @@ class ApplicationModule {
 
     @Singleton
     @Provides
+    static TrailerDao provideTrailerDao(MovieDatabase movieDatabase) {
+        return movieDatabase.trailerDao();
+    }
+
+    @Singleton
+    @Provides
     static ReviewDao provideReviewDao(MovieDatabase movieDatabase) {
         return movieDatabase.reviewDao();
     }
@@ -68,6 +77,15 @@ class ApplicationModule {
     static Gson provideGsonWithMovieArrayAdapter(Context context, @Named("GsonWithLocalDateAdapter") Gson gson) {
         return new GsonBuilder()
                 .registerTypeAdapter(Movie[].class, (JsonDeserializer<Movie[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_results_element)), type))
+                .create();
+    }
+
+    @Singleton
+    @Provides
+    @Named("GsonWithTrailerArrayAdapter")
+    static Gson provideGsonWithTrailerArrayAdapter(Context context, @Named("GsonWithLocalDateAdapter") Gson gson) {
+        return new GsonBuilder()
+                .registerTypeAdapter(Trailer[].class, (JsonDeserializer<Trailer[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_results_element)), type))
                 .create();
     }
 
@@ -93,6 +111,17 @@ class ApplicationModule {
 
     @Singleton
     @Provides
+    @Named("TmdbServiceWithTrailerArrayAdapter")
+    static TmdbService provideTmdbServiceWithTrailerArrayAdapter(Context context, @Named("GsonWithTrailerArrayAdapter") Gson gson) {
+        return new Retrofit.Builder()
+                .baseUrl(context.getString(R.string.tmdb_base_url))
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+                .create(TmdbService.class);
+    }
+
+    @Singleton
+    @Provides
     @Named("TmdbServiceWithReviewArrayAdapter")
     static TmdbService provideTmdbServiceWithReviewArrayAdapter(Context context, @Named("GsonWithReviewArrayAdapter") Gson gson) {
         return new Retrofit.Builder()
@@ -106,6 +135,12 @@ class ApplicationModule {
     @Provides
     static MovieRepository provideMovieRepository(Context context, @Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService, MovieDatabase movieDatabase, Executor executor) {
         return new MovieRepository(tmdbService, movieDatabase, executor, context.getString(R.string.poster_base_url));
+    }
+
+    @Singleton
+    @Provides
+    static TrailerRepository provideTrailerRepository(@Named("TmdbServiceWithTrailerArrayAdapter") TmdbService tmdbService, TrailerDao trailerDao, Executor executor) {
+        return new TrailerRepository(tmdbService, trailerDao, executor);
     }
 
     @Singleton

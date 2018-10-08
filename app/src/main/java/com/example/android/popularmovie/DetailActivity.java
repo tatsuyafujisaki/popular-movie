@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
                               getString(R.string.trailers_tab_title),
                               getString(R.string.reviews_tab_title)),
                 Arrays.asList(new OverviewFragment(),
-                              new OverviewFragment(),
+                              new TrailerFragment(),
                               new ReviewFragment())));
 
         binding.tabLayout.setupWithViewPager(binding.viewPager);

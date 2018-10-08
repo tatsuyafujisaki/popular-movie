@@ -71,7 +71,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        // movies can be null when the app starts when the network is unavailable, then the device rotates.
+        // movies can be null if the network is unavailable, then the device rotates.
         if (movies != null) {
             outState.putParcelableArrayList(parcelableMoviesKey, movies);
         }

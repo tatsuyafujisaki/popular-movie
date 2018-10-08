@@ -20,9 +20,9 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/tab_content_padding_top">
 
-            <android.support.v7.widget.CardView style="@style/cardview">
+            <android.support.v7.widget.CardView style="@style/card_view">
 
-                <LinearLayout style="@style/cardview_linearlayout">
+                <LinearLayout style="@style/linear_layout">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -35,9 +35,9 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView style="@style/cardview">
+            <android.support.v7.widget.CardView style="@style/card_view">
 
-                <LinearLayout style="@style/cardview_linearlayout">
+                <LinearLayout style="@style/linear_layout">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -50,9 +50,9 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView style="@style/cardview">
+            <android.support.v7.widget.CardView style="@style/card_view">
 
-                <LinearLayout style="@style/cardview_linearlayout">
+                <LinearLayout style="@style/linear_layout">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -65,9 +65,9 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView style="@style/cardview">
+            <android.support.v7.widget.CardView style="@style/card_view">
 
-                <LinearLayout style="@style/cardview_linearlayout">
+                <LinearLayout style="@style/linear_layout">
 
                     <TextView
                         android:layout_width="match_parent"
