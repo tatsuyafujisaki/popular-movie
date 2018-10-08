@@ -17,18 +17,18 @@ import com.example.android.popularmovie.databinding.ReviewRecyclerviewItemBindin
 import java.util.List;
 
 public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
-    private final Context context;
+    private Context context;
     private final List<Review> reviews;
 
-    public ReviewAdapter(Context context, List<Review> reviews) {
-        this.context = context;
+    public ReviewAdapter(List<Review> reviews) {
         this.reviews = reviews;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(ReviewRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        context = parent.getContext();
+        return new ViewHolder(ReviewRecyclerviewItemBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
@@ -38,12 +38,12 @@ public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.View
         holder.binding.reviewLabelTextView.setText(holder.itemView.getResources().getString(R.string.review_label, position + 1, review.author));
         holder.binding.reviewContentTextView.setText(review.content);
         holder.binding.reviewUrlTextView.setText(review.url);
-        holder.itemView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(review.url)));
-            }
-        });
+//        holder.itemView.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(review.url)));
+//            }
+//        });
     }
 
     @Override

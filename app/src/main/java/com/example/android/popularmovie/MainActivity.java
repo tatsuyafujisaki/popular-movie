@@ -41,7 +41,7 @@ public final class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMoviesKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
-            binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+            binding.recyclerView.setAdapter(new MovieAdapter(movies));
         } else if (Network.isNetworkAvailable(this)) {
             populateMovies(movieViewModel.getPopularMovies());
         } else {
@@ -82,7 +82,7 @@ public final class MainActivity extends AppCompatActivity {
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
                 this.movies = (ArrayList<Movie>) movies;
-                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+                binding.recyclerView.setAdapter(new MovieAdapter(movies));
             });
         } else {
             showToast(response.errorMessage);

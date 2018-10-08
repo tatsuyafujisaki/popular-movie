@@ -18,18 +18,18 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private final Context context;
+    private Context context;
     private final List<Movie> movies;
 
-    public MovieAdapter(Context context, List<Movie> movies) {
-        this.context = context;
+    public MovieAdapter(List<Movie> movies) {
         this.movies = movies;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(MovieRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        context = parent.getContext();
+        return new ViewHolder(MovieRecyclerviewItemBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
