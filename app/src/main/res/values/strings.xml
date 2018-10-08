@@ -11,6 +11,9 @@
     <string name="tmdb_base_url">http://api.themoviedb.org</string>
     <string name="intent_extra_key">movie</string>
     <string name="tmdb_json_results_element">results</string>
-    <string name="network_unavailable_error">Network unavailable</string>
+    <string name="info_tab_title">Info</string>
+    <string name="trailers_tab_title">Trailers</string>
+    <string name="reviews_tab_title">Reviews</string>
     <string name="review_label">Review #%1$d by %2$s</string>
+    <string name="network_unavailable_error">Network unavailable</string>
 </resources>

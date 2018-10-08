@@ -38,8 +38,12 @@ public class DetailActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList("Info", "Trailers", "Reviews"),
-                Arrays.asList(new OverviewFragment(), new OverviewFragment(), new ReviewFragment())));
+                Arrays.asList(getString(R.string.info_tab_title),
+                              getString(R.string.trailers_tab_title),
+                              getString(R.string.reviews_tab_title)),
+                Arrays.asList(new OverviewFragment(),
+                              new OverviewFragment(),
+                              new ReviewFragment())));
 
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
@@ -51,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(movie.originalTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
