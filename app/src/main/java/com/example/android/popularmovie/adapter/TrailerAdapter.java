@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.R;
-import com.example.android.popularmovie.data.Trailer;
+import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.databinding.TrailerRecyclerviewItemBinding;
 
 import java.util.List;

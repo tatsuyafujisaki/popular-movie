@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.data;
+package com.example.android.popularmovie.room.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

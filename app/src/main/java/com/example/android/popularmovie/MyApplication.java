@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
-import com.example.android.popularmovie.di.DaggerApplicationComponent;
+import com.example.android.popularmovie.dagger.DaggerApplicationComponent;
 
 import javax.inject.Inject;
 

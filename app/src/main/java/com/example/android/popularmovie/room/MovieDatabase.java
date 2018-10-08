@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.data;
+package com.example.android.popularmovie.room;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -6,6 +6,12 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.example.android.popularmovie.room.dao.MovieDao;
+import com.example.android.popularmovie.room.dao.ReviewDao;
+import com.example.android.popularmovie.room.dao.TrailerDao;
+import com.example.android.popularmovie.room.entity.Movie;
+import com.example.android.popularmovie.room.entity.Review;
+import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.utils.LocalDateConverter;
 
 @Database(entities = {Movie.class, Review.class, Trailer.class}, version = 1, exportSchema = false)

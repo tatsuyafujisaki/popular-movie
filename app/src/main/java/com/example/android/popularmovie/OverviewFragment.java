@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.popularmovie.data.Movie;
+import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
 
 import java.time.LocalDate;

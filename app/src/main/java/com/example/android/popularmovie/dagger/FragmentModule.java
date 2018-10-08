@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.di;
+package com.example.android.popularmovie.dagger;
 
 import com.example.android.popularmovie.OverviewFragment;
 import com.example.android.popularmovie.ReviewFragment;

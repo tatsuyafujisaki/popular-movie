@@ -3,12 +3,12 @@ package com.example.android.popularmovie;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.android.popularmovie.data.Movie;
-import com.example.android.popularmovie.data.MovieRepository;
-import com.example.android.popularmovie.data.Review;
-import com.example.android.popularmovie.data.ReviewRepository;
-import com.example.android.popularmovie.data.Trailer;
-import com.example.android.popularmovie.data.TrailerRepository;
+import com.example.android.popularmovie.room.entity.Movie;
+import com.example.android.popularmovie.room.repository.MovieRepository;
+import com.example.android.popularmovie.room.entity.Review;
+import com.example.android.popularmovie.room.repository.ReviewRepository;
+import com.example.android.popularmovie.room.entity.Trailer;
+import com.example.android.popularmovie.room.repository.TrailerRepository;
 import com.example.android.popularmovie.utils.ApiResponse;
 
 import java.util.List;

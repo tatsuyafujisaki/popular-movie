@@ -1,19 +1,20 @@
-package com.example.android.popularmovie.di;
+package com.example.android.popularmovie.dagger;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.TmdbService;
-import com.example.android.popularmovie.data.Movie;
-import com.example.android.popularmovie.data.MovieDatabase;
-import com.example.android.popularmovie.data.MovieRepository;
-import com.example.android.popularmovie.data.Review;
-import com.example.android.popularmovie.data.ReviewDao;
-import com.example.android.popularmovie.data.ReviewRepository;
-import com.example.android.popularmovie.data.Trailer;
-import com.example.android.popularmovie.data.TrailerDao;
-import com.example.android.popularmovie.data.TrailerRepository;
+import com.example.android.popularmovie.room.entity.Movie;
+import com.example.android.popularmovie.room.dao.MovieDao;
+import com.example.android.popularmovie.room.MovieDatabase;
+import com.example.android.popularmovie.room.repository.MovieRepository;
+import com.example.android.popularmovie.room.entity.Review;
+import com.example.android.popularmovie.room.dao.ReviewDao;
+import com.example.android.popularmovie.room.repository.ReviewRepository;
+import com.example.android.popularmovie.room.entity.Trailer;
+import com.example.android.popularmovie.room.dao.TrailerDao;
+import com.example.android.popularmovie.room.repository.TrailerRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -48,6 +49,12 @@ class ApplicationModule {
     @Provides
     static MovieDatabase provideMovieDatabase(Context context) {
         return MovieDatabase.getInstance(context);
+    }
+
+    @Singleton
+    @Provides
+    static MovieDao provideMovieDao(MovieDatabase movieDatabase) {
+        return movieDatabase.movieDao();
     }
 
     @Singleton
@@ -133,8 +140,8 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    static MovieRepository provideMovieRepository(Context context, @Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService, MovieDatabase movieDatabase, Executor executor) {
-        return new MovieRepository(tmdbService, movieDatabase, executor, context.getString(R.string.poster_base_url));
+    static MovieRepository provideMovieRepository(Context context, @Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService, MovieDao movieDao, Executor executor) {
+        return new MovieRepository(tmdbService, movieDao, executor, context.getString(R.string.poster_base_url));
     }
 
     @Singleton

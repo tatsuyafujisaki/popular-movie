@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.data;
+package com.example.android.popularmovie.room.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -41,7 +41,7 @@ public final class Trailer implements Parcelable {
     @ColumnInfo(name = "movie_id")
     public int movieId;
 
-    Trailer() {
+    public Trailer() {
     }
 
     private Trailer(Parcel parcel) {

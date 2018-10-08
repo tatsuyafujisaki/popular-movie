@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.data;
+package com.example.android.popularmovie.room.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
@@ -6,6 +6,8 @@ import android.util.SparseArray;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
+import com.example.android.popularmovie.room.dao.TrailerDao;
+import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Converter;
 
@@ -28,7 +30,7 @@ public class TrailerRepository {
     private final SparseArray<LiveData<List<Trailer>>> cached = new SparseArray<>();
     private final SparseArray<LocalDateTime> lastCached = new SparseArray<>();
 
-    public TrailerRepository(TmdbService tmdbService, TrailerDao TrailerDao, Executor executor) {
+    public TrailerRepository(TmdbService tmdbService, com.example.android.popularmovie.room.dao.TrailerDao TrailerDao, Executor executor) {
         this.tmdbService = tmdbService;
         this.TrailerDao = TrailerDao;
         this.executor = executor;

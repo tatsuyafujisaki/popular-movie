@@ -6,7 +6,7 @@
 
         <variable
             name="movie"
-            type="com.example.android.popularmovie.data.Movie" />
+            type="com.example.android.popularmovie.room.entity.Movie" />
     </data>
 
     <android.support.v4.widget.NestedScrollView

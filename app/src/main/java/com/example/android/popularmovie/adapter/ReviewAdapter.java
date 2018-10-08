@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.R;
-import com.example.android.popularmovie.data.Review;
+import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.databinding.ReviewRecyclerviewItemBinding;
 
 import java.util.List;

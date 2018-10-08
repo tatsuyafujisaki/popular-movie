@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.data;
+package com.example.android.popularmovie.room.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -33,6 +33,9 @@ public final class Movie implements Parcelable {
 
     public String overview;
 
+    public boolean isPopular;
+    public boolean isTopRated;
+
     public Movie(){
     }
 
@@ -43,6 +46,8 @@ public final class Movie implements Parcelable {
         releaseDate = (LocalDate) parcel.readSerializable();
         voteAverage = parcel.readDouble();
         overview = parcel.readString();
+        isPopular = parcel.readInt() != 0;
+        isTopRated = parcel.readInt() != 0;
     }
 
     @Override
@@ -58,6 +63,8 @@ public final class Movie implements Parcelable {
         parcel.writeSerializable(releaseDate);
         parcel.writeDouble(voteAverage);
         parcel.writeString(overview);
+        parcel.writeInt(isPopular ? 1 : 0);
+        parcel.writeInt(isTopRated ? 1 : 0);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

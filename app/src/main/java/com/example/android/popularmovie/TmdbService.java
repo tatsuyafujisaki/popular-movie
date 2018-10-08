@@ -1,8 +1,8 @@
 package com.example.android.popularmovie;
 
-import com.example.android.popularmovie.data.Movie;
-import com.example.android.popularmovie.data.Review;
-import com.example.android.popularmovie.data.Trailer;
+import com.example.android.popularmovie.room.entity.Movie;
+import com.example.android.popularmovie.room.entity.Review;
+import com.example.android.popularmovie.room.entity.Trailer;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

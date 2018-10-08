@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.di;
+package com.example.android.popularmovie.dagger;
 
 import android.arch.lifecycle.ViewModel;
 

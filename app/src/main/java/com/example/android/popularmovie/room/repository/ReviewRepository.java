@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.data;
+package com.example.android.popularmovie.room.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
@@ -6,6 +6,8 @@ import android.util.SparseArray;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
+import com.example.android.popularmovie.room.dao.ReviewDao;
+import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Converter;
 
