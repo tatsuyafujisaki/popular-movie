@@ -31,15 +31,12 @@ public interface MovieDao {
     @Query("SELECT id FROM movie WHERE is_favorite = 1")
     List<Integer> getFavoriteMovieIds();
 
+    @Query("DELETE FROM movie WHERE is_top_rated = 0 AND is_favorite = 0")
+    void deleteIfNotTopRatedNorFavorite();
+
+    @Query("DELETE FROM movie WHERE is_popular = 0 AND is_favorite = 0")
+    void deleteIfNotPopularNorFavorite();
+    
     @Insert(onConflict = REPLACE)
     void save(List<Movie> movies);
-
-    @Query("UPDATE movie SET is_popular = 0")
-    void clearPopularFlag();
-
-    @Query("UPDATE movie SET is_top_rated = 0")
-    void clearTopRatedFlag();
-
-    @Query("UPDATE movie SET is_favorite = 0")
-    void cClearFavoriteFlag();
 }

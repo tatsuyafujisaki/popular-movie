@@ -70,7 +70,8 @@ public class MovieRepository {
                                 movie.isFavorite = favoriteMovieIds.contains(movie.id);
                             }
 
-                            movieDao.clearPopularFlag();
+                            // Delete previously popular movies unless they are top rated or favorite
+                            movieDao.deleteIfNotTopRatedNorFavorite();
                             movieDao.save(movies);
 
                             cached.put(POPULAR, movieDao.getPopularMovies());
@@ -121,7 +122,8 @@ public class MovieRepository {
                                 movie.isFavorite = favoriteMovieIds.contains(movie.id);
                             }
 
-                            movieDao.clearTopRatedFlag();
+                            // Delete previously top rated movies unless they are popular or favorite
+                            movieDao.deleteIfNotPopularNorFavorite();
                             movieDao.save(movies);
 
                             cached.put(TOP_RATED, movieDao.getTopRatedMovies());
