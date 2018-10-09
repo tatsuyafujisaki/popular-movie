@@ -11,6 +11,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- This is to prevent the problem that the title of the collapsed toolbar is too small in landscape -->
+    <style name="collapsed_title_text_appearance">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="linear_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

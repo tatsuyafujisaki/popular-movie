@@ -23,8 +23,9 @@
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
                 android:background="?attr/colorAccent"
-                app:expandedTitleMarginBottom="@dimen/collapsing_toolbar_title_margin_bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:expandedTitleMarginBottom="@dimen/collapsing_toolbar_title_margin_bottom"
+                app:collapsedTitleTextAppearance="@style/collapsed_title_text_appearance"
                 app:title="@{movie.originalTitle}">
 
                 <ImageView
@@ -62,8 +63,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/btn_star_big_off"
-            app:backgroundTint="?attr/colorAccent"
+            android:src="@drawable/ic_favorite_border"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="bottom|end" />
     </android.support.design.widget.CoordinatorLayout>
