@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
                 android:background="?attr/colorAccent"
-                app:expandedTitleMarginBottom="70dp"
+                app:expandedTitleMarginBottom="@dimen/collapsing_toolbar_title_margin_bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="@{movie.originalTitle}">
 
