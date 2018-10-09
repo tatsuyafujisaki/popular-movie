@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,9 @@ import dagger.android.AndroidInjection;
 public class DetailActivity extends AppCompatActivity {
     @Inject
     MovieViewModel movieViewModel;
+
+    @Inject
+    Executor executor;
 
     private final String parcelableMovieKey = "movie";
 
@@ -58,6 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(view -> {
             movie.isFavorite = !movie.isFavorite;
             setFabImage((FloatingActionButton) view);
+            executor.execute(() -> movieViewModel.updateFavorite(movie.id, movie.isFavorite));
         });
 
         setSupportActionBar(binding.toolbar);

@@ -64,6 +64,8 @@ public final class MainActivity extends AppCompatActivity {
             case R.id.order_by_top_rated:
                 populateMovies(movieViewModel.getTopRatedMovies());
                 break;
+            case R.id.favorite:
+                populateMovies(movieViewModel.getFavoriteMovies());
         }
 
         return super.onOptionsItemSelected(item);

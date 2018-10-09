@@ -23,11 +23,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.FAVORITE;
 import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.POPULAR;
 import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.TOP_RATED;
 
 public class MovieRepository {
-    public enum MovieType { POPULAR, TOP_RATED }
+    public enum MovieType {POPULAR, TOP_RATED, FAVORITE}
 
     private final TmdbService tmdbService;
     private final MovieDao movieDao;
@@ -46,7 +47,7 @@ public class MovieRepository {
     }
 
     public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
-        if(cached.containsKey(POPULAR)) {
+        if (cached.containsKey(POPULAR)) {
             return ApiResponse.success(cached.get(POPULAR));
         }
 
@@ -97,7 +98,7 @@ public class MovieRepository {
     }
 
     public ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
-        if(cached.containsKey(TOP_RATED)) {
+        if (cached.containsKey(TOP_RATED)) {
             return ApiResponse.success(cached.get(TOP_RATED));
         }
 
@@ -109,7 +110,6 @@ public class MovieRepository {
                 public void onResponse(@NonNull Call<Movie[]> call, @NonNull Response<Movie[]> response) {
                     if (response.isSuccessful()) {
                         List<Movie> movies = Converter.toArrayList(response.body());
-
 
                         executor.execute(() -> {
                             HashSet<Integer> popularRatedMovieIds = new HashSet(movieDao.getPopularMovieIds());
@@ -146,6 +146,20 @@ public class MovieRepository {
         }
 
         return errorMessage == null ? ApiResponse.success(movieDao.getTopRatedMovies()) : ApiResponse.failure(errorMessage);
+    }
+
+    public ApiResponse<LiveData<List<Movie>>> getFavoriteMovies() {
+        if (cached.containsKey(FAVORITE)) {
+            return ApiResponse.success(cached.get(FAVORITE));
+        }
+
+        cached.put(FAVORITE, movieDao.getFavoriteMovies());
+
+        return ApiResponse.success(movieDao.getFavoriteMovies());
+    }
+
+    public void updateFavorite(int movieId, boolean isFavorite) {
+        movieDao.updateFavorite(movieId, isFavorite);
     }
 
     private boolean hasExpired(MovieType movieType) {
