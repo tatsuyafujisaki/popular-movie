@@ -4,13 +4,14 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.android.popularmovie.adapter.MyFragmentPagerAdapter;
-import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
+import com.example.android.popularmovie.room.entity.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
@@ -39,11 +40,11 @@ public class DetailActivity extends AppCompatActivity {
 
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(getString(R.string.info_tab_title),
-                              getString(R.string.trailers_tab_title),
-                              getString(R.string.reviews_tab_title)),
+                        getString(R.string.trailers_tab_title),
+                        getString(R.string.reviews_tab_title)),
                 Arrays.asList(new OverviewFragment(),
-                              new TrailerFragment(),
-                              new ReviewFragment())));
+                        new TrailerFragment(),
+                        new ReviewFragment())));
 
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
@@ -52,6 +53,12 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(binding.tabLayout.getTabAt(2)).setIcon(R.drawable.ic_thumb_up);
 
         setMovie(savedInstanceState);
+        setFabImage(binding.fab);
+
+        binding.fab.setOnClickListener(view -> {
+            movie.isFavorite = !movie.isFavorite;
+            setFabImage((FloatingActionButton) view);
+        });
 
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(movie.originalTitle);
@@ -93,5 +100,9 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         binding.setMovie(movie);
+    }
+
+    private void setFabImage(FloatingActionButton fab) {
+        fab.setImageResource(movie.isFavorite ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
     }
 }
