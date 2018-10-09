@@ -36,7 +36,7 @@ public interface MovieDao {
 
     @Query("DELETE FROM movie WHERE is_popular = 0 AND is_favorite = 0")
     void deleteIfNotPopularNorFavorite();
-    
+
     @Insert(onConflict = REPLACE)
     void save(List<Movie> movies);
 }
