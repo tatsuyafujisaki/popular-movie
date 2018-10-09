@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="grid_item_height">300dp</dimen>
     <dimen name="detail_backdrop_height">600dp</dimen>
     <dimen name="toolbar_margin_bottom">55dp</dimen>
     <dimen name="card_margin">8dp</dimen>
