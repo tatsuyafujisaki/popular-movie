@@ -60,12 +60,13 @@ public final class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.most_popular:
                 populateMovies(movieViewModel.getPopularMovies());
-                break;
+                return true;
             case R.id.top_rated:
                 populateMovies(movieViewModel.getTopRatedMovies());
-                break;
+                return true;
             case R.id.favorite:
                 populateMovies(movieViewModel.getFavoriteMovies());
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
