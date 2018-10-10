@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Popular Movie</string>
     <string name="most_popular">Most popular</string>
-    <string name="top_rated">Top rated</string>
-    <string name="favorite">Favorite</string>
+    <string name="top_rated">Highest rated</string>
+    <string name="favorites">Favorites</string>
     <string name="poster_description">Movie poster</string>
     <string name="movie_play_image_description">Movie play image</string>
     <string name="original_title_label">Original title</string>

@@ -51,29 +51,6 @@ public final class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//
-//        if (Network.isNetworkAvailable(this)) {
-//            switch (lastLoadedMovieType) {
-//                case POPULAR:
-//                    populateMovies(movieViewModel.getPopularMovies());
-//                    break;
-//                case TOP_RATED:
-//                    populateMovies(movieViewModel.getTopRatedMovies());
-//                    break;
-//                case FAVORITE:
-//                    populateMovies(movieViewModel.getFavoriteMovies());
-//                    break;
-//                default:
-//                    throw new IllegalArgumentException();
-//            }
-//        } else {
-//            showToast(getString(R.string.network_unavailable_error));
-//        }
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -91,7 +68,7 @@ public final class MainActivity extends AppCompatActivity {
                 populateMovies(movieViewModel.getTopRatedMovies());
                 lastLoadedMovieType = MovieType.TOP_RATED;
                 return true;
-            case R.id.favorite:
+            case R.id.favorites:
                 populateMovies(movieViewModel.getFavoriteMovies());
                 lastLoadedMovieType = MovieType.FAVORITE;
                 return true;
