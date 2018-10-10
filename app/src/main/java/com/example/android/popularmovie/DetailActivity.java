@@ -30,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
     @Inject
     Executor executor;
 
-    private final String parcelableMovieKey = "movie";
+    private final String bundleKey = "IS_FAVORITE";
 
     private ActivityDetailBinding binding;
     private Movie movie;
@@ -58,7 +58,14 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(binding.tabLayout.getTabAt(1)).setIcon(R.drawable.ic_movie);
         Objects.requireNonNull(binding.tabLayout.getTabAt(2)).setIcon(R.drawable.ic_thumb_up);
 
-        setMovie(savedInstanceState);
+        movie = Objects.requireNonNull(getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key));
+
+        if(savedInstanceState != null && savedInstanceState.containsKey(bundleKey)) {
+            movie.isFavorite = savedInstanceState.getBoolean(bundleKey);
+        }
+
+        originalFavorite = Objects.requireNonNull(movie).isFavorite;
+        binding.setMovie(movie);
         setFabImage(binding.fab);
 
         binding.fab.setOnClickListener(view -> {
@@ -70,12 +77,6 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(movie.originalTitle);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(parcelableMovieKey, movie);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -95,28 +96,15 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(bundleKey, movie.isFavorite);
+        super.onSaveInstanceState(outState);
+    }
+
     @BindingAdapter("android:src")
     public static void setStringToImageView(ImageView imageView, String path) {
         Picasso.get().load(path).into(imageView);
-    }
-
-    private void setMovie(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMovieKey)) {
-            movie = savedInstanceState.getParcelable(parcelableMovieKey);
-        } else {
-            Bundle bundle = Objects.requireNonNull(getIntent().getExtras());
-            String intentExtraKey = getString(R.string.intent_movie_key);
-
-            if (!bundle.containsKey(intentExtraKey)) {
-                throw new IllegalStateException();
-            }
-
-            movie = Objects.requireNonNull(bundle).getParcelable(intentExtraKey);
-        }
-
-        originalFavorite = Objects.requireNonNull(movie).isFavorite;
-
-        binding.setMovie(movie);
     }
 
     private void setFabImage(FloatingActionButton fab) {

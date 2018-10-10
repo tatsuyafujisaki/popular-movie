@@ -44,7 +44,20 @@ public class MovieRepository {
         this.posterBaseUrl = posterBaseUrl;
     }
 
-    public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
+    public ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
+        switch(movieType) {
+            case POPULAR:
+                return getPopularMovies();
+            case TOP_RATED:
+                return getTopRatedMovies();
+            case FAVORITE:
+                return getFavoriteMovies();
+            default:
+                throw new IllegalArgumentException(movieType.toString());
+        }
+    }
+
+    private ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
         errorMessage = null;
 
         if (hasExpired(POPULAR)) {
@@ -90,7 +103,7 @@ public class MovieRepository {
         return errorMessage == null ? ApiResponse.success(movieDao.getPopularMovies()) : ApiResponse.failure(errorMessage);
     }
 
-    public ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
+    private ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
         errorMessage = null;
 
         if (hasExpired(TOP_RATED)) {
@@ -136,7 +149,7 @@ public class MovieRepository {
         return errorMessage == null ? ApiResponse.success(movieDao.getTopRatedMovies()) : ApiResponse.failure(errorMessage);
     }
 
-    public ApiResponse<LiveData<List<Movie>>> getFavoriteMovies() {
+    private ApiResponse<LiveData<List<Movie>>> getFavoriteMovies() {
         return ApiResponse.success(movieDao.getFavoriteMovies());
     }
 

@@ -26,10 +26,10 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 
 public final class MainActivity extends AppCompatActivity {
-    private final String parcelableMoviesKey = "movies";
+    private final String bundleKey = "MOVIE_TYPE";
     private ActivityMainBinding binding;
     private ArrayList<Movie> movies;
-    private MovieType lastLoadedMovieType;
+    private MovieType movieType;
 
     @Inject
     MovieViewModel movieViewModel;
@@ -42,13 +42,14 @@ public final class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_column_count)));
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMoviesKey)) {
-            movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
-            binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
-        } else {
-            populateMovies(movieViewModel.getPopularMovies());
-            lastLoadedMovieType = MovieType.POPULAR;
+        if (!Network.isNetworkAvailable(this)) {
+            showToast(getString(R.string.network_unavailable_error));
+            return;
         }
+
+        movieType = savedInstanceState != null && savedInstanceState.containsKey(bundleKey) ? (MovieType) savedInstanceState.get(bundleKey) : MovieType.POPULAR;
+
+        setMovies(movieViewModel.getMovies(movieType));
     }
 
     @Override
@@ -61,27 +62,34 @@ public final class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.most_popular:
-                populateMovies(movieViewModel.getPopularMovies());
-                lastLoadedMovieType = MovieType.POPULAR;
-                return true;
+                movieType = MovieType.POPULAR;
+                break;
             case R.id.top_rated:
-                populateMovies(movieViewModel.getTopRatedMovies());
-                lastLoadedMovieType = MovieType.TOP_RATED;
-                return true;
+                movieType = MovieType.TOP_RATED;
+                break;
             case R.id.favorites:
-                populateMovies(movieViewModel.getFavoriteMovies());
-                lastLoadedMovieType = MovieType.FAVORITE;
-                return true;
+                movieType = MovieType.FAVORITE;
+                break;
+            default:
+                throw new IllegalArgumentException(String.valueOf(item.getItemId()));
         }
 
-        return super.onOptionsItemSelected(item);
+        setMovies(movieViewModel.getMovies(movieType));
+
+        return true;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // movies is null if the device rotates in DetailActivity.
+        if (movies == null) {
+            return;
+        }
+
+        // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
         if (requestCode == getResources().getInteger(R.integer.get_movie_id_if_favorite_toggled) && resultCode == RESULT_OK) {
             int movieId = data.getIntExtra(getString(R.string.intent_movie_id_key), -1);
-            if (lastLoadedMovieType == MovieType.FAVORITE) {
+            if (movieType == MovieType.FAVORITE) {
                 movies.removeIf(movie -> movie.id == movieId);
                 binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
             } else {
@@ -92,19 +100,11 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        // movies can be null if the network is unavailable, then the device rotates.
-        if (movies != null) {
-            outState.putParcelableArrayList(parcelableMoviesKey, movies);
-        }
+        outState.putSerializable(bundleKey, movieType);
         super.onSaveInstanceState(outState);
     }
 
-    private void populateMovies(ApiResponse<LiveData<List<Movie>>> response) {
-        if (!Network.isNetworkAvailable(this)) {
-            showToast(getString(R.string.network_unavailable_error));
-            return;
-        }
-
+    private void setMovies(ApiResponse<LiveData<List<Movie>>> response) {
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
                 this.movies = (ArrayList<Movie>) movies;

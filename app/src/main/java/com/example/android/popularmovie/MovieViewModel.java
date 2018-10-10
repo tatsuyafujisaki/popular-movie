@@ -11,14 +11,20 @@ import com.example.android.popularmovie.room.repository.ReviewRepository;
 import com.example.android.popularmovie.room.repository.TrailerRepository;
 import com.example.android.popularmovie.utils.ApiResponse;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
+import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.FAVORITE;
 
 public class MovieViewModel extends ViewModel {
     private final MovieRepository movieRepository;
     private final TrailerRepository trailerRepository;
     private final ReviewRepository reviewRepository;
+
+    private HashMap<MovieType, LiveData<List<Movie>>> movies = new HashMap<>();
 
     @Inject
     public MovieViewModel(MovieRepository movieRepository, TrailerRepository trailerRepository, ReviewRepository reviewRepository) {
@@ -27,16 +33,18 @@ public class MovieViewModel extends ViewModel {
         this.reviewRepository = reviewRepository;
     }
 
-    ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
-        return movieRepository.getPopularMovies();
-    }
+    ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
+        if(movies.containsKey(movieType)) {
+            return ApiResponse.success(movies.get(movieType));
+        }
 
-    ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
-        return movieRepository.getTopRatedMovies();
-    }
+        ApiResponse<LiveData<List<Movie>>> apiResponse = movieRepository.getMovies(movieType);
 
-    ApiResponse<LiveData<List<Movie>>> getFavoriteMovies() {
-        return movieRepository.getFavoriteMovies();
+        if(apiResponse.isSuccessful && movieType != FAVORITE) {
+            movies.put(movieType, apiResponse.data);
+        }
+
+        return apiResponse;
     }
 
     ApiResponse<LiveData<List<Trailer>>> getTrailers(int movieId) {
