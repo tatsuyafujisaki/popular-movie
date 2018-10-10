@@ -8,7 +8,8 @@
     <string name="vote_average_label">Vote average</string>
     <string name="release_date_label">Release date</string>
     <string name="overview_label">Overview</string>
-    <string name="intent_extra_key">movie</string>
+    <string name="intent_movie_key">MOVIE</string>
+    <string name="intent_movie_id_key">MOVIE_ID</string>
     <string name="info_tab_title">Info</string>
     <string name="trailers_tab_title">Trailers</string>
     <string name="reviews_tab_title">Reviews</string>

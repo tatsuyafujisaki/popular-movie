@@ -14,7 +14,7 @@ import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.utils.LocalDateConverter;
 
-@Database(entities = {Movie.class, Review.class, Trailer.class}, version = 1, exportSchema = false)
+@Database(entities = {Movie.class, Trailer.class, Review.class}, version = 1, exportSchema = false)
 @TypeConverters(LocalDateConverter.class)
 public abstract class MovieDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "Movies.db";
@@ -33,6 +33,8 @@ public abstract class MovieDatabase extends RoomDatabase {
     }
 
     public abstract MovieDao movieDao();
+
     public abstract TrailerDao trailerDao();
+
     public abstract ReviewDao reviewDao();
 }

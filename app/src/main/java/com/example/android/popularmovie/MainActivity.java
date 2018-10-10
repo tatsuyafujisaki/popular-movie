@@ -1,6 +1,7 @@
 package com.example.android.popularmovie;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,8 +12,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.android.popularmovie.adapter.MovieAdapter;
-import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;
+import com.example.android.popularmovie.room.entity.Movie;
+import com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Network;
 
@@ -27,6 +29,7 @@ public final class MainActivity extends AppCompatActivity {
     private final String parcelableMoviesKey = "movies";
     private ActivityMainBinding binding;
     private ArrayList<Movie> movies;
+    private MovieType lastLoadedMovieType;
 
     @Inject
     MovieViewModel movieViewModel;
@@ -41,13 +44,35 @@ public final class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMoviesKey)) {
             movies = savedInstanceState.getParcelableArrayList(parcelableMoviesKey);
-            binding.recyclerView.setAdapter(new MovieAdapter(movies));
-        } else if (Network.isNetworkAvailable(this)) {
-            populateMovies(movieViewModel.getPopularMovies());
+            binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
         } else {
-            showToast(getString(R.string.network_unavailable_error));
+            populateMovies(movieViewModel.getPopularMovies());
+            lastLoadedMovieType = MovieType.POPULAR;
         }
     }
+
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//
+//        if (Network.isNetworkAvailable(this)) {
+//            switch (lastLoadedMovieType) {
+//                case POPULAR:
+//                    populateMovies(movieViewModel.getPopularMovies());
+//                    break;
+//                case TOP_RATED:
+//                    populateMovies(movieViewModel.getTopRatedMovies());
+//                    break;
+//                case FAVORITE:
+//                    populateMovies(movieViewModel.getFavoriteMovies());
+//                    break;
+//                default:
+//                    throw new IllegalArgumentException();
+//            }
+//        } else {
+//            showToast(getString(R.string.network_unavailable_error));
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,16 +85,32 @@ public final class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.most_popular:
                 populateMovies(movieViewModel.getPopularMovies());
+                lastLoadedMovieType = MovieType.POPULAR;
                 return true;
             case R.id.top_rated:
                 populateMovies(movieViewModel.getTopRatedMovies());
+                lastLoadedMovieType = MovieType.TOP_RATED;
                 return true;
             case R.id.favorite:
                 populateMovies(movieViewModel.getFavoriteMovies());
+                lastLoadedMovieType = MovieType.FAVORITE;
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == getResources().getInteger(R.integer.get_movie_id_if_favorite_toggled) && resultCode == RESULT_OK) {
+            int movieId = data.getIntExtra(getString(R.string.intent_movie_id_key), -1);
+            if (lastLoadedMovieType == MovieType.FAVORITE) {
+                movies.removeIf(movie -> movie.id == movieId);
+                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+            } else {
+                movies.stream().filter(movie -> movie.id == movieId).findFirst().ifPresent(movie -> movie.isFavorite = !movie.isFavorite);
+            }
+        }
     }
 
     @Override
@@ -82,10 +123,16 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     private void populateMovies(ApiResponse<LiveData<List<Movie>>> response) {
+        if (!Network.isNetworkAvailable(this)) {
+            showToast(getString(R.string.network_unavailable_error));
+            return;
+        }
+
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
                 this.movies = (ArrayList<Movie>) movies;
-                binding.recyclerView.setAdapter(new MovieAdapter(movies));
+                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+                response.data.removeObservers(this);
             });
         } else {
             showToast(response.errorMessage);

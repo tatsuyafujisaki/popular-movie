@@ -23,7 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.FAVORITE;
 import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.POPULAR;
 import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.TOP_RATED;
 
@@ -36,7 +35,6 @@ public class MovieRepository {
     private final String posterBaseUrl;
     private String errorMessage;
 
-    private final HashMap<MovieType, LiveData<List<Movie>>> cached = new HashMap<>();
     private final HashMap<MovieType, LocalDateTime> lastUpdates = new HashMap<>();
 
     public MovieRepository(TmdbService tmdbService, MovieDao movieDao, Executor executor, String posterBaseUrl) {
@@ -47,10 +45,6 @@ public class MovieRepository {
     }
 
     public ApiResponse<LiveData<List<Movie>>> getPopularMovies() {
-        if (cached.containsKey(POPULAR)) {
-            return ApiResponse.success(cached.get(POPULAR));
-        }
-
         errorMessage = null;
 
         if (hasExpired(POPULAR)) {
@@ -75,7 +69,6 @@ public class MovieRepository {
                             movieDao.deleteIfNotTopRatedNorFavorite();
                             movieDao.save(movies);
 
-                            cached.put(POPULAR, movieDao.getPopularMovies());
                             lastUpdates.put(POPULAR, LocalDateTime.now());
                         });
                     } else {
@@ -98,10 +91,6 @@ public class MovieRepository {
     }
 
     public ApiResponse<LiveData<List<Movie>>> getTopRatedMovies() {
-        if (cached.containsKey(TOP_RATED)) {
-            return ApiResponse.success(cached.get(TOP_RATED));
-        }
-
         errorMessage = null;
 
         if (hasExpired(TOP_RATED)) {
@@ -126,7 +115,6 @@ public class MovieRepository {
                             movieDao.deleteIfNotPopularNorFavorite();
                             movieDao.save(movies);
 
-                            cached.put(TOP_RATED, movieDao.getTopRatedMovies());
                             lastUpdates.put(TOP_RATED, LocalDateTime.now());
                         });
                     } else {
@@ -149,13 +137,7 @@ public class MovieRepository {
     }
 
     public ApiResponse<LiveData<List<Movie>>> getFavoriteMovies() {
-        if (cached.containsKey(FAVORITE)) {
-            return ApiResponse.success(cached.get(FAVORITE));
-        }
-
-        cached.put(FAVORITE, movieDao.getFavoriteMovies());
-
-        return ApiResponse.success(cached.get(FAVORITE));
+        return ApiResponse.success(movieDao.getFavoriteMovies());
     }
 
     public void updateFavorite(int movieId, boolean isFavorite) {

@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
+import com.example.android.popularmovie.room.entity.Movie;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -67,7 +67,7 @@ public class OverviewFragment extends Fragment {
         } else {
             Bundle bundle = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras());
 
-            String extraKey = getString(R.string.intent_extra_key);
+            String extraKey = getString(R.string.intent_movie_key);
 
             if (!bundle.containsKey(extraKey)) {
                 throw new IllegalStateException();

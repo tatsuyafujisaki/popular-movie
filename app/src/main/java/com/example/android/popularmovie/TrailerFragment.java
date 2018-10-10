@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.adapter.TrailerAdapter;
+import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.utils.ApiResponse;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TrailerFragment extends Fragment {
     @Inject
     MovieViewModel movieViewModel;
 
-    FragmentTrailerBinding binding;
+    private FragmentTrailerBinding binding;
 
     private Movie movie;
     private ArrayList<Trailer> trailers;
@@ -75,7 +75,7 @@ public class TrailerFragment extends Fragment {
         } else {
             Bundle bundle = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras());
 
-            String extraKey = getString(R.string.intent_extra_key);
+            String extraKey = getString(R.string.intent_movie_key);
 
             if (!bundle.containsKey(extraKey)) {
                 throw new IllegalStateException();

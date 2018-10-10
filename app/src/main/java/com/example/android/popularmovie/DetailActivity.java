@@ -1,5 +1,6 @@
 package com.example.android.popularmovie;
 
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private ActivityDetailBinding binding;
     private Movie movie;
+    private boolean originalFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +80,14 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
+                if (originalFavorite != movie.isFavorite) {
+                    Intent intent = new Intent();
+                    intent.putExtra(getString(R.string.intent_movie_id_key), movie.id);
+                    setResult(RESULT_OK, intent);
+                }
+
                 onBackPressed();
                 return true;
         }
@@ -97,7 +105,7 @@ public class DetailActivity extends AppCompatActivity {
             movie = savedInstanceState.getParcelable(parcelableMovieKey);
         } else {
             Bundle bundle = Objects.requireNonNull(getIntent().getExtras());
-            String intentExtraKey = getString(R.string.intent_extra_key);
+            String intentExtraKey = getString(R.string.intent_movie_key);
 
             if (!bundle.containsKey(intentExtraKey)) {
                 throw new IllegalStateException();
@@ -105,6 +113,8 @@ public class DetailActivity extends AppCompatActivity {
 
             movie = Objects.requireNonNull(bundle).getParcelable(intentExtraKey);
         }
+
+        originalFavorite = movie.isFavorite;
 
         binding.setMovie(movie);
     }
