@@ -58,10 +58,10 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.order_by_most_popular:
+            case R.id.most_popular:
                 populateMovies(movieViewModel.getPopularMovies());
                 break;
-            case R.id.order_by_top_rated:
+            case R.id.top_rated:
                 populateMovies(movieViewModel.getTopRatedMovies());
                 break;
             case R.id.favorite:
