@@ -6,6 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/grid_item_height"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/poster_description"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/poster_description" />
 </layout>

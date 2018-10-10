@@ -10,5 +10,5 @@
     <dimen name="card_margin">8dp</dimen>
     <dimen name="tab_content_padding_top">24dp</dimen>
     <dimen name="text_view_margin_top">8dp</dimen>
-    <dimen name="text_view_margin_vertical">8dp</dimen>
+    <dimen name="text_view_margin_bottom">8dp</dimen>
 </resources>

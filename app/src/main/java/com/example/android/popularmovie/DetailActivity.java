@@ -114,7 +114,7 @@ public class DetailActivity extends AppCompatActivity {
             movie = Objects.requireNonNull(bundle).getParcelable(intentExtraKey);
         }
 
-        originalFavorite = movie.isFavorite;
+        originalFavorite = Objects.requireNonNull(movie).isFavorite;
 
         binding.setMovie(movie);
     }

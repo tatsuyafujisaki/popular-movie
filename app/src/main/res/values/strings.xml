@@ -4,6 +4,7 @@
     <string name="top_rated">Top rated</string>
     <string name="favorite">Favorite</string>
     <string name="poster_description">Movie poster</string>
+    <string name="movie_play_image_description">Movie play image</string>
     <string name="original_title_label">Original title</string>
     <string name="vote_average_label">Vote average</string>
     <string name="release_date_label">Release date</string>
@@ -18,6 +19,7 @@
     <string name="tmdb_json_results_element">results</string>
     <string name="poster_base_url">http://image.tmdb.org/t/p/w185</string>
     <string name="tmdb_base_url">http://api.themoviedb.org</string>
+    <string name="youtube_base_uri">vnd.youtube:</string>
     <string name="youtube_base_url">https://www.youtube.com/watch?v=</string>
     <string name="network_unavailable_error">Network unavailable</string>
 </resources>

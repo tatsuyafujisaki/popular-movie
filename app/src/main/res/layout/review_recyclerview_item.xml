@@ -11,7 +11,8 @@
                 android:id="@+id/review_content_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/text_view_margin_vertical"
+                android:layout_marginTop="@dimen/text_view_margin_top"
+                android:layout_marginBottom="@dimen/text_view_margin_bottom"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView

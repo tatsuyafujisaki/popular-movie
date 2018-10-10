@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <android.support.v7.widget.CardView style="@style/card_view">
-        <LinearLayout style="@style/linear_layout">
-            <TextView
-                android:id="@+id/trailer_label_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="0dp">
 
-            <TextView
-                android:id="@+id/trailer_info_text_view"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/text_view_margin_vertical" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_play_circle_filled"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/movie_play_image_description" />
 
-            <TextView
-                android:id="@+id/trailer_url_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"/>
+            <LinearLayout style="@style/linear_layout">
+                <TextView
+                    android:id="@+id/trailer_label_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                <TextView
+                    android:id="@+id/trailer_info_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_view_margin_top" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>
