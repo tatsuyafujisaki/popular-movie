@@ -27,8 +27,7 @@ public class TrailerRepository {
     private final TrailerDao TrailerDao;
     private final Executor executor;
     private String errorMessage;
-    private final SparseArray<LiveData<List<Trailer>>> cached = new SparseArray<>();
-    private final SparseArray<LocalDateTime> lastCached = new SparseArray<>();
+    private final SparseArray<LocalDateTime> lastUpdates = new SparseArray<>();
 
     public TrailerRepository(TmdbService tmdbService, com.example.android.popularmovie.room.dao.TrailerDao TrailerDao, Executor executor) {
         this.tmdbService = tmdbService;
@@ -37,10 +36,6 @@ public class TrailerRepository {
     }
 
     public ApiResponse<LiveData<List<Trailer>>> getTrailers(int movieId) {
-        if(cached.get(movieId) != null) {
-            return ApiResponse.success(cached.get(movieId));
-        }
-
         errorMessage = null;
 
         if (hasExpired(movieId)) {
@@ -54,8 +49,7 @@ public class TrailerRepository {
 
                         executor.execute(() -> TrailerDao.save(Trailers));
 
-                        cached.put(movieId, TrailerDao.load(movieId));
-                        lastCached.put(movieId, LocalDateTime.now());
+                        lastUpdates.put(movieId, LocalDateTime.now());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -78,7 +72,7 @@ public class TrailerRepository {
     private boolean hasExpired(int movieId) {
         int DAYS_TO_EXPIRE = 1;
 
-        LocalDateTime lastCachedTime = lastCached.get(movieId);
+        LocalDateTime lastCachedTime = lastUpdates.get(movieId);
 
         return lastCachedTime == null || DAYS_TO_EXPIRE < ChronoUnit.DAYS.between(lastCachedTime, LocalDateTime.now());
     }

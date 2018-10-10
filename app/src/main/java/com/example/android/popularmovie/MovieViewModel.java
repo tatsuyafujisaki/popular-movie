@@ -2,6 +2,7 @@ package com.example.android.popularmovie;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.SparseArray;
 
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
@@ -24,7 +25,9 @@ public class MovieViewModel extends ViewModel {
     private final TrailerRepository trailerRepository;
     private final ReviewRepository reviewRepository;
 
-    private HashMap<MovieType, LiveData<List<Movie>>> movies = new HashMap<>();
+    private final HashMap<MovieType, LiveData<List<Movie>>> movies = new HashMap<>();
+    private final SparseArray<LiveData<List<Trailer>>> trailers = new SparseArray<>();
+    private final SparseArray<LiveData<List<Review>>> reviews = new SparseArray<>();
 
     @Inject
     public MovieViewModel(MovieRepository movieRepository, TrailerRepository trailerRepository, ReviewRepository reviewRepository) {
@@ -40,6 +43,7 @@ public class MovieViewModel extends ViewModel {
 
         ApiResponse<LiveData<List<Movie>>> apiResponse = movieRepository.getMovies(movieType);
 
+        // Avoid caching favorite movies because you always want to know the up-to-date favorite flags in the Movie entity.
         if(apiResponse.isSuccessful && movieType != FAVORITE) {
             movies.put(movieType, apiResponse.data);
         }
@@ -48,11 +52,31 @@ public class MovieViewModel extends ViewModel {
     }
 
     ApiResponse<LiveData<List<Trailer>>> getTrailers(int movieId) {
-        return trailerRepository.getTrailers(movieId);
+        if(trailers.get(movieId) != null) {
+            return ApiResponse.success(trailers.get(movieId));
+        }
+
+        ApiResponse<LiveData<List<Trailer>>> apiResponse = trailerRepository.getTrailers(movieId);
+
+        if(apiResponse.isSuccessful) {
+            trailers.put(movieId, apiResponse.data);
+        }
+
+        return apiResponse;
     }
 
     ApiResponse<LiveData<List<Review>>> getReviews(int movieId) {
-        return reviewRepository.getReviews(movieId);
+        if(reviews.get(movieId) != null) {
+            return ApiResponse.success(reviews.get(movieId));
+        }
+
+        ApiResponse<LiveData<List<Review>>> apiResponse = reviewRepository.getReviews(movieId);
+
+        if(apiResponse.isSuccessful) {
+            reviews.put(movieId, apiResponse.data);
+        }
+
+        return apiResponse;
     }
 
     void updateFavorite(int movieId, boolean isFavorite) {

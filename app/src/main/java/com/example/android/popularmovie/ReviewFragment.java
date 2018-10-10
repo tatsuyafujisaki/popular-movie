@@ -17,7 +17,6 @@ import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.utils.ApiResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,16 +25,10 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 public class ReviewFragment extends Fragment {
-    private final String parcelableMovieKey = "movie";
-    private final String parcelableReviewsKey = "reviews";
-
     @Inject
     MovieViewModel movieViewModel;
 
     private FragmentReviewBinding binding;
-
-    private Movie movie;
-    private ArrayList<Review> reviews;
 
     @Override
     public void onAttach(Context context) {
@@ -54,52 +47,15 @@ public class ReviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setMovie(savedInstanceState);
-        setReviews(savedInstanceState);
-    }
+        Movie movie = Objects.requireNonNull(getActivity()).getIntent().getExtras().getParcelable(getString(R.string.intent_movie_key));
+        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(Objects.requireNonNull(movie).id);
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(parcelableMovieKey, movie);
-
-        if (reviews != null) {
-            outState.putParcelableArrayList(parcelableReviewsKey, reviews);
-        }
-
-        super.onSaveInstanceState(outState);
-    }
-
-    private void setMovie(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMovieKey)) {
-            movie = savedInstanceState.getParcelable(parcelableMovieKey);
-        } else {
-            Bundle bundle = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras());
-
-            String extraKey = getString(R.string.intent_movie_key);
-
-            if (!bundle.containsKey(extraKey)) {
-                throw new IllegalStateException();
-            }
-
-            movie = bundle.getParcelable(extraKey);
-        }
-    }
-
-    private void setReviews(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableReviewsKey)) {
-            reviews = savedInstanceState.getParcelableArrayList(parcelableReviewsKey);
-            binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
-        } else {
-            ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(movie.id);
-
-            if (response.isSuccessful) {
-                response.data.observe(this, reviews -> {
-                    if (!Objects.requireNonNull(reviews).isEmpty()) {
-                        this.reviews = (ArrayList<Review>) reviews;
-                        binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
-                    }
-                });
-            }
+        if (response.isSuccessful) {
+            response.data.observe(this, reviews -> {
+                if (!reviews.isEmpty()) {
+                    binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
+                }
+            });
         }
     }
 }

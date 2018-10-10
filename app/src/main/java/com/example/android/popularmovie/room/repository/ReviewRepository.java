@@ -27,8 +27,7 @@ public class ReviewRepository {
     private final ReviewDao reviewDao;
     private final Executor executor;
     private String errorMessage;
-    private final SparseArray<LiveData<List<Review>>> cached = new SparseArray<>();
-    private final SparseArray<LocalDateTime> lastCached = new SparseArray<>();
+    private final SparseArray<LocalDateTime> lastUpdates = new SparseArray<>();
 
     public ReviewRepository(TmdbService tmdbService, ReviewDao reviewDao, Executor executor) {
         this.tmdbService = tmdbService;
@@ -37,10 +36,6 @@ public class ReviewRepository {
     }
 
     public ApiResponse<LiveData<List<Review>>> getReviews(int movieId) {
-        if(cached.get(movieId) != null) {
-            return ApiResponse.success(cached.get(movieId));
-        }
-
         errorMessage = null;
 
         if (hasExpired(movieId)) {
@@ -54,8 +49,7 @@ public class ReviewRepository {
 
                         executor.execute(() -> reviewDao.save(reviews));
 
-                        cached.put(movieId, reviewDao.load(movieId));
-                        lastCached.put(movieId, LocalDateTime.now());
+                        lastUpdates.put(movieId, LocalDateTime.now());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -78,7 +72,7 @@ public class ReviewRepository {
     private boolean hasExpired(int movieId) {
         int MINUTES_TO_EXPIRE = 60;
 
-        LocalDateTime lastCachedTime = lastCached.get(movieId);
+        LocalDateTime lastCachedTime = lastUpdates.get(movieId);
 
         return lastCachedTime == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastCachedTime, LocalDateTime.now());
     }

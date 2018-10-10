@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
-import com.example.android.popularmovie.room.entity.Movie;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,11 +20,7 @@ import java.util.Objects;
 import dagger.android.support.AndroidSupportInjection;
 
 public class OverviewFragment extends Fragment {
-    private final String parcelableMovieKey = "movie";
-
     private FragmentOverviewBinding binding;
-
-    private Movie movie;
 
     @BindingAdapter("android:text")
     public static void setDoubleToTextView(TextView textView, Double d) {
@@ -52,30 +47,6 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setMovie(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(parcelableMovieKey, movie);
-        super.onSaveInstanceState(outState);
-    }
-
-    private void setMovie(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(parcelableMovieKey)) {
-            movie = savedInstanceState.getParcelable(parcelableMovieKey);
-        } else {
-            Bundle bundle = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras());
-
-            String extraKey = getString(R.string.intent_movie_key);
-
-            if (!bundle.containsKey(extraKey)) {
-                throw new IllegalStateException();
-            }
-
-            movie = bundle.getParcelable(extraKey);
-        }
-
-        binding.setMovie(movie);
+        binding.setMovie(Objects.requireNonNull(getActivity()).getIntent().getExtras().getParcelable(getString(R.string.intent_movie_key)));
     }
 }
