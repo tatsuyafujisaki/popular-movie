@@ -37,7 +37,7 @@ public class MovieRepository {
     private String errorMessage;
 
     private final HashMap<MovieType, LiveData<List<Movie>>> cached = new HashMap<>();
-    private final HashMap<MovieType, LocalDateTime> lastCached = new HashMap<>();
+    private final HashMap<MovieType, LocalDateTime> lastUpdates = new HashMap<>();
 
     public MovieRepository(TmdbService tmdbService, MovieDao movieDao, Executor executor, String posterBaseUrl) {
         this.tmdbService = tmdbService;
@@ -76,7 +76,7 @@ public class MovieRepository {
                             movieDao.save(movies);
 
                             cached.put(POPULAR, movieDao.getPopularMovies());
-                            lastCached.put(POPULAR, LocalDateTime.now());
+                            lastUpdates.put(POPULAR, LocalDateTime.now());
                         });
                     } else {
                         try {
@@ -127,7 +127,7 @@ public class MovieRepository {
                             movieDao.save(movies);
 
                             cached.put(TOP_RATED, movieDao.getTopRatedMovies());
-                            lastCached.put(TOP_RATED, LocalDateTime.now());
+                            lastUpdates.put(TOP_RATED, LocalDateTime.now());
                         });
                     } else {
                         try {
@@ -155,7 +155,7 @@ public class MovieRepository {
 
         cached.put(FAVORITE, movieDao.getFavoriteMovies());
 
-        return ApiResponse.success(movieDao.getFavoriteMovies());
+        return ApiResponse.success(cached.get(FAVORITE));
     }
 
     public void updateFavorite(int movieId, boolean isFavorite) {
@@ -164,6 +164,6 @@ public class MovieRepository {
 
     private boolean hasExpired(MovieType movieType) {
         int MINUTES_TO_EXPIRE = 60;
-        return !lastCached.containsKey(movieType) || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastCached.get(movieType), LocalDateTime.now());
+        return !lastUpdates.containsKey(movieType) || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdates.get(movieType), LocalDateTime.now());
     }
 }
