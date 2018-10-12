@@ -3,9 +3,8 @@
 
     <ImageView
         android:id="@+id/movie_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/grid_item_height"
+        style="@style/default_layout"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/poster_description" />
+        android:contentDescription="@string/poster_description"
+        android:scaleType="centerCrop" />
 </layout>

@@ -1,16 +1,14 @@
-<menu xmlns:android = "http://schemas.android.com/apk/res/android"
-    xmlns:tools = "http://schemas.android.com/tools"
-    tools:context = ".MainActivity">
+<menu xmlns:android = "http://schemas.android.com/apk/res/android">
     <item
         android:id = "@+id/most_popular"
-        android:title = "@string/most_popular"
+        android:title = "@string/most_popular_menu_item"
         android:orderInCategory = "1" />
     <item
         android:id = "@+id/top_rated"
-        android:title = "@string/top_rated"
+        android:title = "@string/top_rated_menu_item"
         android:orderInCategory = "2" />
     <item
         android:id = "@+id/favorites"
-        android:title = "@string/favorites"
+        android:title = "@string/favorites_menu_item"
         android:orderInCategory = "3" />
 </menu>

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="collapsing_toolbar_title_margin_bottom">70dp</dimen>
-    <dimen name="grid_item_height">300dp</dimen>
-    <dimen name="detail_backdrop_height">600dp</dimen>
+    <dimen name="app_bar_layout_height">600dp</dimen>
     <dimen name="toolbar_margin_bottom">55dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_border_width">0dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="card_margin">8dp</dimen>
-    <dimen name="tab_content_padding_top">24dp</dimen>
-    <dimen name="text_view_margin_top">8dp</dimen>
-    <dimen name="text_view_margin_bottom">8dp</dimen>
+    <dimen name="tab_description_padding_top">24dp</dimen>
+    <dimen name="overview_text_view_margin_top">8dp</dimen>
+    <dimen name="trailer_text_view_margin_top">8dp</dimen>
+    <dimen name="review_text_view_margin_top">8dp</dimen>
+    <dimen name="trailer_title_padding_start">16dp</dimen>
+    <dimen name="trailer_title_padding_end">0dp</dimen>
 </resources>

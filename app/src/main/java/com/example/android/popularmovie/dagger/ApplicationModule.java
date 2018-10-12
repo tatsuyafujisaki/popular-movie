@@ -141,7 +141,7 @@ class ApplicationModule {
                                                   @Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService,
                                                   MovieDao movieDao,
                                                   Executor executor) {
-        return new MovieRepository(tmdbService, movieDao, context.getString(R.string.poster_base_url), executor);
+        return new MovieRepository(tmdbService, movieDao, context.getString(R.string.tmdb_image_base_url), executor);
     }
 
     @Singleton

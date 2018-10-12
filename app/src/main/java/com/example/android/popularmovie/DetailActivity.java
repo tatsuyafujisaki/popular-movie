@@ -45,7 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(getString(R.string.info_tab_title),
+                Arrays.asList(getString(R.string.overview_tab_title),
                         getString(R.string.trailers_tab_title),
                         getString(R.string.reviews_tab_title)),
                 Arrays.asList(new OverviewFragment(),

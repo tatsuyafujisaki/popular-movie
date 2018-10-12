@@ -36,7 +36,7 @@ public final class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.Vi
         Trailer trailer = trailers.get(position);
 
         holder.binding.trailerLabelTextView.setText(trailer.name);
-        holder.binding.trailerInfoTextView.setText(context.getString(R.string.trailer_info, trailer.iso639, trailer.iso3166, trailer.size));
+        holder.binding.trailerInfoTextView.setText(context.getString(R.string.trailer_info_format, trailer.iso639, trailer.iso3166, trailer.size));
     }
 
     @Override

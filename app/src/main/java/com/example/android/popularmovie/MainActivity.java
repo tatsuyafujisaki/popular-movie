@@ -138,7 +138,7 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     private int columnCount() {
-        return Math.max(2, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.grid_column_width));
+        return Math.max(2, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.poster_grid_column_width));
     }
 
     private void showToast(String text) {

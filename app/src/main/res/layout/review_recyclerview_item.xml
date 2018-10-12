@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v7.widget.CardView style="@style/card_view">
-        <LinearLayout style="@style/linear_layout">
+
+    <android.support.v7.widget.CardView style="@style/default_card_view">
+
+        <LinearLayout style="@style/padded_vertical_linear_layout">
+
             <TextView
                 android:id="@+id/review_label_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                style="@style/default_layout" />
 
             <TextView
                 android:id="@+id/review_content_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/text_view_margin_top"
-                android:layout_marginBottom="@dimen/text_view_margin_bottom"
+                style="@style/default_layout"
+                android:layout_marginTop="@dimen/review_text_view_margin_top"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
                 android:id="@+id/review_url_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"/>
+                style="@style/default_layout"
+                android:layout_marginTop="@dimen/review_text_view_margin_top"
+                android:autoLink="web" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

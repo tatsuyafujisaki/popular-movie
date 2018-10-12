@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v7.widget.CardView style="@style/card_view">
+
+    <android.support.v7.widget.CardView style="@style/default_card_view">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="0dp">
+            style="@style/default_layout"
+            android:paddingStart="@dimen/trailer_title_padding_start"
+            android:paddingEnd="@dimen/trailer_title_padding_end">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_play_circle_filled"
+                style="@style/wrap_contents"
                 android:layout_gravity="center_vertical"
-                android:contentDescription="@string/movie_play_image_description" />
+                android:contentDescription="@string/play_image_description"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_play_circle_filled" />
 
-            <LinearLayout style="@style/linear_layout">
+            <LinearLayout style="@style/padded_vertical_linear_layout">
+
                 <TextView
                     android:id="@+id/trailer_label_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/default_layout"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
                 <TextView
                     android:id="@+id/trailer_info_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_view_margin_top" />
+                    style="@style/default_layout"
+                    android:layout_marginTop="@dimen/trailer_text_view_margin_top" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

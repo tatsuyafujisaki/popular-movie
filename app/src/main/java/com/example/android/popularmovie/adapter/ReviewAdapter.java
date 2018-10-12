@@ -31,7 +31,7 @@ public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Review review = reviews.get(position);
 
-        holder.binding.reviewLabelTextView.setText(context.getString(R.string.review_label, position + 1, review.author));
+        holder.binding.reviewLabelTextView.setText(context.getString(R.string.review_label_format, position + 1, review.author));
         holder.binding.reviewContentTextView.setText(review.content);
         holder.binding.reviewUrlTextView.setText(review.url);
     }
