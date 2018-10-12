@@ -80,9 +80,9 @@ public class MovieRepository {
                             // Delete previously popular movies unless they are top rated or favorite
                             movieDao.deleteIfNotTopRatedNorFavorite();
                             movieDao.save(movies);
-                        });
 
-                        lastUpdates.put(POPULAR, System.currentTimeMillis());
+                            lastUpdates.put(POPULAR, System.currentTimeMillis());
+                        });
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -112,21 +112,23 @@ public class MovieRepository {
                     if (response.isSuccessful()) {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
-                        HashSet<Integer> popularRatedMovieIds = new HashSet<>(movieDao.getPopularMovieIds());
-                        HashSet<Integer> favoriteMovieIds = new HashSet<>(movieDao.getFavoriteMovieIds());
+                        executor.execute(() -> {
+                            HashSet<Integer> popularRatedMovieIds = new HashSet<>(movieDao.getPopularMovieIds());
+                            HashSet<Integer> favoriteMovieIds = new HashSet<>(movieDao.getFavoriteMovieIds());
 
-                        for (Movie movie : movies) {
-                            movie.posterPath = posterBaseUrl.concat(movie.posterPath);
-                            movie.isPopular = popularRatedMovieIds.contains(movie.id);
-                            movie.isTopRated = true;
-                            movie.isFavorite = favoriteMovieIds.contains(movie.id);
-                        }
+                            for (Movie movie : movies) {
+                                movie.posterPath = posterBaseUrl.concat(movie.posterPath);
+                                movie.isPopular = popularRatedMovieIds.contains(movie.id);
+                                movie.isTopRated = true;
+                                movie.isFavorite = favoriteMovieIds.contains(movie.id);
+                            }
 
-                        // Delete previously top rated movies unless they are popular or favorite
-                        movieDao.deleteIfNotPopularNorFavorite();
-                        movieDao.save(movies);
+                            // Delete previously top rated movies unless they are popular or favorite
+                            movieDao.deleteIfNotPopularNorFavorite();
+                            movieDao.save(movies);
 
-                        lastUpdates.put(TOP_RATED, System.currentTimeMillis());
+                            lastUpdates.put(TOP_RATED, System.currentTimeMillis());
+                        });
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();

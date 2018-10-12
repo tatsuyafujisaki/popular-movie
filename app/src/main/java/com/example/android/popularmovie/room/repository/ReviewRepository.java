@@ -48,9 +48,10 @@ public class ReviewRepository {
                             review.movieId = movieId;
                         }
 
-                        executor.execute(() -> reviewDao.save(reviews));
-
-                        lastUpdates.put(movieId, System.currentTimeMillis());
+                        executor.execute(() -> {
+                            reviewDao.save(reviews);
+                            lastUpdates.put(movieId, System.currentTimeMillis());
+                        });
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();

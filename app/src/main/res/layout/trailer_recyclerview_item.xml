@@ -4,8 +4,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="0dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -48,9 +48,10 @@ public class TrailerRepository {
                             trailer.movieId = movieId;
                         }
 
-                        executor.execute(() -> TrailerDao.save(trailers));
-
-                        lastUpdates.put(movieId, System.currentTimeMillis());
+                        executor.execute(() -> {
+                            TrailerDao.save(trailers);
+                            lastUpdates.put(movieId, System.currentTimeMillis());
+                        });
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
