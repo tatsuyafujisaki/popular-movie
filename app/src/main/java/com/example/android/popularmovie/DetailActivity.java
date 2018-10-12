@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.example.android.popularmovie.adapter.MyFragmentPagerAdapter;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.example.android.popularmovie.room.entity.Movie;
-import com.squareup.picasso.Picasso;
+import com.example.android.popularmovie.utils.Network;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -60,7 +60,7 @@ public class DetailActivity extends AppCompatActivity {
 
         movie = Objects.requireNonNull(getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key));
 
-        if(savedInstanceState != null && savedInstanceState.containsKey(bundleKey)) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(bundleKey)) {
             movie.isFavorite = savedInstanceState.getBoolean(bundleKey);
         }
 
@@ -104,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @BindingAdapter("android:src")
     public static void setStringToImageView(ImageView imageView, String path) {
-        Picasso.get().load(path).into(imageView);
+        Network.picasso(path).into(imageView);
     }
 
     private void setFabImage(FloatingActionButton fab) {
