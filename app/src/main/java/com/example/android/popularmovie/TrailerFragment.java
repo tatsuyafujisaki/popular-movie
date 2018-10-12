@@ -48,7 +48,7 @@ public class TrailerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Movie movie = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key));
-        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(movie.id);
+        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(Objects.requireNonNull(movie).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, trailers -> {

@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import dagger.android.support.AndroidSupportInjection;
@@ -28,8 +29,8 @@ public class OverviewFragment extends Fragment {
     }
 
     @BindingAdapter("android:text")
-    public static void setLocalDateToTextView(TextView textView, LocalDate date) {
-        textView.setText(date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
+    public static void setDateToTextView(TextView textView, Date date) {
+        textView.setText(new SimpleDateFormat("MMMM d, yyyy", Locale.US).format(date));
     }
 
     @Override

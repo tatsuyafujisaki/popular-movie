@@ -10,10 +10,9 @@ import com.example.android.popularmovie.room.dao.ReviewDao;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Converter;
+import com.example.android.popularmovie.utils.MyDateUtils;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -27,7 +26,7 @@ public class ReviewRepository {
     private final ReviewDao reviewDao;
     private final Executor executor;
     private String errorMessage;
-    private final SparseArray<LocalDateTime> lastUpdates = new SparseArray<>();
+    private final SparseArray<Long> lastUpdates = new SparseArray<>();
 
     public ReviewRepository(TmdbService tmdbService, ReviewDao reviewDao, Executor executor) {
         this.tmdbService = tmdbService;
@@ -45,11 +44,13 @@ public class ReviewRepository {
                     if (response.isSuccessful()) {
                         List<Review> reviews = Converter.toArrayList(response.body());
 
-                        reviews.forEach(review -> review.movieId = movieId);
+                        for (Review review : reviews) {
+                            review.movieId = movieId;
+                        }
 
                         executor.execute(() -> reviewDao.save(reviews));
 
-                        lastUpdates.put(movieId, LocalDateTime.now());
+                        lastUpdates.put(movieId, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -71,9 +72,7 @@ public class ReviewRepository {
 
     private boolean hasExpired(int movieId) {
         int MINUTES_TO_EXPIRE = 60;
-
-        LocalDateTime lastCachedTime = lastUpdates.get(movieId);
-
-        return lastCachedTime == null || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastCachedTime, LocalDateTime.now());
+        Long lastUpdate = lastUpdates.get(movieId);
+        return lastUpdate == null || MyDateUtils.Minute.hasExpired(lastUpdate, MINUTES_TO_EXPIRE);
     }
 }

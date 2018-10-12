@@ -10,10 +10,9 @@ import com.example.android.popularmovie.room.dao.TrailerDao;
 import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Converter;
+import com.example.android.popularmovie.utils.MyDateUtils;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -27,7 +26,7 @@ public class TrailerRepository {
     private final TrailerDao TrailerDao;
     private final Executor executor;
     private String errorMessage;
-    private final SparseArray<LocalDateTime> lastUpdates = new SparseArray<>();
+    private final SparseArray<Long> lastUpdates = new SparseArray<>();
 
     public TrailerRepository(TmdbService tmdbService, com.example.android.popularmovie.room.dao.TrailerDao TrailerDao, Executor executor) {
         this.tmdbService = tmdbService;
@@ -43,13 +42,15 @@ public class TrailerRepository {
                 @Override
                 public void onResponse(@NonNull Call<Trailer[]> call, @NonNull Response<Trailer[]> response) {
                     if (response.isSuccessful()) {
-                        List<Trailer> Trailers = Converter.toArrayList(response.body());
+                        List<Trailer> trailers = Converter.toArrayList(response.body());
 
-                        Trailers.forEach(Trailer -> Trailer.movieId = movieId);
+                        for (Trailer trailer : trailers) {
+                            trailer.movieId = movieId;
+                        }
 
-                        executor.execute(() -> TrailerDao.save(Trailers));
+                        executor.execute(() -> TrailerDao.save(trailers));
 
-                        lastUpdates.put(movieId, LocalDateTime.now());
+                        lastUpdates.put(movieId, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -70,10 +71,8 @@ public class TrailerRepository {
     }
 
     private boolean hasExpired(int movieId) {
-        int DAYS_TO_EXPIRE = 1;
-
-        LocalDateTime lastCachedTime = lastUpdates.get(movieId);
-
-        return lastCachedTime == null || DAYS_TO_EXPIRE < ChronoUnit.DAYS.between(lastCachedTime, LocalDateTime.now());
+        int DAY_TO_EXPIRE = 1;
+        Long lastUpdate = lastUpdates.get(movieId);
+        return lastUpdate == null || MyDateUtils.Day.hasExpired(lastUpdate, DAY_TO_EXPIRE);
     }
 }

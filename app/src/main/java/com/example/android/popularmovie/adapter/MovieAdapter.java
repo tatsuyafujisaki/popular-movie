@@ -14,7 +14,6 @@ import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.utils.Network;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

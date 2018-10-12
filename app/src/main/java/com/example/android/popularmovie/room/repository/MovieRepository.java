@@ -9,10 +9,9 @@ import com.example.android.popularmovie.room.dao.MovieDao;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.utils.ApiResponse;
 import com.example.android.popularmovie.utils.Converter;
+import com.example.android.popularmovie.utils.MyDateUtils;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,21 +30,21 @@ public class MovieRepository {
 
     private final TmdbService tmdbService;
     private final MovieDao movieDao;
-    private final Executor executor;
     private final String posterBaseUrl;
+    private final Executor executor;
     private String errorMessage;
 
-    private final HashMap<MovieType, LocalDateTime> lastUpdates = new HashMap<>();
+    private final HashMap<MovieType, Long> lastUpdates = new HashMap<>();
 
-    public MovieRepository(TmdbService tmdbService, MovieDao movieDao, Executor executor, String posterBaseUrl) {
+    public MovieRepository(TmdbService tmdbService, MovieDao movieDao, String posterBaseUrl, Executor executor) {
         this.tmdbService = tmdbService;
         this.movieDao = movieDao;
-        this.executor = executor;
         this.posterBaseUrl = posterBaseUrl;
+        this.executor = executor;
     }
 
     public ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
-        switch(movieType) {
+        switch (movieType) {
             case POPULAR:
                 return getPopularMovies();
             case TOP_RATED:
@@ -68,8 +67,8 @@ public class MovieRepository {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
                         executor.execute(() -> {
-                            HashSet<Integer> topRatedMovieIds = new HashSet(movieDao.getTopRatedMovieIds());
-                            HashSet<Integer> favoriteMovieIds = new HashSet(movieDao.getFavoriteMovieIds());
+                            HashSet<Integer> topRatedMovieIds = new HashSet<>(movieDao.getTopRatedMovieIds());
+                            HashSet<Integer> favoriteMovieIds = new HashSet<>(movieDao.getFavoriteMovieIds());
 
                             for (Movie movie : movies) {
                                 movie.posterPath = posterBaseUrl.concat(movie.posterPath);
@@ -81,9 +80,9 @@ public class MovieRepository {
                             // Delete previously popular movies unless they are top rated or favorite
                             movieDao.deleteIfNotTopRatedNorFavorite();
                             movieDao.save(movies);
-
-                            lastUpdates.put(POPULAR, LocalDateTime.now());
                         });
+
+                        lastUpdates.put(POPULAR, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -113,23 +112,21 @@ public class MovieRepository {
                     if (response.isSuccessful()) {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
-                        executor.execute(() -> {
-                            HashSet<Integer> popularRatedMovieIds = new HashSet(movieDao.getPopularMovieIds());
-                            HashSet<Integer> favoriteMovieIds = new HashSet(movieDao.getFavoriteMovieIds());
+                        HashSet<Integer> popularRatedMovieIds = new HashSet<>(movieDao.getPopularMovieIds());
+                        HashSet<Integer> favoriteMovieIds = new HashSet<>(movieDao.getFavoriteMovieIds());
 
-                            for (Movie movie : movies) {
-                                movie.posterPath = posterBaseUrl.concat(movie.posterPath);
-                                movie.isPopular = popularRatedMovieIds.contains(movie.id);
-                                movie.isTopRated = true;
-                                movie.isFavorite = favoriteMovieIds.contains(movie.id);
-                            }
+                        for (Movie movie : movies) {
+                            movie.posterPath = posterBaseUrl.concat(movie.posterPath);
+                            movie.isPopular = popularRatedMovieIds.contains(movie.id);
+                            movie.isTopRated = true;
+                            movie.isFavorite = favoriteMovieIds.contains(movie.id);
+                        }
 
-                            // Delete previously top rated movies unless they are popular or favorite
-                            movieDao.deleteIfNotPopularNorFavorite();
-                            movieDao.save(movies);
+                        // Delete previously top rated movies unless they are popular or favorite
+                        movieDao.deleteIfNotPopularNorFavorite();
+                        movieDao.save(movies);
 
-                            lastUpdates.put(TOP_RATED, LocalDateTime.now());
-                        });
+                        lastUpdates.put(TOP_RATED, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -159,6 +156,6 @@ public class MovieRepository {
 
     private boolean hasExpired(MovieType movieType) {
         int MINUTES_TO_EXPIRE = 60;
-        return !lastUpdates.containsKey(movieType) || MINUTES_TO_EXPIRE < ChronoUnit.MINUTES.between(lastUpdates.get(movieType), LocalDateTime.now());
+        return !lastUpdates.containsKey(movieType) || MyDateUtils.Minute.hasExpired(lastUpdates.get(movieType), MINUTES_TO_EXPIRE);
     }
 }

@@ -24,7 +24,7 @@ public class Network {
     public static RequestCreator picasso(String path){
         return Picasso.get()
                       .load(path)
-                      .placeholder(R.drawable.ic_photo)
+                      .placeholder(R.drawable.ic_placeholder)
                       .error(R.drawable.ic_error);
     }
 }

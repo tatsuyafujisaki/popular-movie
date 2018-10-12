@@ -8,7 +8,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public final class Movie implements Parcelable {
@@ -25,7 +25,7 @@ public final class Movie implements Parcelable {
 
     @SerializedName("release_date")
     @ColumnInfo(name = "release_date")
-    public LocalDate releaseDate;
+    public Date releaseDate;
 
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
@@ -49,7 +49,7 @@ public final class Movie implements Parcelable {
         id = parcel.readInt();
         originalTitle = parcel.readString();
         posterPath = parcel.readString();
-        releaseDate = (LocalDate) parcel.readSerializable();
+        releaseDate = new Date(parcel.readLong());
         voteAverage = parcel.readDouble();
         overview = parcel.readString();
         isPopular = parcel.readInt() != 0;
@@ -63,16 +63,16 @@ public final class Movie implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(id);
-        parcel.writeString(originalTitle);
-        parcel.writeString(posterPath);
-        parcel.writeSerializable(releaseDate);
-        parcel.writeDouble(voteAverage);
-        parcel.writeString(overview);
-        parcel.writeInt(isPopular ? 1 : 0);
-        parcel.writeInt(isTopRated ? 1 : 0);
-        parcel.writeInt(isFavorite ? 1 : 0);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(originalTitle);
+        dest.writeString(posterPath);
+        dest.writeLong(releaseDate.getTime());
+        dest.writeDouble(voteAverage);
+        dest.writeString(overview);
+        dest.writeInt(isPopular ? 1 : 0);
+        dest.writeInt(isTopRated ? 1 : 0);
+        dest.writeInt(isFavorite ? 1 : 0);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

@@ -12,10 +12,10 @@ import com.example.android.popularmovie.room.dao.TrailerDao;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.utils.LocalDateConverter;
+import com.example.android.popularmovie.utils.DateConverter;
 
 @Database(entities = {Movie.class, Trailer.class, Review.class}, version = 1, exportSchema = false)
-@TypeConverters(LocalDateConverter.class)
+@TypeConverters(DateConverter.class)
 public abstract class MovieDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "Movies.db";
     private static MovieDatabase instance;

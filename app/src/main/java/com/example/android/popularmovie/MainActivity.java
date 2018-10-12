@@ -21,6 +21,7 @@ import com.example.android.popularmovie.utils.Network;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -94,10 +95,19 @@ public final class MainActivity extends AppCompatActivity {
         if (requestCode == resources.getInteger(R.integer.activity_request_code) && resultCode == RESULT_OK) {
             int movieId = data.getIntExtra(getString(R.string.intent_movie_id_key), -1);
             if (movieType == MovieType.FAVORITE) {
-                movies.removeIf(movie -> movie.id == movieId);
+                for (Movie movie : movies) {
+                    if (movie.id == movieId){
+                        movies.remove(movie);
+                    }
+                }
                 binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
             } else {
-                movies.stream().filter(movie -> movie.id == movieId).findFirst().ifPresent(movie -> movie.isFavorite = !movie.isFavorite);
+                for (Movie movie : movies) {
+                    if(movie.id == movieId){
+                        movie.isFavorite = ! movie.isFavorite;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -111,9 +121,16 @@ public final class MainActivity extends AppCompatActivity {
     private void setMovies(ApiResponse<LiveData<List<Movie>>> response) {
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
-                this.movies = (ArrayList<Movie>) movies;
-                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
-                response.data.removeObservers(this);
+                /*
+                 * This observer is called twice.
+                 * For the first time, movies is null because downloading movies has not completed.
+                 * For the second time, movies is not null because downloading movies in a different thread has completed.
+                 */
+                if (!Objects.requireNonNull(movies).isEmpty()) {
+                    this.movies = (ArrayList<Movie>) movies;
+                    binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+                    response.data.removeObservers(this);
+                }
             });
         } else {
             showToast(response.errorMessage);
