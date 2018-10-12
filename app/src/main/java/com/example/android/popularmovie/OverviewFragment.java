@@ -47,6 +47,6 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.setMovie(Objects.requireNonNull(getActivity()).getIntent().getExtras().getParcelable(getString(R.string.intent_movie_key)));
+        binding.setMovie(Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key)));
     }
 }

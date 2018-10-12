@@ -2,6 +2,7 @@ package com.example.android.popularmovie;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import dagger.android.AndroidInjection;
 
 public final class MainActivity extends AppCompatActivity {
     private final String bundleKey = "MOVIE_TYPE";
+    private Resources resources;
     private ActivityMainBinding binding;
     private ArrayList<Movie> movies;
     private MovieType movieType;
@@ -39,8 +41,10 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
 
+        resources = getResources();
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_column_count)));
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, columnCount()));
 
         if (!Network.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
@@ -87,7 +91,7 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
-        if (requestCode == getResources().getInteger(R.integer.get_movie_id_if_favorite_toggled) && resultCode == RESULT_OK) {
+        if (requestCode == resources.getInteger(R.integer.activity_request_code) && resultCode == RESULT_OK) {
             int movieId = data.getIntExtra(getString(R.string.intent_movie_id_key), -1);
             if (movieType == MovieType.FAVORITE) {
                 movies.removeIf(movie -> movie.id == movieId);
@@ -114,6 +118,10 @@ public final class MainActivity extends AppCompatActivity {
         } else {
             showToast(response.errorMessage);
         }
+    }
+
+    private int columnCount() {
+        return Math.max(2, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.grid_column_width));
     }
 
     private void showToast(String text) {

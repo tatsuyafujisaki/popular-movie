@@ -55,7 +55,7 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
         public void onClick(View v) {
             Intent intent = new Intent(activity, DetailActivity.class);
             intent.putExtra(activity.getString(R.string.intent_movie_key), movies.get(getAdapterPosition()));
-            activity.startActivityForResult(intent, activity.getResources().getInteger(R.integer.get_movie_id_if_favorite_toggled));
+            activity.startActivityForResult(intent, activity.getResources().getInteger(R.integer.activity_request_code));
         }
     }
 }

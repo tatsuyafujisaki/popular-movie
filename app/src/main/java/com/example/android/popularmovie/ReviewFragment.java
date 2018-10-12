@@ -47,12 +47,12 @@ public class ReviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Movie movie = Objects.requireNonNull(getActivity()).getIntent().getExtras().getParcelable(getString(R.string.intent_movie_key));
+        Movie movie = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key));
         ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(Objects.requireNonNull(movie).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, reviews -> {
-                if (!reviews.isEmpty()) {
+                if (!Objects.requireNonNull(reviews).isEmpty()) {
                     binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
                 }
             });

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="grid_column_count">2</integer>
-    <integer name="get_movie_id_if_favorite_toggled">1</integer>
+    <integer name="grid_column_width">400</integer>
+    <integer name="activity_request_code">1</integer>
 </resources>
