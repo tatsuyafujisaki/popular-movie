@@ -2,6 +2,8 @@ package com.example.android.popularmovie.room.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
+import android.support.v4.util.ArraySet;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
@@ -12,10 +14,10 @@ import com.example.android.popularmovie.utils.Converter;
 import com.example.android.popularmovie.utils.MyDateUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Executor;
 
 import retrofit2.Call;
@@ -34,7 +36,7 @@ public class MovieRepository {
     private final Executor executor;
     private String errorMessage;
 
-    private final HashMap<MovieType, Long> lastUpdates = new HashMap<>();
+    private final Map<MovieType, Long> lastUpdates = new ArrayMap<>();
 
     public MovieRepository(TmdbService tmdbService, MovieDao movieDao, String posterBaseUrl, Executor executor) {
         this.tmdbService = tmdbService;
@@ -67,8 +69,8 @@ public class MovieRepository {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
                         executor.execute(() -> {
-                            HashSet<Integer> topRatedMovieIds = new HashSet<>(movieDao.getTopRatedMovieIds());
-                            HashSet<Integer> favoriteMovieIds = new HashSet<>(movieDao.getFavoriteMovieIds());
+                            Set<Integer> topRatedMovieIds = new ArraySet<>(movieDao.getTopRatedMovieIds());
+                            Set<Integer> favoriteMovieIds = new ArraySet<>(movieDao.getFavoriteMovieIds());
 
                             for (Movie movie : movies) {
                                 movie.posterPath = posterBaseUrl.concat(movie.posterPath);
@@ -113,8 +115,8 @@ public class MovieRepository {
                         List<Movie> movies = Converter.toArrayList(response.body());
 
                         executor.execute(() -> {
-                            HashSet<Integer> popularRatedMovieIds = new HashSet<>(movieDao.getPopularMovieIds());
-                            HashSet<Integer> favoriteMovieIds = new HashSet<>(movieDao.getFavoriteMovieIds());
+                            Set<Integer> popularRatedMovieIds = new ArraySet<>(movieDao.getPopularMovieIds());
+                            Set<Integer> favoriteMovieIds = new ArraySet<>(movieDao.getFavoriteMovieIds());
 
                             for (Movie movie : movies) {
                                 movie.posterPath = posterBaseUrl.concat(movie.posterPath);
