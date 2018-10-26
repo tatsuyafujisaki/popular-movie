@@ -38,7 +38,7 @@ public class TrailerRepository {
         errorMessage = null;
 
         if (hasExpired(movieId)) {
-            tmdbService.getTrailers(movieId, BuildConfig.API_KEY).enqueue(new Callback<Trailer[]>() {
+            tmdbService.getTrailers(movieId, BuildConfig.TMDB_API_KEY).enqueue(new Callback<Trailer[]>() {
                 @Override
                 public void onResponse(@NonNull Call<Trailer[]> call, @NonNull Response<Trailer[]> response) {
                     if (response.isSuccessful()) {

@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", API_KEY)
+        buildConfigField("String", "TMDB_API_KEY", TMDB_API_KEY)
     }
     dataBinding {
         enabled true
