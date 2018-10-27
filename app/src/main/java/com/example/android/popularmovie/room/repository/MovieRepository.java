@@ -6,7 +6,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v4.util.ArraySet;
 
 import com.example.android.popularmovie.BuildConfig;
-import com.example.android.popularmovie.TmdbService;
+import com.example.android.popularmovie.util.TmdbService;
 import com.example.android.popularmovie.room.dao.MovieDao;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.util.ApiResponse;

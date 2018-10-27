@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.example.android.popularmovie.BuildConfig;
-import com.example.android.popularmovie.TmdbService;
+import com.example.android.popularmovie.util.TmdbService;
 import com.example.android.popularmovie.room.dao.ReviewDao;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.util.ApiResponse;

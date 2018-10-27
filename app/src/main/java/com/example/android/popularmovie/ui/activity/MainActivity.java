@@ -1,4 +1,4 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.ui.activity;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Intent;
@@ -12,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.android.popularmovie.adapter.MovieAdapter;
+import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.R;
+import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.repository.MovieRepository.MovieType;

@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.adapter;
+package com.example.android.popularmovie.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

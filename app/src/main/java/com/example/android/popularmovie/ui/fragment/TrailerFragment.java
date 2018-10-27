@@ -1,4 +1,4 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.ui.fragment;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.popularmovie.adapter.TrailerAdapter;
+import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.R;
+import com.example.android.popularmovie.ui.adapter.TrailerAdapter;
 import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Trailer;

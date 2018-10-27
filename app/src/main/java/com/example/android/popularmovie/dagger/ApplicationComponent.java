@@ -2,7 +2,9 @@ package com.example.android.popularmovie.dagger;
 
 import android.app.Application;
 
-import com.example.android.popularmovie.MyApplication;
+import com.example.android.popularmovie.dagger.module.ActivityModule;
+import com.example.android.popularmovie.dagger.module.ApplicationModule;
+import com.example.android.popularmovie.dagger.module.FragmentModule;
 
 import javax.inject.Singleton;
 

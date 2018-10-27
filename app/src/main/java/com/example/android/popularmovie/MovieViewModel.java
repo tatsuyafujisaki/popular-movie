@@ -37,50 +37,50 @@ public class MovieViewModel extends ViewModel {
         this.reviewRepository = reviewRepository;
     }
 
-    ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
-        if(movies.containsKey(movieType)) {
+    public ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
+        if (movies.containsKey(movieType)) {
             return ApiResponse.success(movies.get(movieType));
         }
 
         ApiResponse<LiveData<List<Movie>>> apiResponse = movieRepository.getMovies(movieType);
 
         // Avoid caching favorite movies because you always want to know the up-to-date favorite flags in the Movie entity.
-        if(apiResponse.isSuccessful && movieType != FAVORITE) {
+        if (apiResponse.isSuccessful && movieType != FAVORITE) {
             movies.put(movieType, apiResponse.data);
         }
 
         return apiResponse;
     }
 
-    ApiResponse<LiveData<List<Trailer>>> getTrailers(int movieId) {
-        if(trailers.get(movieId) != null) {
+    public ApiResponse<LiveData<List<Trailer>>> getTrailers(int movieId) {
+        if (trailers.get(movieId) != null) {
             return ApiResponse.success(trailers.get(movieId));
         }
 
         ApiResponse<LiveData<List<Trailer>>> apiResponse = trailerRepository.getTrailers(movieId);
 
-        if(apiResponse.isSuccessful) {
+        if (apiResponse.isSuccessful) {
             trailers.put(movieId, apiResponse.data);
         }
 
         return apiResponse;
     }
 
-    ApiResponse<LiveData<List<Review>>> getReviews(int movieId) {
-        if(reviews.get(movieId) != null) {
+    public ApiResponse<LiveData<List<Review>>> getReviews(int movieId) {
+        if (reviews.get(movieId) != null) {
             return ApiResponse.success(reviews.get(movieId));
         }
 
         ApiResponse<LiveData<List<Review>>> apiResponse = reviewRepository.getReviews(movieId);
 
-        if(apiResponse.isSuccessful) {
+        if (apiResponse.isSuccessful) {
             reviews.put(movieId, apiResponse.data);
         }
 
         return apiResponse;
     }
 
-    void updateFavorite(int movieId, boolean isFavorite) {
+    public void updateFavorite(int movieId, boolean isFavorite) {
         movieRepository.updateFavorite(movieId, isFavorite);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.android.popularmovie;
+package com.example.android.popularmovie.ui.fragment;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
 
 import java.text.SimpleDateFormat;

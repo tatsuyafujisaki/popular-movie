@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.adapter;
+package com.example.android.popularmovie.ui.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-import com.example.android.popularmovie.DetailActivity;
+import com.example.android.popularmovie.ui.activity.DetailActivity;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;

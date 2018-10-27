@@ -1,9 +1,11 @@
-package com.example.android.popularmovie.dagger;
+package com.example.android.popularmovie.dagger.module;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.dagger.ViewModelFactory;
+import com.example.android.popularmovie.dagger.ViewModelKey;
 
 import dagger.Binds;
 import dagger.Module;

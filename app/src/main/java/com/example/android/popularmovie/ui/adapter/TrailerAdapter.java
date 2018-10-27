@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.adapter;
+package com.example.android.popularmovie.ui.adapter;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;

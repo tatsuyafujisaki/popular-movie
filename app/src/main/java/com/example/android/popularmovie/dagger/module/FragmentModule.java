@@ -1,14 +1,14 @@
-package com.example.android.popularmovie.dagger;
+package com.example.android.popularmovie.dagger.module;
 
-import com.example.android.popularmovie.OverviewFragment;
-import com.example.android.popularmovie.ReviewFragment;
-import com.example.android.popularmovie.TrailerFragment;
+import com.example.android.popularmovie.ui.fragment.OverviewFragment;
+import com.example.android.popularmovie.ui.fragment.ReviewFragment;
+import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-abstract class FragmentModule {
+public abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract OverviewFragment contributeOverviewFragment();
 
