@@ -14,6 +14,7 @@ import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.util.NetworkUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 
 import java.util.List;
 
@@ -53,8 +54,7 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(activity, DetailActivity.class);
-            intent.putExtra(activity.getString(R.string.intent_movie_key), movies.get(getAdapterPosition()));
+            Intent intent = IntentUtils.createIntent(activity, DetailActivity.class, movies.get(getAdapterPosition()));
             activity.startActivityForResult(intent, activity.getResources().getInteger(R.integer.activity_request_code));
         }
     }

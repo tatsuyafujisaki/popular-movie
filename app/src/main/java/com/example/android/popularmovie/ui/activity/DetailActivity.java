@@ -1,6 +1,5 @@
 package com.example.android.popularmovie.ui.activity;
 
-import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,15 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.example.android.popularmovie.viewmodel.MovieViewModel;
 import com.example.android.popularmovie.R;
+import com.example.android.popularmovie.databinding.ActivityDetailBinding;
+import com.example.android.popularmovie.room.entity.Movie;
+import com.example.android.popularmovie.ui.adapter.MyFragmentPagerAdapter;
 import com.example.android.popularmovie.ui.fragment.OverviewFragment;
 import com.example.android.popularmovie.ui.fragment.ReviewFragment;
 import com.example.android.popularmovie.ui.fragment.TrailerFragment;
-import com.example.android.popularmovie.ui.adapter.MyFragmentPagerAdapter;
-import com.example.android.popularmovie.databinding.ActivityDetailBinding;
-import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.util.NetworkUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
+import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -48,9 +48,9 @@ public class DetailActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(getString(R.string.overview_tab_title),
-                        getString(R.string.trailers_tab_title),
-                        getString(R.string.reviews_tab_title)),
+                Arrays.asList(getString(R.string.overview_tab),
+                        getString(R.string.trailers_tab),
+                        getString(R.string.reviews_tabs)),
                 Arrays.asList(new OverviewFragment(),
                         new TrailerFragment(),
                         new ReviewFragment())));
@@ -61,7 +61,7 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(binding.tabLayout.getTabAt(1)).setIcon(R.drawable.ic_movie);
         Objects.requireNonNull(binding.tabLayout.getTabAt(2)).setIcon(R.drawable.ic_thumb_up);
 
-        movie = Objects.requireNonNull(getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key));
+        movie = IntentUtils.getParcelableExtra(this);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(bundleKey)) {
             movie.isFavorite = savedInstanceState.getBoolean(bundleKey);
@@ -86,9 +86,7 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             if (originalFavorite != movie.isFavorite) {
-                Intent intent = new Intent();
-                intent.putExtra(getString(R.string.intent_movie_id_key), movie.id);
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK, IntentUtils.createIntent(movie.id));
             }
 
             onBackPressed();

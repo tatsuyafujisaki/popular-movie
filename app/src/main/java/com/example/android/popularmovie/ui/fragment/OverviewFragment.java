@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import dagger.android.support.AndroidSupportInjection;
 
@@ -49,6 +48,6 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.setMovie(Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras()).getParcelable(getString(R.string.intent_movie_key)));
+        binding.setMovie(IntentUtils.getParcelableExtra(this));
     }
 }

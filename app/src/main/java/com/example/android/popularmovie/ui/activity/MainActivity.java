@@ -18,6 +18,7 @@ import com.example.android.popularmovie.room.repository.MovieRepository.MovieTyp
 import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
@@ -91,10 +92,10 @@ public final class MainActivity extends AppCompatActivity {
 
         // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
         if (requestCode == getResources().getInteger(R.integer.activity_request_code) && resultCode == RESULT_OK) {
-            int movieId = data.getIntExtra(getString(R.string.intent_movie_id_key), -1);
+            int movieId = IntentUtils.getIntExtra(data);
             if (movieType == MovieType.FAVORITE) {
                 for (Movie movie : movies) {
-                    if (movie.id == movieId){
+                    if (movie.id == movieId) {
                         movies.remove(movie);
                     }
                 }
