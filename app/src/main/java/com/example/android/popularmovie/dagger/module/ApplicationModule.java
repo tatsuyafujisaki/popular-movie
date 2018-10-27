@@ -7,7 +7,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 
-import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.viewmodel.MovieViewModel;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.util.TmdbService;
 import com.example.android.popularmovie.room.MovieDatabase;

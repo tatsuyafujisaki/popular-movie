@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.viewmodel.MovieViewModel;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;

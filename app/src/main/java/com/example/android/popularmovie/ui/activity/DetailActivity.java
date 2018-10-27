@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.viewmodel.MovieViewModel;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.ui.fragment.OverviewFragment;
 import com.example.android.popularmovie.ui.fragment.ReviewFragment;

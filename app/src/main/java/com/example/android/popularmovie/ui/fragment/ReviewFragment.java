@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.popularmovie.MovieViewModel;
+import com.example.android.popularmovie.viewmodel.MovieViewModel;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.ui.adapter.ReviewAdapter;
 import com.example.android.popularmovie.databinding.FragmentReviewBinding;
