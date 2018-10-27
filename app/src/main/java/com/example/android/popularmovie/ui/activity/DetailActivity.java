@@ -44,11 +44,9 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
         AndroidInjection.inject(this);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(getString(R.string.overview_tab_title),
                         getString(R.string.trailers_tab_title),
