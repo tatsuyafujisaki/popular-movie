@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.utils;
+package com.example.android.popularmovie.util;
 
 import android.arch.persistence.room.TypeConverter;
 

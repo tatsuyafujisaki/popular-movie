@@ -15,7 +15,7 @@ import com.example.android.popularmovie.adapter.TrailerAdapter;
 import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.utils.ApiResponse;
+import com.example.android.popularmovie.util.ApiResponse;
 
 import java.util.List;
 import java.util.Objects;

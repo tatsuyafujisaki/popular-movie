@@ -11,7 +11,7 @@ import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.room.repository.MovieRepository;
 import com.example.android.popularmovie.room.repository.ReviewRepository;
 import com.example.android.popularmovie.room.repository.TrailerRepository;
-import com.example.android.popularmovie.utils.ApiResponse;
+import com.example.android.popularmovie.util.ApiResponse;
 
 import java.util.List;
 import java.util.Map;

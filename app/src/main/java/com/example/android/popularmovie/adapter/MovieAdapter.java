@@ -13,7 +13,7 @@ import com.example.android.popularmovie.DetailActivity;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;
-import com.example.android.popularmovie.utils.Network;
+import com.example.android.popularmovie.util.NetworkUtils;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Network.picasso(movies.get(position).posterPath).into(holder.binding.movieImageView);
+        NetworkUtils.picasso(movies.get(position).posterPath).into(holder.binding.movieImageView);
     }
 
     @Override

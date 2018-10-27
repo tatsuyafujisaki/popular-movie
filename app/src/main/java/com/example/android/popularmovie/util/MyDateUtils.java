@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.utils;
+package com.example.android.popularmovie.util;
 
 import java.util.Calendar;
 

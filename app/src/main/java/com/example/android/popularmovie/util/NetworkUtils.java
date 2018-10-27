@@ -1,4 +1,4 @@
-package com.example.android.popularmovie.utils;
+package com.example.android.popularmovie.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,7 +8,7 @@ import com.example.android.popularmovie.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
-public class Network {
+public class NetworkUtils {
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
 

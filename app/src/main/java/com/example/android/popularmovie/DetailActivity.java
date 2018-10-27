@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.example.android.popularmovie.adapter.MyFragmentPagerAdapter;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.example.android.popularmovie.room.entity.Movie;
-import com.example.android.popularmovie.utils.Network;
+import com.example.android.popularmovie.util.NetworkUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -103,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @BindingAdapter("android:src")
     public static void setStringToImageView(ImageView imageView, String path) {
-        Network.picasso(path).into(imageView);
+        NetworkUtils.picasso(path).into(imageView);
     }
 
     private void setFabImage(FloatingActionButton fab) {

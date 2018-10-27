@@ -15,7 +15,7 @@ import com.example.android.popularmovie.adapter.ReviewAdapter;
 import com.example.android.popularmovie.databinding.FragmentReviewBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
-import com.example.android.popularmovie.utils.ApiResponse;
+import com.example.android.popularmovie.util.ApiResponse;
 
 import java.util.List;
 import java.util.Objects;

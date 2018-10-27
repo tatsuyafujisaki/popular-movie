@@ -12,7 +12,7 @@ import com.example.android.popularmovie.room.dao.TrailerDao;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.utils.DateConverter;
+import com.example.android.popularmovie.util.DateConverter;
 
 @Database(entities = {Movie.class, Trailer.class, Review.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)

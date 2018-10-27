@@ -16,8 +16,8 @@ import com.example.android.popularmovie.adapter.MovieAdapter;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
-import com.example.android.popularmovie.utils.ApiResponse;
-import com.example.android.popularmovie.utils.Network;
+import com.example.android.popularmovie.util.ApiResponse;
+import com.example.android.popularmovie.util.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, columnCount()));
 
-        if (!Network.isNetworkAvailable(this)) {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
             return;
         }

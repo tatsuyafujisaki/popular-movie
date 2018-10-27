@@ -9,9 +9,9 @@ import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.TmdbService;
 import com.example.android.popularmovie.room.dao.MovieDao;
 import com.example.android.popularmovie.room.entity.Movie;
-import com.example.android.popularmovie.utils.ApiResponse;
-import com.example.android.popularmovie.utils.Converter;
-import com.example.android.popularmovie.utils.MyDateUtils;
+import com.example.android.popularmovie.util.ApiResponse;
+import com.example.android.popularmovie.util.Converter;
+import com.example.android.popularmovie.util.MyDateUtils;
 
 import java.io.IOException;
 import java.util.List;
