@@ -1,8 +1,13 @@
 package com.example.android.popularmovie.dagger;
 
 import android.app.Application;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 
+import com.example.android.popularmovie.MovieViewModel;
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.TmdbService;
 import com.example.android.popularmovie.room.MovieDatabase;
@@ -32,6 +37,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 class ApplicationModule {
+    @Singleton
+    @Provides
+    static ViewModel provideViewModel(FragmentActivity activity, Class<MovieViewModel> modelClass, ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(activity, factory).get(modelClass);
+    }
+
     @Singleton
     @Provides
     static Context provideContext(Application application) {
