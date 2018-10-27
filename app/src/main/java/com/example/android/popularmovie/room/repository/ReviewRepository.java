@@ -72,8 +72,8 @@ public class ReviewRepository {
     }
 
     private boolean hasExpired(int movieId) {
-        int MINUTES_TO_EXPIRE = 60;
+        int minutesToExpire = 60;
         Long lastUpdate = lastUpdates.get(movieId);
-        return lastUpdate == null || MyDateUtils.Minute.hasExpired(lastUpdate, MINUTES_TO_EXPIRE);
+        return lastUpdate == null || MyDateUtils.Minute.hasExpired(lastUpdate, minutesToExpire);
     }
 }

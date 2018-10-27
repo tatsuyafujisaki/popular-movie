@@ -159,7 +159,7 @@ public class MovieRepository {
     }
 
     private boolean hasExpired(MovieType movieType) {
-        int MINUTES_TO_EXPIRE = 60;
-        return !lastUpdates.containsKey(movieType) || MyDateUtils.Minute.hasExpired(lastUpdates.get(movieType), MINUTES_TO_EXPIRE);
+        int minutesToExpire = 60;
+        return !lastUpdates.containsKey(movieType) || MyDateUtils.Minute.hasExpired(lastUpdates.get(movieType), minutesToExpire);
     }
 }

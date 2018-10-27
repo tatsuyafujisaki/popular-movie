@@ -72,8 +72,8 @@ public class TrailerRepository {
     }
 
     private boolean hasExpired(int movieId) {
-        int DAY_TO_EXPIRE = 1;
+        int daysToExpire = 1;
         Long lastUpdate = lastUpdates.get(movieId);
-        return lastUpdate == null || MyDateUtils.Day.hasExpired(lastUpdate, DAY_TO_EXPIRE);
+        return lastUpdate == null || MyDateUtils.Day.hasExpired(lastUpdate, daysToExpire);
     }
 }
