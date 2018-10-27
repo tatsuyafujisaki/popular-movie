@@ -18,7 +18,7 @@ import com.example.android.popularmovie.room.repository.MovieRepository.MovieTyp
 import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.IntentUtils;
+import com.example.android.popularmovie.util.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;

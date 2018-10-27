@@ -14,7 +14,7 @@ import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.IntentUtils;
+import com.example.android.popularmovie.util.IntentUtils;
 
 import java.util.List;
 

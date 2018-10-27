@@ -17,7 +17,7 @@ import com.example.android.popularmovie.ui.fragment.OverviewFragment;
 import com.example.android.popularmovie.ui.fragment.ReviewFragment;
 import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.IntentUtils;
+import com.example.android.popularmovie.util.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.Arrays;
