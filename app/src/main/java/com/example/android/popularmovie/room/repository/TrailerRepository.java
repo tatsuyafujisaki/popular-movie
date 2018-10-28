@@ -5,12 +5,11 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.example.android.popularmovie.BuildConfig;
-import com.example.android.popularmovie.util.TmdbService;
 import com.example.android.popularmovie.room.dao.TrailerDao;
 import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.util.ApiResponse;
-import com.example.android.popularmovie.util.Converter;
 import com.example.android.popularmovie.util.MyDateUtils;
+import com.example.android.popularmovie.util.TmdbService;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,13 +37,13 @@ public class TrailerRepository {
         errorMessage = null;
 
         if (hasExpired(movieId)) {
-            tmdbService.getTrailers(movieId, BuildConfig.TMDB_API_KEY).enqueue(new Callback<Trailer[]>() {
+            tmdbService.getTrailers(movieId, BuildConfig.TMDB_API_KEY).enqueue(new Callback<List<Trailer>>() {
                 @Override
-                public void onResponse(@NonNull Call<Trailer[]> call, @NonNull Response<Trailer[]> response) {
+                public void onResponse(@NonNull Call<List<Trailer>> call, @NonNull Response<List<Trailer>> response) {
                     if (response.isSuccessful()) {
-                        List<Trailer> trailers = Converter.toArrayList(response.body());
+                        List<Trailer> trailers = response.body();
 
-                        for (Trailer trailer : trailers) {
+                        for (Trailer trailer : Objects.requireNonNull(trailers)) {
                             trailer.movieId = movieId;
                         }
 
@@ -62,7 +61,7 @@ public class TrailerRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Trailer[]> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<List<Trailer>> call, @NonNull Throwable t) {
                     errorMessage = t.getMessage();
                 }
             });

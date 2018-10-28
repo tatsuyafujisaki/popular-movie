@@ -6,12 +6,11 @@ import android.support.v4.util.ArrayMap;
 import android.support.v4.util.ArraySet;
 
 import com.example.android.popularmovie.BuildConfig;
-import com.example.android.popularmovie.util.TmdbService;
 import com.example.android.popularmovie.room.dao.MovieDao;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.util.ApiResponse;
-import com.example.android.popularmovie.util.Converter;
 import com.example.android.popularmovie.util.MyDateUtils;
+import com.example.android.popularmovie.util.TmdbService;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,17 +61,17 @@ public class MovieRepository {
         errorMessage = null;
 
         if (hasExpired(POPULAR)) {
-            tmdbService.getPopularMovies(BuildConfig.TMDB_API_KEY).enqueue(new Callback<Movie[]>() {
+            tmdbService.getPopularMovies(BuildConfig.TMDB_API_KEY).enqueue(new Callback<List<Movie>>() {
                 @Override
-                public void onResponse(@NonNull Call<Movie[]> call, @NonNull Response<Movie[]> response) {
+                public void onResponse(@NonNull Call<List<Movie>> call, @NonNull Response<List<Movie>> response) {
                     if (response.isSuccessful()) {
-                        List<Movie> movies = Converter.toArrayList(response.body());
+                        List<Movie> movies = response.body();
 
                         executor.execute(() -> {
                             Set<Integer> topRatedMovieIds = new ArraySet<>(movieDao.getTopRatedMovieIds());
                             Set<Integer> favoriteMovieIds = new ArraySet<>(movieDao.getFavoriteMovieIds());
 
-                            for (Movie movie : movies) {
+                            for (Movie movie : Objects.requireNonNull(movies)) {
                                 movie.posterPath = posterBaseUrl.concat(movie.posterPath);
                                 movie.isPopular = true;
                                 movie.isTopRated = topRatedMovieIds.contains(movie.id);
@@ -95,7 +94,7 @@ public class MovieRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Movie[]> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<List<Movie>> call, @NonNull Throwable t) {
                     errorMessage = t.getMessage();
                 }
             });
@@ -108,17 +107,17 @@ public class MovieRepository {
         errorMessage = null;
 
         if (hasExpired(TOP_RATED)) {
-            tmdbService.getTopRatedMovies(BuildConfig.TMDB_API_KEY).enqueue(new Callback<Movie[]>() {
+            tmdbService.getTopRatedMovies(BuildConfig.TMDB_API_KEY).enqueue(new Callback<List<Movie>>() {
                 @Override
-                public void onResponse(@NonNull Call<Movie[]> call, @NonNull Response<Movie[]> response) {
+                public void onResponse(@NonNull Call<List<Movie>> call, @NonNull Response<List<Movie>> response) {
                     if (response.isSuccessful()) {
-                        List<Movie> movies = Converter.toArrayList(response.body());
+                        List<Movie> movies = response.body();
 
                         executor.execute(() -> {
                             Set<Integer> popularRatedMovieIds = new ArraySet<>(movieDao.getPopularMovieIds());
                             Set<Integer> favoriteMovieIds = new ArraySet<>(movieDao.getFavoriteMovieIds());
 
-                            for (Movie movie : movies) {
+                            for (Movie movie : Objects.requireNonNull(movies)) {
                                 movie.posterPath = posterBaseUrl.concat(movie.posterPath);
                                 movie.isPopular = popularRatedMovieIds.contains(movie.id);
                                 movie.isTopRated = true;
@@ -141,7 +140,7 @@ public class MovieRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Movie[]> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<List<Movie>> call, @NonNull Throwable t) {
                     errorMessage = t.getMessage();
                 }
             });
