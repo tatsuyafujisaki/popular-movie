@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/ApplicationThemeActionBar">
+        android:theme="@style/ThemeWithActionBar">
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         <activity
             android:name=".ui.activity.DetailActivity"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/ApplicationThemeNoActionBar">
+            android:theme="@style/ThemeWithoutActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />

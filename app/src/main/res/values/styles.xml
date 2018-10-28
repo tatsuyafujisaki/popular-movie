@@ -1,11 +1,11 @@
 <resources>
-    <style name="ApplicationThemeActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="ThemeWithActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ApplicationThemeNoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="ThemeWithoutActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
