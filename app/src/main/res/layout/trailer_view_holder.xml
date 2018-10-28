@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.CardView style="@style/default_card_view">
+    <android.support.v7.widget.CardView style="@style/card_view">
 
         <LinearLayout
             style="@style/default_layout"
-            android:paddingStart="@dimen/trailer_title_padding_start"
-            android:paddingEnd="@dimen/trailer_title_padding_end">
+            android:paddingStart="@dimen/trailer_linear_layout_padding_start"
+            android:paddingEnd="@dimen/trailer_linear_layout_padding_end">
 
             <ImageView
                 style="@style/wrap_contents"

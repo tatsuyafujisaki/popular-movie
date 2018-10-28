@@ -3,5 +3,5 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        style="@style/default_recycler_view" />
+        style="@style/recycler_view" />
 </layout>
