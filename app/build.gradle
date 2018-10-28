@@ -1,17 +1,16 @@
 plugins {
-    id "com.android.application"
+    id 'com.android.application'
 }
 
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.android.popularmovie"
+        applicationId 'com.example.android.popularmovie'
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "TMDB_API_KEY", TMDB_API_KEY)
+        versionName '1.0'
+        buildConfigField('String', 'TMDB_API_KEY', TMDB_API_KEY)
     }
     dataBinding {
         enabled true
@@ -23,28 +22,28 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    def supportLibraryVersion = "27.1.1"
+    def supportLibraryVersion = '27.1.1'
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$supportLibraryVersion"
     implementation "com.android.support:design:$supportLibraryVersion"
     implementation "com.android.support:preference-v7:$supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
 
-    def lifecycleVersion = "1.1.1"
+    def lifecycleVersion = '1.1.1'
     implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
     implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
 
-    def roomVersion = "1.1.1"
+    def roomVersion = '1.1.1'
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
 
-    def retrofitVersion = "2.4.0"
+    def retrofitVersion = '2.4.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    def daggerVersion = "2.17"
+    def daggerVersion = '2.17'
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -55,20 +54,9 @@ dependencies {
      */
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "com.squareup.picasso:picasso:2.71828"
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
-    /*
-     * Test
-     */
-
-    androidTestImplementation "junit:junit:4.12"
-    androidTestImplementation "com.android.support:support-annotations:$supportLibraryVersion"
-
-    def junitBasedLibrariesVersion = "1.0.2"
-    androidTestImplementation "com.android.support.test:runner:$junitBasedLibrariesVersion"
-    androidTestImplementation "com.android.support.test:rules:$junitBasedLibrariesVersion"
-
-    // Avoid the warning 'all com.android.support libraries must use the exact same version'.
+    // Avoid the warning 'all com.android.support libraries must use the exact same version'
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             if (details.requested.group == 'com.android.support' && !details.requested.name.contains('multidex')) {
