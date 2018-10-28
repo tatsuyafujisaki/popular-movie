@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.R;
-import com.example.android.popularmovie.databinding.TrailerRecyclerViewHolderBinding;
+import com.example.android.popularmovie.databinding.*;
 import com.example.android.popularmovie.room.entity.Trailer;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public final class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new ViewHolder(TrailerRecyclerViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
+        return new ViewHolder(TrailerViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
@@ -45,9 +45,9 @@ public final class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.Vi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TrailerRecyclerViewHolderBinding binding;
+        final TrailerViewHolderBinding binding;
 
-        ViewHolder(TrailerRecyclerViewHolderBinding binding) {
+        ViewHolder(TrailerViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);

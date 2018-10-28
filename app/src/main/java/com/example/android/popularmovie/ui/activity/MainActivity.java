@@ -18,7 +18,8 @@ import com.example.android.popularmovie.room.repository.MovieRepository.MovieTyp
 import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.IntentUtils;
+import com.example.android.popularmovie.util.ui.BundleUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public final class MainActivity extends AppCompatActivity {
     @Inject
     MovieViewModel movieViewModel;
 
-    private final String bundleKey = "MOVIE_TYPE";
     private ActivityMainBinding binding;
     private ArrayList<Movie> movies;
     private MovieType movieType;
@@ -51,7 +51,7 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
 
-        movieType = savedInstanceState != null && savedInstanceState.containsKey(bundleKey) ? (MovieType) savedInstanceState.get(bundleKey) : MovieType.POPULAR;
+        movieType = savedInstanceState != null ? BundleUtils.get(savedInstanceState) : MovieType.POPULAR;
 
         setMovies(movieViewModel.getMovies(movieType));
     }
@@ -113,7 +113,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(bundleKey, movieType);
+        BundleUtils.putSerializable(outState, movieType);
         super.onSaveInstanceState(outState);
     }
 

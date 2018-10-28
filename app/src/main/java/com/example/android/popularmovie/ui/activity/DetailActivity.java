@@ -17,7 +17,8 @@ import com.example.android.popularmovie.ui.fragment.OverviewFragment;
 import com.example.android.popularmovie.ui.fragment.ReviewFragment;
 import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.IntentUtils;
+import com.example.android.popularmovie.util.ui.BundleUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.Arrays;
@@ -37,7 +38,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private final String bundleKey = "IS_FAVORITE";
 
-    private ActivityDetailBinding binding;
     private Movie movie;
     private boolean originalFavorite;
 
@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(getString(R.string.overview_tab),
                         getString(R.string.trailers_tab),
@@ -63,8 +63,8 @@ public class DetailActivity extends AppCompatActivity {
 
         movie = IntentUtils.getParcelableExtra(this);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(bundleKey)) {
-            movie.isFavorite = savedInstanceState.getBoolean(bundleKey);
+        if (savedInstanceState != null) {
+            movie.isFavorite = BundleUtils.getBoolean(savedInstanceState);
         }
 
         originalFavorite = Objects.requireNonNull(movie).isFavorite;
@@ -98,7 +98,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putBoolean(bundleKey, movie.isFavorite);
+        BundleUtils.putBoolean(outState, movie.isFavorite);
         super.onSaveInstanceState(outState);
     }
 

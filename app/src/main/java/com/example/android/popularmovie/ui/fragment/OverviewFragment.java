@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.popularmovie.databinding.FragmentOverviewBinding;
-import com.example.android.popularmovie.util.IntentUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

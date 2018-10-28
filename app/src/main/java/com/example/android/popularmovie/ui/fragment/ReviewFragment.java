@@ -15,7 +15,7 @@ import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.ui.adapter.ReviewAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
-import com.example.android.popularmovie.util.IntentUtils;
+import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.List;
