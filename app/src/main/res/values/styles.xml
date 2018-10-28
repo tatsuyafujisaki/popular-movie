@@ -39,6 +39,13 @@
         <item name="android:padding">@dimen/linear_layout_padding</item>
     </style>
 
+    <style name="image_view" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
     <style name="card_view" parent="CardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

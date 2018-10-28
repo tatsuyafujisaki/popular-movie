@@ -25,9 +25,10 @@
                 app:title="@{movie.originalTitle}">
 
                 <ImageView
-                    style="@style/match_parents"
+                    style="@style/image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:contentDescription="@string/poster_description"
-                    android:scaleType="centerCrop"
                     android:src="@{movie.posterPath}"
                     app:layout_collapseMode="parallax" />
                 <!-- app:layout_collapseMode="pin" is to prevent the up button from disappearing when the toolbar is collapsed -->

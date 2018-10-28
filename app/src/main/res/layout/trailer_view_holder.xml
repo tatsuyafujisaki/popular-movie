@@ -9,10 +9,11 @@
             android:paddingEnd="@dimen/trailer_linear_layout_padding_end">
 
             <ImageView
-                style="@style/wrap_contents"
+                style="@style/image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/play_image_description"
-                android:scaleType="centerCrop"
                 android:src="@drawable/ic_play_circle_filled" />
 
             <LinearLayout style="@style/padded_vertical_linear_layout">

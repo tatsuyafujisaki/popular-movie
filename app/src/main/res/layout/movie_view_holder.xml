@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
     <ImageView
         android:id="@+id/movie_image_view"
-        style="@style/default_layout"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/poster_description"
-        android:scaleType="centerCrop" />
+        style="@style/image_view"
+        android:contentDescription="@string/poster_description" />
 </layout>
