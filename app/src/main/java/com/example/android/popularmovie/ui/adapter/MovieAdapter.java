@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-import com.example.android.popularmovie.ui.activity.DetailActivity;
 import com.example.android.popularmovie.R;
-import com.example.android.popularmovie.databinding.MovieRecyclerviewItemBinding;
+import com.example.android.popularmovie.databinding.*;
 import com.example.android.popularmovie.room.entity.Movie;
-import com.example.android.popularmovie.util.NetworkUtils;
+import com.example.android.popularmovie.ui.activity.DetailActivity;
 import com.example.android.popularmovie.util.IntentUtils;
+import com.example.android.popularmovie.util.NetworkUtils;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(MovieRecyclerviewItemBinding.inflate(LayoutInflater.from(activity), parent, false));
+        return new ViewHolder(MovieRecyclerViewHolderBinding.inflate(LayoutInflater.from(activity), parent, false));
     }
 
     @Override
@@ -44,9 +44,9 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        final MovieRecyclerviewItemBinding binding;
+        final MovieRecyclerViewHolderBinding binding;
 
-        ViewHolder(MovieRecyclerviewItemBinding binding) {
+        ViewHolder(MovieRecyclerViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);

@@ -7,14 +7,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.R;
+import com.example.android.popularmovie.databinding.ReviewRecyclerViewHolderBinding;
 import com.example.android.popularmovie.room.entity.Review;
-import com.example.android.popularmovie.databinding.ReviewRecyclerviewItemBinding;
 
 import java.util.List;
 
 public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
-    private Context context;
     private final List<Review> reviews;
+    private Context context;
 
     public ReviewAdapter(List<Review> reviews) {
         this.reviews = reviews;
@@ -24,7 +24,7 @@ public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new ViewHolder(ReviewRecyclerviewItemBinding.inflate(LayoutInflater.from(context), parent, false));
+        return new ViewHolder(ReviewRecyclerViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
@@ -42,9 +42,9 @@ public final class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final ReviewRecyclerviewItemBinding binding;
+        final ReviewRecyclerViewHolderBinding binding;
 
-        ViewHolder(ReviewRecyclerviewItemBinding binding) {
+        ViewHolder(ReviewRecyclerViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
