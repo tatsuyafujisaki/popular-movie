@@ -121,8 +121,8 @@ public final class MainActivity extends AppCompatActivity {
         if (response.isSuccessful) {
             response.data.observe(this, movies -> {
                 /*
-                 * This observer is called twice.
-                 * For the first time, movies is null because downloading movies has not completed.
+                 * This observer is probably called twice.
+                 * For the first time, movies is null because downloading movies in a different thread has not completed.
                  * For the second time, movies is not null because downloading movies in a different thread has completed.
                  */
                 if (!Objects.requireNonNull(movies).isEmpty()) {
