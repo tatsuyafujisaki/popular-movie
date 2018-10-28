@@ -30,7 +30,7 @@
     <string name="youtube_base_url">https://www.youtube.com/watch?v=</string>
 
     <!-- JSON elements -->
-    <string name="json_root_element">results</string>
+    <string name="tmdb_json_result_element">results</string>
 
     <!-- Misc -->
     <string name="trailer_info_format">%1$s-%2$s / %3$dp</string>

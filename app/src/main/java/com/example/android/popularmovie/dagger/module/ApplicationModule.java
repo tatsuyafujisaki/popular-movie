@@ -91,7 +91,7 @@ public class ApplicationModule {
     @Named("GsonWithMovieArrayAdapter")
     static Gson provideGsonWithMovieArrayAdapter(Context context, @Named("Gson") Gson gson) {
         return new GsonBuilder()
-                .registerTypeAdapter(Movie[].class, (JsonDeserializer<Movie[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.json_root_element)), type))
+                .registerTypeAdapter(Movie[].class, (JsonDeserializer<Movie[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_result_element)), type))
                 .create();
     }
 
@@ -100,7 +100,7 @@ public class ApplicationModule {
     @Named("GsonWithTrailerArrayAdapter")
     static Gson provideGsonWithTrailerArrayAdapter(Context context, @Named("Gson") Gson gson) {
         return new GsonBuilder()
-                .registerTypeAdapter(Trailer[].class, (JsonDeserializer<Trailer[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.json_root_element)), type))
+                .registerTypeAdapter(Trailer[].class, (JsonDeserializer<Trailer[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_result_element)), type))
                 .create();
     }
 
@@ -109,7 +109,7 @@ public class ApplicationModule {
     @Named("GsonWithReviewArrayAdapter")
     static Gson provideGsonWithReviewArrayAdapter(Context context, @Named("Gson") Gson gson) {
         return new GsonBuilder()
-                .registerTypeAdapter(Review[].class, (JsonDeserializer<Review[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.json_root_element)), type))
+                .registerTypeAdapter(Review[].class, (JsonDeserializer<Review[]>) (json, type, context1) -> gson.fromJson(json.getAsJsonObject().getAsJsonArray(context.getString(R.string.tmdb_json_result_element)), type))
                 .create();
     }
 
