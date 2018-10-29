@@ -40,8 +40,8 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, Math.max(2, getResources().getDisplayMetrics().widthPixels / getResources().getInteger(R.integer.poster_grid_column_width))));

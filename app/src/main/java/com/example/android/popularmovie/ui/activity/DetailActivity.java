@@ -36,15 +36,18 @@ public class DetailActivity extends AppCompatActivity {
     @Inject
     Executor executor;
 
-    private final String bundleKey = "IS_FAVORITE";
-
     private Movie movie;
     private boolean originalFavorite;
 
+    @BindingAdapter("android:src")
+    public static void setStringToImageView(ImageView imageView, String path) {
+        NetworkUtils.picasso(path).into(imageView);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
 
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
@@ -100,11 +103,6 @@ public class DetailActivity extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         BundleUtils.putBoolean(outState, movie.isFavorite);
         super.onSaveInstanceState(outState);
-    }
-
-    @BindingAdapter("android:src")
-    public static void setStringToImageView(ImageView imageView, String path) {
-        NetworkUtils.picasso(path).into(imageView);
     }
 
     private void setFabImage(FloatingActionButton fab) {
