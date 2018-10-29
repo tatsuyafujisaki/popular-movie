@@ -20,7 +20,6 @@ public final class BundleUtils {
         bundle.putBoolean(KEY, value);
     }
 
-    // Usable to put enum
     public static void putEnum(@NonNull Bundle bundle, Serializable value) {
         if (value != null) {
             bundle.putSerializable(KEY, value);
