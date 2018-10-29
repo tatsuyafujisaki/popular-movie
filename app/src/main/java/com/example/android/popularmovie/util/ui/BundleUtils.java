@@ -12,7 +12,7 @@ public final class BundleUtils {
         return bundle.getBoolean(KEY);
     }
 
-    public static <T> T get(@NonNull Bundle bundle) {
+    public static <T> T getEnum(@NonNull Bundle bundle) {
         return (T) bundle.get(KEY);
     }
 
@@ -20,7 +20,10 @@ public final class BundleUtils {
         bundle.putBoolean(KEY, value);
     }
 
-    public static void putSerializable(@NonNull Bundle bundle, Serializable value) {
-        bundle.putSerializable(KEY, value);
+    // Usable to put enum
+    public static void putEnum(@NonNull Bundle bundle, Serializable value) {
+        if (value != null) {
+            bundle.putSerializable(KEY, value);
+        }
     }
 }

@@ -51,7 +51,7 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
 
-        movieType = savedInstanceState != null ? BundleUtils.get(savedInstanceState) : MovieType.POPULAR;
+        movieType = savedInstanceState != null ? BundleUtils.getEnum(savedInstanceState) : MovieType.POPULAR;
 
         setMovies(movieViewModel.getMovies(movieType));
     }
@@ -113,7 +113,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        BundleUtils.putSerializable(outState, movieType);
+        BundleUtils.putEnum(outState, movieType);
         super.onSaveInstanceState(outState);
     }
 
