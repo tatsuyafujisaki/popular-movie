@@ -1,4 +1,5 @@
 <resources>
+
     <style name="ThemeWithActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -31,17 +32,26 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="text_view_in_constraint_layout" parent="constraint_layout_child">
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
+    <style name="label_text_view_in_fragment_overview" parent="text_view_in_constraint_layout">
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginTop">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fragment_overview_small_margin</item>
+    </style>
+
+    <style name="value_text_view_in_fragment_overview" parent="text_view_in_constraint_layout">
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fragment_overview_big_margin</item>
+    </style>
     <!-- This is to prevent the title of the collapsed toolbar from becoming too small in landscape -->
     <style name="collapsed_title_text_appearance">
         <item name="android:textSize">@dimen/collapsed_title_text_size</item>
-    </style>
-
-    <style name="vertical_linear_layout" parent="default_layout">
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="padded_vertical_linear_layout" parent="vertical_linear_layout">
-        <item name="android:padding">@dimen/linear_layout_padding</item>
     </style>
 
     <style name="image_view" parent="CardView">
@@ -58,14 +68,18 @@
         <item name="cardElevation">@dimen/card_elevation</item>
     </style>
 
+    <style name="card_view_in_constraint_layout" parent="CardView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="android:layout_margin">@dimen/card_margin</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
+
     <style name="recycler_view" parent="default_layout">
         <item name="android:clipToPadding">false</item>
         <item name="android:numColumns">auto_fit</item>
         <item name="layoutManager">LinearLayoutManager</item>
-    </style>
-
-    <style name="overview_descriptions_text_view" parent="default_layout">
-        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
-        <item name="android:layout_marginTop">@dimen/overview_text_view_margin_top</item>
     </style>
 </resources>

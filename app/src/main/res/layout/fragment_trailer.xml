@@ -3,6 +3,5 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        style="@style/recycler_view"
-        android:paddingTop="@dimen/tab_description_padding_top" />
+        style="@style/recycler_view" />
 </layout>
