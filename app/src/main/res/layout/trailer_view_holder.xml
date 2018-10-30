@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.CardView style="@style/card_view">
 
@@ -16,26 +17,27 @@
                 android:src="@drawable/ic_play_circle_filled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_play_circle_filled" />
 
             <TextView
                 android:id="@+id/trailer_label_text_view"
                 style="@style/constraint_layout_child"
                 android:layout_marginTop="@dimen/trailer_label_text_view_margin_top"
+                android:layout_marginBottom="@dimen/trailer_label_text_view_margin_bottom"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintBottom_toTopOf="@+id/trailer_info_text_view"
-                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintLeft_toRightOf="@id/play_image_view"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/trailer_info_text_view"
                 style="@style/constraint_layout_child"
-                android:layout_marginTop="@dimen/trailer_info_text_view_margin_top"
                 android:layout_marginBottom="@dimen/trailer_info_text_view_margin_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/play_image_view"
-                app:layout_constraintTop_toBottomOf="@+id/trailer_label_text_view" />
+                app:layout_constraintTop_toBottomOf="@+id/trailer_label_text_view"
+                tools:text="@tools:sample/lorem" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

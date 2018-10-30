@@ -23,6 +23,6 @@
     <dimen name="tab_description_padding_top">24dp</dimen>
     <dimen name="play_image_view_padding">16dp</dimen>
     <dimen name="trailer_label_text_view_margin_top">8dp</dimen>
-    <dimen name="trailer_info_text_view_margin_top">8dp</dimen>
+    <dimen name="trailer_label_text_view_margin_bottom">8dp</dimen>
     <dimen name="trailer_info_text_view_margin_bottom">8dp</dimen>
 </resources>
