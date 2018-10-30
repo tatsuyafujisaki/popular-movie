@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView style="@style/card_view">
 
-        <LinearLayout
-            style="@style/default_layout"
-            android:paddingStart="@dimen/trailer_linear_layout_padding_start"
-            android:paddingEnd="@dimen/trailer_linear_layout_padding_end">
+        <android.support.constraint.ConstraintLayout style="@style/match_parents">
 
             <ImageView
+                android:id="@+id/play_image_view"
                 style="@style/image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:contentDescription="@string/play_image_description"
-                android:src="@drawable/ic_play_circle_filled" />
+                android:padding="@dimen/play_image_view_padding"
+                android:src="@drawable/ic_play_circle_filled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout style="@style/padded_vertical_linear_layout">
+            <TextView
+                android:id="@+id/trailer_label_text_view"
+                style="@style/constraint_layout_child"
+                android:layout_marginTop="@dimen/trailer_label_text_view_margin_top"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/trailer_info_text_view"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintLeft_toRightOf="@id/play_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/trailer_label_text_view"
-                    style="@style/default_layout"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-                <TextView
-                    android:id="@+id/trailer_info_text_view"
-                    style="@style/default_layout"
-                    android:layout_marginTop="@dimen/trailer_text_view_margin_top" />
-            </LinearLayout>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/trailer_info_text_view"
+                style="@style/constraint_layout_child"
+                android:layout_marginTop="@dimen/trailer_info_text_view_margin_top"
+                android:layout_marginBottom="@dimen/trailer_info_text_view_margin_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/play_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/trailer_label_text_view" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

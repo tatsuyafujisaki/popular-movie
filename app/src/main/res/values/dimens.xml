@@ -2,9 +2,6 @@
 <resources>
     <!-- LinearLayout -->
     <dimen name="linear_layout_padding">16dp</dimen>
-    <dimen name="trailer_linear_layout_padding_start">16dp</dimen>
-    <dimen name="trailer_linear_layout_padding_end">0dp</dimen>
-
     <!-- FAB -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_border_width">0dp</dimen>
@@ -16,7 +13,6 @@
 
     <!-- TextView -->
     <dimen name="overview_text_view_margin_top">8dp</dimen>
-    <dimen name="trailer_text_view_margin_top">8dp</dimen>
     <dimen name="review_text_view_margin_top">8dp</dimen>
 
     <!-- Misc -->
@@ -25,4 +21,8 @@
     <dimen name="app_bar_layout_height">600dp</dimen>
     <dimen name="toolbar_margin_bottom">55dp</dimen>
     <dimen name="tab_description_padding_top">24dp</dimen>
+    <dimen name="play_image_view_padding">16dp</dimen>
+    <dimen name="trailer_label_text_view_margin_top">8dp</dimen>
+    <dimen name="trailer_info_text_view_margin_top">8dp</dimen>
+    <dimen name="trailer_info_text_view_margin_bottom">8dp</dimen>
 </resources>
