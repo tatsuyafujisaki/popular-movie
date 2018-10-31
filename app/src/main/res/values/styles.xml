@@ -1,17 +1,4 @@
 <resources>
-
-    <style name="ThemeWithActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="ThemeWithoutActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <style name="default_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -36,16 +23,6 @@
         <item name="android:textSize">@dimen/collapsed_title_text_size</item>
     </style>
 
-    <style name="linear_recycler_view" parent="default_layout">
-        <item name="android:clipToPadding">false</item>
-        <item name="layoutManager">LinearLayoutManager</item>
-    </style>
-
-    <style name="grid_recycler_view" parent="default_layout">
-        <item name="android:clipToPadding">false</item>
-        <!-- layoutManger will be set with dynamically calculated columnSpan in code -->
-    </style>
-
     <style name="image_view" parent="default_layout">
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">centerCrop</item>
@@ -58,32 +35,15 @@
         <item name="cardElevation">@dimen/card_elevation</item>
     </style>
 
-    <style name="constraint_layout_child">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="recycler_view" parent="default_layout">
+        <item name="android:clipToPadding">false</item>
     </style>
 
-    <style name="label_text_view_in_fragment_overview" parent="constraint_layout_child">
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
-        <item name="android:layout_marginTop">@dimen/fragment_overview_big_margin</item>
-        <item name="android:layout_marginBottom">@dimen/fragment_overview_small_margin</item>
-        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_overview_small_margin</item>
+    <style name="linear_recycler_view" parent="recycler_view">
+        <item name="layoutManager">LinearLayoutManager</item>
     </style>
 
-    <style name="value_text_view_in_fragment_overview" parent="constraint_layout_child">
-        <item name="android:layout_marginBottom">@dimen/fragment_overview_big_margin</item>
-        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_overview_small_margin</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
-    </style>
-
-    <style name="card_view_in_constraint_layout" parent="card_view">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
+    <style name="grid_recycler_view" parent="recycler_view">
+        <item name="layoutManager">GridLayoutManager</item>
     </style>
 </resources>

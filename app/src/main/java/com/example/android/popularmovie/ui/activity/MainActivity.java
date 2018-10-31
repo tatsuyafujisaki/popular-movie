@@ -45,7 +45,9 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, ResourceUtils.getGridColumnSpan(getResources(), R.integer.poster_grid_column_width)));
+
+        ((GridLayoutManager) binding.recyclerView.getLayoutManager())
+                .setSpanCount(ResourceUtils.getGridColumnSpan(getResources(), R.integer.poster_grid_column_width));
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="constraint_layout_child">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="label_text_view_in_fragment_overview" parent="constraint_layout_child">
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="android:layout_marginTop">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fragment_overview_small_margin</item>
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_small_margin</item>
+    </style>
+
+    <style name="value_text_view_in_fragment_overview" parent="constraint_layout_child">
+        <item name="android:layout_marginBottom">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_small_margin</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
+    <style name="card_view_in_constraint_layout" parent="card_view">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+</resources>
