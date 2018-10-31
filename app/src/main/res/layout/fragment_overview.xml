@@ -17,7 +17,6 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/original_title_card"
                 style="@style/card_view_in_constraint_layout"
-                app:layout_constraintBottom_toTopOf="@id/release_date_card"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.constraint.ConstraintLayout style="@style/match_parents">
@@ -44,7 +43,6 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/release_date_card"
                 style="@style/card_view_in_constraint_layout"
-                app:layout_constraintBottom_toTopOf="@id/vote_average_card"
                 app:layout_constraintTop_toBottomOf="@id/original_title_card">
 
                 <android.support.constraint.ConstraintLayout style="@style/match_parents">
@@ -71,7 +69,6 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/vote_average_card"
                 style="@style/card_view_in_constraint_layout"
-                app:layout_constraintBottom_toTopOf="@id/overview_card"
                 app:layout_constraintTop_toBottomOf="@id/release_date_card">
 
                 <android.support.constraint.ConstraintLayout style="@style/match_parents">
@@ -98,7 +95,6 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/overview_card"
                 style="@style/card_view_in_constraint_layout"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vote_average_card">
 
                 <android.support.constraint.ConstraintLayout style="@style/match_parents">

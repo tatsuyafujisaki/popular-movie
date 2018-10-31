@@ -36,10 +36,14 @@
         <item name="android:textSize">@dimen/collapsed_title_text_size</item>
     </style>
 
-    <style name="recycler_view" parent="default_layout">
+    <style name="linear_recycler_view" parent="default_layout">
         <item name="android:clipToPadding">false</item>
-        <item name="android:numColumns">auto_fit</item>
         <item name="layoutManager">LinearLayoutManager</item>
+    </style>
+
+    <style name="grid_recycler_view" parent="default_layout">
+        <item name="android:clipToPadding">false</item>
+        <!-- layoutManger will be set with dynamically calculated columnSpan in code -->
     </style>
 
     <style name="image_view" parent="default_layout">
