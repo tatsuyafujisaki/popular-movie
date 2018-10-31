@@ -1,5 +1,4 @@
 <resources>
-
     <style name="ThemeWithActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -27,6 +26,33 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="collapsed_title_text_appearance">
+        <!-- This is to prevent the title of the collapsed toolbar from becoming too small in landscape -->
+        <item name="android:textSize">@dimen/collapsed_title_text_size</item>
+    </style>
+
+    <style name="recycler_view" parent="default_layout">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:numColumns">auto_fit</item>
+        <item name="layoutManager">LinearLayoutManager</item>
+    </style>
+
+    <style name="image_view" parent="default_layout">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="card_view" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/card_margin</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
+
+    <!--
+        ConstraintLayout
+    -->
+
     <style name="constraint_layout_child">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -49,37 +75,11 @@
         <item name="android:layout_marginEnd">@dimen/fragment_overview_big_margin</item>
         <item name="android:layout_marginBottom">@dimen/fragment_overview_big_margin</item>
     </style>
-    <!-- This is to prevent the title of the collapsed toolbar from becoming too small in landscape -->
-    <style name="collapsed_title_text_appearance">
-        <item name="android:textSize">@dimen/collapsed_title_text_size</item>
-    </style>
 
-    <style name="image_view" parent="CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:adjustViewBounds">true</item>
-        <item name="android:scaleType">centerCrop</item>
-    </style>
-
-    <style name="card_view" parent="CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/card_margin</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
-    </style>
-
-    <style name="card_view_in_constraint_layout" parent="CardView">
+    <style name="card_view_in_constraint_layout" parent="card_view">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
-        <item name="android:layout_margin">@dimen/card_margin</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
-    </style>
-
-    <style name="recycler_view" parent="default_layout">
-        <item name="android:clipToPadding">false</item>
-        <item name="android:numColumns">auto_fit</item>
-        <item name="layoutManager">LinearLayoutManager</item>
     </style>
 </resources>
