@@ -19,6 +19,7 @@ import com.example.android.popularmovie.ui.adapter.MovieRecyclerViewAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
 import com.example.android.popularmovie.util.ui.BundleUtils;
+import com.example.android.popularmovie.util.ui.ResourceUtils;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
@@ -44,7 +45,7 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, Math.max(2, getResources().getDisplayMetrics().widthPixels / getResources().getInteger(R.integer.poster_grid_column_width))));
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(this, ResourceUtils.getGridColumnSpan(getResources(), R.integer.poster_grid_column_width)));
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
