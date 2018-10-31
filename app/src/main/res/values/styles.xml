@@ -1,4 +1,5 @@
 <resources>
+
     <style name="ThemeWithActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -52,7 +53,6 @@
     <!--
         ConstraintLayout
     -->
-
     <style name="constraint_layout_child">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -61,18 +61,16 @@
     <style name="text_view_in_constraint_layout" parent="constraint_layout_child">
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_big_margin</item>
     </style>
 
     <style name="label_text_view_in_fragment_overview" parent="text_view_in_constraint_layout">
-        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
         <item name="android:layout_marginTop">@dimen/fragment_overview_big_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_overview_big_margin</item>
         <item name="android:layout_marginBottom">@dimen/fragment_overview_small_margin</item>
     </style>
 
     <style name="value_text_view_in_fragment_overview" parent="text_view_in_constraint_layout">
-        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
-        <item name="android:layout_marginEnd">@dimen/fragment_overview_big_margin</item>
         <item name="android:layout_marginBottom">@dimen/fragment_overview_big_margin</item>
     </style>
 
