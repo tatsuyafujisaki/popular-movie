@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        style="@style/recycler_view" />
+        style="@style/recycler_view"
+        tools:listitem="@layout/review_recycler_view_item" />
 </layout>

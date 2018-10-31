@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.ui.adapter.TrailerAdapter;
+import com.example.android.popularmovie.ui.adapter.TrailerRecyclerViewAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
@@ -52,7 +52,7 @@ public class TrailerFragment extends Fragment {
         if (response.isSuccessful) {
             response.data.observe(this, trailers -> {
                 if (!Objects.requireNonNull(trailers).isEmpty()) {
-                    binding.recyclerView.setAdapter(new TrailerAdapter(trailers));
+                    binding.recyclerView.setAdapter(new TrailerRecyclerViewAdapter(trailers));
                 }
             });
         }

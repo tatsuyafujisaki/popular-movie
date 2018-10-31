@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -30,7 +31,8 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/poster_description"
                     android:src="@{movie.posterPath}"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax"
+                    tools:src="@tools:sample/avatars"/>
                 <!-- app:layout_collapseMode="pin" is to prevent the up button from disappearing when the toolbar is collapsed -->
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"

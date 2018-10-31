@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.example.android.popularmovie.R;
-import com.example.android.popularmovie.databinding.MovieViewHolderBinding;
+import com.example.android.popularmovie.databinding.MovieRecyclerViewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.ui.activity.DetailActivity;
 import com.example.android.popularmovie.util.ui.IntentUtils;
@@ -18,11 +18,11 @@ import com.example.android.popularmovie.util.NetworkUtils;
 
 import java.util.List;
 
-public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+public final class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
     private final Activity activity;
     private final List<Movie> movies;
 
-    public MovieAdapter(Activity activity, List<Movie> movies) {
+    public MovieRecyclerViewAdapter(Activity activity, List<Movie> movies) {
         this.activity = activity;
         this.movies = movies;
     }
@@ -30,7 +30,7 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(MovieViewHolderBinding.inflate(LayoutInflater.from(activity), parent, false));
+        return new ViewHolder(MovieRecyclerViewItemBinding.inflate(LayoutInflater.from(activity), parent, false));
     }
 
     @Override
@@ -44,9 +44,9 @@ public final class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        final MovieViewHolderBinding binding;
+        final MovieRecyclerViewItemBinding binding;
 
-        ViewHolder(MovieViewHolderBinding binding) {
+        ViewHolder(MovieRecyclerViewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);

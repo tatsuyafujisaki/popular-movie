@@ -10,7 +10,7 @@
             type="com.example.android.popularmovie.room.entity.Movie" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView style="@style/match_parents">
+    <android.support.v4.widget.NestedScrollView style="@style/nested_scroll_view">
 
         <android.support.constraint.ConstraintLayout style="@style/match_parents">
 

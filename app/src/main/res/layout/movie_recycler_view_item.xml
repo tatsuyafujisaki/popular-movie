@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/movie_image_view"
+        style="@style/image_view"
+        android:contentDescription="@string/poster_description"
+        tools:src="@tools:sample/avatars" />
+</layout>
