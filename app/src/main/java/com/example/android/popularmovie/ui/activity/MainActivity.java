@@ -83,7 +83,7 @@ public final class MainActivity extends AppCompatActivity {
 
         setMovies(movieViewModel.getMovies(movieType));
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

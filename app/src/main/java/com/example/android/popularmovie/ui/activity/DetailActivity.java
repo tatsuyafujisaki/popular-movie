@@ -87,13 +87,8 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (originalFavorite != movie.isFavorite) {
-                setResult(RESULT_OK, IntentUtils.createIntent(movie.id));
-            }
-
-            onBackPressed();
-            return true;
+        if (item.getItemId() == android.R.id.home && originalFavorite != movie.isFavorite) {
+            setResult(RESULT_OK, IntentUtils.createIntent(movie.id));
         }
 
         return super.onOptionsItemSelected(item);
