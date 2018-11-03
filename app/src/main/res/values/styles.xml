@@ -9,13 +9,17 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="wrap_contents">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="nested_scroll_view" parent="match_parents">
         <item name="android:fillViewport">true</item>
     </style>
 
-    <style name="wrap_contents">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="linear_layout" parent="default_layout">
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="collapsed_title_text_appearance">
@@ -45,5 +49,18 @@
 
     <style name="grid_recycler_view" parent="recycler_view">
         <item name="layoutManager">GridLayoutManager</item>
+    </style>
+
+    <style name="overview_label_text_view" parent="default_layout">
+        <item name="android:layout_marginTop">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fragment_overview_small_margin</item>
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_small_margin</item>
+    </style>
+
+    <style name="overview_value_text_view" parent="default_layout">
+        <item name="android:layout_marginBottom">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginStart">@dimen/fragment_overview_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fragment_overview_small_margin</item>
     </style>
 </resources>

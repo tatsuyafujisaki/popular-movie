@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.CardView style="@style/card_view">
 
-        <android.support.constraint.ConstraintLayout style="@style/match_parents">
+        <LinearLayout style="@style/linear_layout">
 
             <TextView
                 android:id="@+id/review_label_text_view"
-                style="@style/constraint_layout_child"
+                style="@style/default_layout"
                 android:layout_margin="@dimen/review_view_holder_margin"
-                app:layout_constraintBottom_toTopOf="@+id/review_content_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/review_content_text_view"
-                style="@style/constraint_layout_child"
+                style="@style/default_layout"
                 android:layout_marginStart="@dimen/review_view_holder_margin"
                 android:layout_marginEnd="@dimen/review_view_holder_margin"
                 android:layout_marginBottom="@dimen/review_view_holder_margin"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintBottom_toTopOf="@id/review_url_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/review_label_text_view"
                 tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/review_url_text_view"
-                style="@style/constraint_layout_child"
+                style="@style/default_layout"
                 android:layout_marginStart="@dimen/review_view_holder_margin"
                 android:layout_marginEnd="@dimen/review_view_holder_margin"
                 android:layout_marginBottom="@dimen/review_view_holder_margin"
                 android:autoLink="web"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/review_content_text_view"
                 tools:text="@tools:sample/lorem" />
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>
