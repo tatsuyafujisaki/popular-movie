@@ -35,7 +35,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NetworkUtils.picasso(movies.get(position).posterPath).into(holder.binding.movieImageView);
     }
 

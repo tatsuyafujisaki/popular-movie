@@ -32,7 +32,7 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trailer trailer = trailers.get(position);
 
         holder.binding.trailerLabelTextView.setText(trailer.name);

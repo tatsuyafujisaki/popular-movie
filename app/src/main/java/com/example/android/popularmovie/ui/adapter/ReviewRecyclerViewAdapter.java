@@ -28,7 +28,7 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = reviews.get(position);
 
         holder.binding.reviewLabelTextView.setText(context.getString(R.string.review_label_format, position + 1, review.author));
