@@ -29,11 +29,11 @@ public class IntentUtils {
         return getIntent(fragment).getParcelableArrayListExtra(key);
     }
 
-    private static Intent getIntent(Fragment fragment) {
-        return getIntent(Objects.requireNonNull(fragment.getActivity()));
-    }
-
     private static Intent getIntent(Activity activity) {
         return activity.getIntent();
+    }
+
+    private static Intent getIntent(Fragment fragment) {
+        return getIntent(Objects.requireNonNull(fragment.getActivity()));
     }
 }

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         ((GridLayoutManager) binding.recyclerView.getLayoutManager())
-                .setSpanCount(ResourceUtils.getGridColumnSpan(getResources(), R.integer.poster_grid_column_width));
+                .setSpanCount(ResourceUtils.getGridColumnSpan(this, R.integer.poster_grid_column_width));
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
-        if (requestCode == getResources().getInteger(R.integer.activity_request_code) && resultCode == RESULT_OK) {
+        if (requestCode == ResourceUtils.getInteger(this, R.integer.activity_request_code) && resultCode == RESULT_OK) {
             int movieId = IntentUtils.getIntExtra(data, null);
             if (movieType == MovieType.FAVORITE) {
                 for (Movie movie : movies) {
