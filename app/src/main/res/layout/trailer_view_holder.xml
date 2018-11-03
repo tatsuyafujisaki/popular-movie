@@ -1,53 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.CardView style="@style/card_view">
 
-        <android.support.constraint.ConstraintLayout style="@style/match_parents">
+        <RelativeLayout style="@style/match_parents">
 
             <ImageView
                 android:id="@+id/play_image_view"
                 style="@style/image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/play_image_view_margin"
                 android:contentDescription="@string/play_image_description"
                 android:src="@drawable/ic_play_circle_filled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/barrier"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_play_circle_filled" />
-
-            <android.support.constraint.Barrier
-                android:id="@+id/barrier"
-                style="@style/wrap_contents"
-                app:barrierDirection="left"
-                app:constraint_referenced_ids="trailer_label_text_view, trailer_info_text_view" />
 
             <TextView
                 android:id="@+id/trailer_label_text_view"
-                style="@style/constraint_layout_child"
+                style="@style/wrap_contents"
                 android:layout_marginTop="@dimen/trailer_view_holder_big_margin"
                 android:layout_marginEnd="@dimen/trailer_view_holder_big_margin"
                 android:layout_marginBottom="@dimen/trailer_view_holder_small_margin"
+                android:layout_toEndOf="@id/play_image_view"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintBottom_toTopOf="@id/trailer_info_text_view"
-                app:layout_constraintStart_toEndOf="@id/barrier"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/trailer_info_text_view"
-                style="@style/constraint_layout_child"
+                style="@style/wrap_contents"
+                android:layout_toEndOf="@id/play_image_view"
+                android:layout_below="@id/trailer_label_text_view"
                 android:layout_marginEnd="@dimen/trailer_view_holder_big_margin"
                 android:layout_marginBottom="@dimen/trailer_view_holder_big_margin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintTop_toBottomOf="@+id/trailer_label_text_view"
                 tools:text="@tools:sample/lorem" />
-        </android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </layout>
