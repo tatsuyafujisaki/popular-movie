@@ -1,34 +1,39 @@
 package com.example.android.popularmovie.util.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-public final class IntentUtils {
-    private static final String KEY = null;
-
-    public static int getIntExtra(@NonNull Intent intent) {
-        return intent.getIntExtra(KEY, Integer.MIN_VALUE);
+public class IntentUtils {
+    public static int getIntExtra(Intent intent, String key) {
+        return intent.getIntExtra(key, Integer.MIN_VALUE);
     }
 
-    public static <T extends Parcelable> T getParcelableExtra(@NonNull Activity activity) {
-        return activity.getIntent().getParcelableExtra(KEY);
+    public static int getIntExtra(Fragment fragment, String key) {
+        return getIntExtra(getIntent(fragment), key);
     }
 
-    public static <T extends Parcelable> T getParcelableExtra(@NonNull Fragment fragment) {
-        return getParcelableExtra(Objects.requireNonNull(fragment.getActivity()));
+    public static <T extends Parcelable> T getParcelableExtra(Activity activity, String key) {
+        return getIntent(activity).getParcelableExtra(key);
     }
 
-    public static Intent createIntent(int value) {
-        return new Intent().putExtra(KEY, value);
+    public static <T extends Parcelable> T getParcelableExtra(Fragment fragment, String key) {
+        return getIntent(fragment).getParcelableExtra(key);
     }
 
-    public static Intent createIntent(Context packageContext, Class<?> cls, Parcelable value) {
-        return new Intent(packageContext, cls).putExtra(KEY, value);
+    public static <T extends Parcelable> ArrayList<T> getParcelableArrayListExtra(Fragment fragment, String key) {
+        return getIntent(fragment).getParcelableArrayListExtra(key);
+    }
+
+    private static Intent getIntent(Fragment fragment) {
+        return getIntent(Objects.requireNonNull(fragment.getActivity()));
+    }
+
+    private static Intent getIntent(Activity activity) {
+        return activity.getIntent();
     }
 }

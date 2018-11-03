@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 @Entity
-public final class Movie implements Parcelable {
+public class Movie implements Parcelable {
     @PrimaryKey
     public int id;
 

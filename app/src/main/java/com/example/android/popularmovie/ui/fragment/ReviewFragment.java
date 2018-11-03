@@ -47,7 +47,7 @@ public class ReviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(((Movie)IntentUtils.getParcelableExtra(this)).id);
+        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(((Movie)IntentUtils.getParcelableExtra(this, null)).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, reviews -> {

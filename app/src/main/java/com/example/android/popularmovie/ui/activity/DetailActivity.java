@@ -17,7 +17,7 @@ import com.example.android.popularmovie.ui.fragment.OverviewFragment;
 import com.example.android.popularmovie.ui.fragment.ReviewFragment;
 import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.BundleUtils;
+import com.example.android.popularmovie.util.ui.IntentBuilder;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
@@ -64,10 +64,10 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(binding.tabLayout.getTabAt(1)).setIcon(R.drawable.ic_movie);
         Objects.requireNonNull(binding.tabLayout.getTabAt(2)).setIcon(R.drawable.ic_thumb_up);
 
-        movie = IntentUtils.getParcelableExtra(this);
+        movie = IntentUtils.getParcelableExtra(this, null);
 
         if (savedInstanceState != null) {
-            movie.isFavorite = BundleUtils.getBoolean(savedInstanceState);
+            movie.isFavorite = savedInstanceState.getBoolean(null);
         }
 
         originalFavorite = Objects.requireNonNull(movie).isFavorite;
@@ -88,7 +88,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && originalFavorite != movie.isFavorite) {
-            setResult(RESULT_OK, IntentUtils.createIntent(movie.id));
+            setResult(RESULT_OK, new IntentBuilder().putExtra(null, movie.id).build());
         }
 
         return super.onOptionsItemSelected(item);
@@ -96,7 +96,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        BundleUtils.putBoolean(outState, movie.isFavorite);
+        outState.putBoolean(null, movie.isFavorite);
         super.onSaveInstanceState(outState);
     }
 

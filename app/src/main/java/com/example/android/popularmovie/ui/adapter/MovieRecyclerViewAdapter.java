@@ -13,12 +13,12 @@ import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.MovieRecyclerViewItemBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.ui.activity.DetailActivity;
-import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.util.NetworkUtils;
+import com.example.android.popularmovie.util.ui.IntentBuilder;
 
 import java.util.List;
 
-public final class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
+public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
     private final Activity activity;
     private final List<Movie> movies;
 
@@ -54,7 +54,7 @@ public final class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRe
 
         @Override
         public void onClick(View v) {
-            Intent intent = IntentUtils.createIntent(activity, DetailActivity.class, movies.get(getAdapterPosition()));
+            Intent intent = new IntentBuilder(activity, DetailActivity.class).putParcelable(null, movies.get(getAdapterPosition())).build();
             activity.startActivityForResult(intent, activity.getResources().getInteger(R.integer.activity_request_code));
         }
     }

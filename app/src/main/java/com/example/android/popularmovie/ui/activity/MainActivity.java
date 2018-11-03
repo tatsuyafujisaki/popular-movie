@@ -18,9 +18,8 @@ import com.example.android.popularmovie.room.repository.MovieRepository.MovieTyp
 import com.example.android.popularmovie.ui.adapter.MovieRecyclerViewAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.BundleUtils;
-import com.example.android.popularmovie.util.ui.ResourceUtils;
 import com.example.android.popularmovie.util.ui.IntentUtils;
+import com.example.android.popularmovie.util.ui.ResourceUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
-public final class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     @Inject
     MovieViewModel movieViewModel;
 
@@ -54,7 +53,7 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
 
-        movieType = savedInstanceState != null ? BundleUtils.getEnum(savedInstanceState) : MovieType.POPULAR;
+        movieType = savedInstanceState != null ? (MovieType) savedInstanceState.getSerializable(null) : MovieType.POPULAR;
 
         setMovies(movieViewModel.getMovies(movieType));
     }
@@ -95,7 +94,7 @@ public final class MainActivity extends AppCompatActivity {
 
         // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
         if (requestCode == getResources().getInteger(R.integer.activity_request_code) && resultCode == RESULT_OK) {
-            int movieId = IntentUtils.getIntExtra(data);
+            int movieId = IntentUtils.getIntExtra(data, null);
             if (movieType == MovieType.FAVORITE) {
                 for (Movie movie : movies) {
                     if (movie.id == movieId) {
@@ -105,8 +104,8 @@ public final class MainActivity extends AppCompatActivity {
                 binding.recyclerView.setAdapter(new MovieRecyclerViewAdapter(this, movies));
             } else {
                 for (Movie movie : movies) {
-                    if(movie.id == movieId){
-                        movie.isFavorite = ! movie.isFavorite;
+                    if (movie.id == movieId) {
+                        movie.isFavorite = !movie.isFavorite;
                         break;
                     }
                 }
@@ -116,7 +115,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        BundleUtils.putEnum(outState, movieType);
+        outState.putSerializable(null, movieType);
         super.onSaveInstanceState(outState);
     }
 

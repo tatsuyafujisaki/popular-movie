@@ -16,7 +16,7 @@ import com.example.android.popularmovie.room.entity.Trailer;
 
 import java.util.List;
 
-public final class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecyclerViewAdapter.ViewHolder> {
+public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecyclerViewAdapter.ViewHolder> {
     private final List<Trailer> trailers;
     private Context context;
 

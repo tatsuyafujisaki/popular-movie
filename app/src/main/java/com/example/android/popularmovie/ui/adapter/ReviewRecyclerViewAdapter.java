@@ -12,7 +12,7 @@ import com.example.android.popularmovie.room.entity.Review;
 
 import java.util.List;
 
-public final class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecyclerViewAdapter.ViewHolder> {
+public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecyclerViewAdapter.ViewHolder> {
     private final List<Review> reviews;
     private Context context;
 

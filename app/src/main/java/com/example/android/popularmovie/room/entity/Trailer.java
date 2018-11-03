@@ -21,7 +21,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         onDelete = CASCADE,
         onUpdate = CASCADE),
         indices = {@Index("movie_id")})
-public final class Trailer implements Parcelable {
+public class Trailer implements Parcelable {
     @PrimaryKey
     @NonNull
     public String id;
