@@ -16,11 +16,11 @@ import com.example.android.popularmovie.room.entity.Trailer;
 
 import java.util.List;
 
-public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecyclerViewAdapter.ViewHolder> {
+public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHolder> {
     private final List<Trailer> trailers;
     private Context context;
 
-    public TrailerRecyclerViewAdapter(List<Trailer> trailers) {
+    public TrailerAdapter(List<Trailer> trailers) {
         this.trailers = trailers;
     }
 
@@ -28,7 +28,7 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new ViewHolder(TrailerRecyclerViewItemBinding.inflate(LayoutInflater.from(context), parent, false));
+        return new ViewHolder(TrailerViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
     @Override
@@ -45,9 +45,9 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TrailerRecyclerViewItemBinding binding;
+        final TrailerViewHolderBinding binding;
 
-        ViewHolder(TrailerRecyclerViewItemBinding binding) {
+        ViewHolder(TrailerViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);

@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 import com.example.android.popularmovie.databinding.FragmentReviewBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
-import com.example.android.popularmovie.ui.adapter.ReviewRecyclerViewAdapter;
+import com.example.android.popularmovie.ui.activity.DetailActivity;
+import com.example.android.popularmovie.ui.adapter.ReviewAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
@@ -47,12 +48,12 @@ public class ReviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(((Movie)IntentUtils.getParcelableExtra(this, null)).id);
+        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(((Movie)IntentUtils.getParcelableExtra(this, DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY)).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, reviews -> {
                 if (!Objects.requireNonNull(reviews).isEmpty()) {
-                    binding.recyclerView.setAdapter(new ReviewRecyclerViewAdapter(reviews));
+                    binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
                 }
             });
         }

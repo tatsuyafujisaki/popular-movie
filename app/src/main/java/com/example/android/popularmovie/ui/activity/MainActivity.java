@@ -15,7 +15,7 @@ import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
-import com.example.android.popularmovie.ui.adapter.MovieRecyclerViewAdapter;
+import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
 import com.example.android.popularmovie.util.ui.IntentUtils;
@@ -31,6 +31,8 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String MOVIE_ID_INT_EXTRA_KEY = null;
+
     @Inject
     MovieViewModel movieViewModel;
 
@@ -94,14 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
         // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
         if (requestCode == ResourceUtils.getInteger(this, R.integer.activity_request_code) && resultCode == RESULT_OK) {
-            int movieId = IntentUtils.getIntExtra(data, null);
+            int movieId = IntentUtils.getIntExtra(data, MOVIE_ID_INT_EXTRA_KEY);
             if (movieType == MovieType.FAVORITE) {
                 for (Movie movie : movies) {
                     if (movie.id == movieId) {
                         movies.remove(movie);
                     }
                 }
-                binding.recyclerView.setAdapter(new MovieRecyclerViewAdapter(this, movies));
+                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
             } else {
                 for (Movie movie : movies) {
                     if (movie.id == movieId) {
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(movies).isEmpty()) {
                     this.movies = (ArrayList<Movie>) movies;
-                    binding.recyclerView.setAdapter(new MovieRecyclerViewAdapter(this, movies));
+                    binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
                     response.data.removeObservers(this);
                 }
             });

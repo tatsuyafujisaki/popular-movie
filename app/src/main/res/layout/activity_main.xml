@@ -5,5 +5,5 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         style="@style/grid_recycler_view"
-        tools:listitem="@layout/movie_recycler_view_item" />
+        tools:listitem="@layout/movie_view_holder" />
 </layout>

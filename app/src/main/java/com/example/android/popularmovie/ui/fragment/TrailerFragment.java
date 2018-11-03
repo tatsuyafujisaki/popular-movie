@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.ui.adapter.TrailerRecyclerViewAdapter;
+import com.example.android.popularmovie.ui.activity.DetailActivity;
+import com.example.android.popularmovie.ui.adapter.TrailerAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
@@ -24,6 +25,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
+
 
 public class TrailerFragment extends Fragment {
     @Inject
@@ -47,12 +49,12 @@ public class TrailerFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(((Movie)IntentUtils.getParcelableExtra(this, null)).id);
+        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(((Movie)IntentUtils.getParcelableExtra(this, DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY)).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, trailers -> {
                 if (!Objects.requireNonNull(trailers).isEmpty()) {
-                    binding.recyclerView.setAdapter(new TrailerRecyclerViewAdapter(trailers));
+                    binding.recyclerView.setAdapter(new TrailerAdapter(trailers));
                 }
             });
         }

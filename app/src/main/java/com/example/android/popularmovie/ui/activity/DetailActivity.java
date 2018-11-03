@@ -30,6 +30,8 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 
 public class DetailActivity extends AppCompatActivity {
+    public static final String MOVIE_PARCELABLE_EXTRA_KEY = null;
+
     @Inject
     MovieViewModel movieViewModel;
 
@@ -64,7 +66,7 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(binding.tabLayout.getTabAt(1)).setIcon(R.drawable.ic_movie);
         Objects.requireNonNull(binding.tabLayout.getTabAt(2)).setIcon(R.drawable.ic_thumb_up);
 
-        movie = IntentUtils.getParcelableExtra(this, null);
+        movie = IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY);
 
         if (savedInstanceState != null) {
             movie.isFavorite = savedInstanceState.getBoolean(null);
@@ -88,7 +90,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && originalFavorite != movie.isFavorite) {
-            setResult(RESULT_OK, new IntentBuilder().putExtra(null, movie.id).build());
+            setResult(RESULT_OK, new IntentBuilder().putExtra(MainActivity.MOVIE_ID_INT_EXTRA_KEY, movie.id).build());
         }
 
         return super.onOptionsItemSelected(item);
