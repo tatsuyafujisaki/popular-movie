@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.example.android.popularmovie.databinding.FragmentTrailerBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Trailer;
-import com.example.android.popularmovie.ui.activity.DetailActivity;
 import com.example.android.popularmovie.ui.adapter.TrailerAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.ui.IntentUtils;
@@ -26,6 +25,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.example.android.popularmovie.ui.activity.DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY;
 
 public class TrailerFragment extends Fragment {
     @Inject
@@ -49,7 +49,7 @@ public class TrailerFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(((Movie)IntentUtils.getParcelableExtra(this, DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY)).id);
+        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(((Movie)IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY)).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, trailers -> {

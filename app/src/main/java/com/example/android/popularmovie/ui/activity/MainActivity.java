@@ -2,6 +2,7 @@ package com.example.android.popularmovie.ui.activity;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +20,6 @@ import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
 import com.example.android.popularmovie.util.ui.IntentUtils;
-import com.example.android.popularmovie.util.ui.ResourceUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
@@ -34,7 +34,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String MOVIE_ID_INT_EXTRA_KEY = null;
 
     @Inject
+    Resources resources;
+
+    @Inject
     MovieViewModel movieViewModel;
+
+    @Inject
+    int gridColumnSpan;
 
     private ActivityMainBinding binding;
     private ArrayList<Movie> movies;
@@ -47,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        ((GridLayoutManager) binding.recyclerView.getLayoutManager())
-                .setSpanCount(ResourceUtils.getGridColumnSpan(this, R.integer.poster_grid_column_width));
+        ((GridLayoutManager) binding.recyclerView.getLayoutManager()).setSpanCount(gridColumnSpan);
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
@@ -95,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If movies is not null and the favorite flag of a movie is toggled in DetailActivity, update the favorite flag in movies too.
-        if (requestCode == ResourceUtils.getInteger(this, R.integer.activity_request_code) && resultCode == RESULT_OK) {
+        if (requestCode == resources.getInteger(R.integer.activity_request_code) && resultCode == RESULT_OK) {
             int movieId = IntentUtils.getIntExtra(data, MOVIE_ID_INT_EXTRA_KEY);
             if (movieType == MovieType.FAVORITE) {
                 for (Movie movie : movies) {

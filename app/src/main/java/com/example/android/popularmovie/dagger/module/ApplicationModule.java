@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 
 import com.example.android.popularmovie.R;
@@ -49,6 +50,12 @@ public class ApplicationModule {
     @Provides
     static Context provideContext(Application application) {
         return application.getApplicationContext();
+    }
+
+    @Singleton
+    @Provides
+    static Resources provideResources(Context context) {
+        return context.getResources();
     }
 
     @Singleton
@@ -182,5 +189,11 @@ public class ApplicationModule {
                                                     ReviewDao reviewDao,
                                                     Executor executor) {
         return new ReviewRepository(tmdbService, reviewDao, executor);
+    }
+
+    @Singleton
+    @Provides
+    static int provideGridColumnSpan(Resources resources) {
+        return Math.max(1, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.grid_column_span));
     }
 }

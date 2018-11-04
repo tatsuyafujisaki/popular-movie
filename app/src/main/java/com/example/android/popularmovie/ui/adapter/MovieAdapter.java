@@ -15,27 +15,28 @@ import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.ui.activity.DetailActivity;
 import com.example.android.popularmovie.util.NetworkUtils;
 import com.example.android.popularmovie.util.ui.IntentBuilder;
-import com.example.android.popularmovie.util.ui.ResourceUtils;
 
 import java.util.List;
+
+import static com.example.android.popularmovie.ui.activity.DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private final Activity activity;
     private final List<Movie> movies;
 
-    public MovieAdapter(Activity activity, List<Movie> movies) {
+    public MovieAdapter(final Activity activity, final List<Movie> movies) {
         this.activity = activity;
         this.movies = movies;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(MovieViewHolderBinding.inflate(LayoutInflater.from(activity), parent, false));
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+        return new ViewHolder(MovieViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         NetworkUtils.picasso(movies.get(position).posterPath).into(holder.binding.movieImageView);
     }
 
@@ -47,19 +48,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         final MovieViewHolderBinding binding;
 
-        ViewHolder(MovieViewHolderBinding binding) {
+        ViewHolder(final MovieViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
-            Intent intent = new IntentBuilder(activity, DetailActivity.class)
-                    .putParcelable(DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition()))
+        public void onClick(final View v) {
+            final Intent intent = new IntentBuilder(v.getContext(), DetailActivity.class)
+                    .putParcelable(MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition()))
                     .build();
 
-            activity.startActivityForResult(intent, ResourceUtils.getInteger(activity, R.integer.activity_request_code));
+            activity.startActivityForResult(intent, v.getResources().getInteger(R.integer.activity_request_code));
         }
     }
 }

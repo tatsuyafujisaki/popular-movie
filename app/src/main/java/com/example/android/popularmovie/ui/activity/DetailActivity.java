@@ -29,6 +29,8 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
+import static com.example.android.popularmovie.ui.activity.MainActivity.MOVIE_ID_INT_EXTRA_KEY;
+
 public class DetailActivity extends AppCompatActivity {
     public static final String MOVIE_PARCELABLE_EXTRA_KEY = null;
 
@@ -90,7 +92,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && originalFavorite != movie.isFavorite) {
-            setResult(RESULT_OK, new IntentBuilder().putExtra(MainActivity.MOVIE_ID_INT_EXTRA_KEY, movie.id).build());
+            setResult(RESULT_OK, new IntentBuilder().putExtra(MOVIE_ID_INT_EXTRA_KEY, movie.id).build());
         }
 
         return super.onOptionsItemSelected(item);
