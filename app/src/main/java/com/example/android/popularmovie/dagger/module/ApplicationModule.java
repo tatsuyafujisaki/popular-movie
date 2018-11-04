@@ -42,8 +42,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApplicationModule {
     @Singleton
     @Provides
-    static ViewModel provideViewModel(FragmentActivity activity, Class<MovieViewModel> modelClass, ViewModelProvider.Factory factory) {
-        return ViewModelProviders.of(activity, factory).get(modelClass);
+    static Executor provideExecutor() {
+        return Executors.newSingleThreadExecutor();
     }
 
     @Singleton
@@ -56,12 +56,6 @@ public class ApplicationModule {
     @Provides
     static Resources provideResources(Context context) {
         return context.getResources();
-    }
-
-    @Singleton
-    @Provides
-    static Executor provideExecutor() {
-        return Executors.newSingleThreadExecutor();
     }
 
     @Singleton
@@ -90,6 +84,12 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
+    static ViewModel provideViewModel(FragmentActivity activity, Class<MovieViewModel> modelClass, ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(activity, factory).get(modelClass);
+    }
+
+    @Singleton
+    @Provides
     @Named("TmdbJsonResultElement")
     static String provideTmdbJsonResultElement(Context context) {
         return context.getString(R.string.tmdb_json_result_element);
@@ -104,16 +104,10 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    @Named("TmdbImageBaseUrl")
-    static String provideTmdbImageBaseUrl(Context context) {
-        return context.getString(R.string.tmdb_image_base_url);
-    }
-
-    @Singleton
-    @Provides
     @Named("GsonWithMovieArrayAdapter")
     static Gson provideGsonWithMovieArrayAdapter(@Named("TmdbJsonResultElement") String jsonResultElement) {
-        return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Movie>>() {}.getType(), (JsonDeserializer<List<Movie>>) (json, type, context1)
+        return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Movie>>() {
+        }.getType(), (JsonDeserializer<List<Movie>>) (json, type, context1)
                 -> new Gson().fromJson(json.getAsJsonObject().getAsJsonArray(jsonResultElement), type)).create();
     }
 
@@ -121,7 +115,8 @@ public class ApplicationModule {
     @Provides
     @Named("GsonWithTrailerArrayAdapter")
     static Gson provideGsonWithTrailerArrayAdapter(@Named("TmdbJsonResultElement") String jsonResultElement) {
-        return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Trailer>>() {}.getType(), (JsonDeserializer<List<Trailer>>) (json, type, context1)
+        return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Trailer>>() {
+        }.getType(), (JsonDeserializer<List<Trailer>>) (json, type, context1)
                 -> new Gson().fromJson(json.getAsJsonObject().getAsJsonArray(jsonResultElement), type)).create();
     }
 
@@ -129,7 +124,8 @@ public class ApplicationModule {
     @Provides
     @Named("GsonWithReviewArrayAdapter")
     static Gson provideGsonWithReviewArrayAdapter(@Named("TmdbJsonResultElement") String jsonResultElement) {
-        return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Review>>() {}.getType(), (JsonDeserializer<List<Review>>) (json, type, context1)
+        return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Review>>() {
+        }.getType(), (JsonDeserializer<List<Review>>) (json, type, context1)
                 -> new Gson().fromJson(json.getAsJsonObject().getAsJsonArray(jsonResultElement), type)).create();
     }
 
@@ -168,11 +164,11 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    static MovieRepository provideMovieRepository(@Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService,
+    static MovieRepository provideMovieRepository(Context context,
+                                                  @Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService,
                                                   MovieDao movieDao,
-                                                  @Named("TmdbImageBaseUrl") String tmdbImageBaseUrl,
                                                   Executor executor) {
-        return new MovieRepository(tmdbService, movieDao, tmdbImageBaseUrl, executor);
+        return new MovieRepository(tmdbService, movieDao, context.getString(R.string.tmdb_image_base_url), executor);
     }
 
     @Singleton
