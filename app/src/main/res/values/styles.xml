@@ -1,4 +1,5 @@
 <resources>
+
     <style name="default_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -22,17 +23,12 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="collapsed_title_text_appearance">
-        <!-- This is to prevent the title of the collapsed toolbar from becoming too small in landscape -->
-        <item name="android:textSize">@dimen/collapsed_title_text_size</item>
-    </style>
-
     <style name="image_view" parent="default_layout">
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 
-    <style name="card_view" parent="CardView">
+    <style name="card_view" parent="CardView.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/card_margin</item>

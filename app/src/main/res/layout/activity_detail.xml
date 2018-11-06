@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,9 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_layout_height">
 
+            <!--
+                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+                is to replace the default app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                whose title is too small in landscape.
+            -->
             <android.support.design.widget.CollapsingToolbarLayout
                 style="@style/match_parents"
-                app:collapsedTitleTextAppearance="@style/collapsed_title_text_appearance"
+                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="@dimen/collapsing_toolbar_title_margin_bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -58,12 +63,10 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             style="@style/wrap_contents"
-            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin_end"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_favorite_border"
-            app:borderWidth="@dimen/fab_border_width"
-            app:elevation="@dimen/fab_elevation"
             app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|end" />
     </android.support.design.widget.CoordinatorLayout>
