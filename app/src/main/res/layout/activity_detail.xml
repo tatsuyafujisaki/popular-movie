@@ -18,13 +18,13 @@
             android:layout_height="@dimen/app_bar_layout_height">
 
             <!--
-                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
-                is to replace the default app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                whose title is too small in landscape.
+                Use app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+                because the title of the current theme ("?attr/actionBarTheme" a.k.a. "@style/TextAppearance.AppCompat.Widget.ActionBar.Title")
+                is too small in landscape.
             -->
             <android.support.design.widget.CollapsingToolbarLayout
                 style="@style/match_parents"
-                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="@dimen/collapsing_toolbar_title_margin_bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
