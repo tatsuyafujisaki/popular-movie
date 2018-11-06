@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 
-import java.util.List;
-
 public final class IntentBuilder {
     private final Intent intent;
 
@@ -24,11 +22,6 @@ public final class IntentBuilder {
 
     public IntentBuilder putParcelable(String key, Parcelable value) {
         intent.putExtra(key, value);
-        return this;
-    }
-
-    public IntentBuilder putParcelableArrayListExtra(String key, List<? extends Parcelable> value) {
-        intent.putParcelableArrayListExtra(key, Converter.toArrayList(value));
         return this;
     }
 
