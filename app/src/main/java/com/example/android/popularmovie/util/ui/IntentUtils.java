@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 
-import java.util.Objects;
-
 public class IntentUtils {
     public static int getIntExtra(Intent intent, String key) {
         return intent.getIntExtra(key, Integer.MIN_VALUE);
@@ -17,6 +15,6 @@ public class IntentUtils {
     }
 
     public static <T extends Parcelable> T getParcelableExtra(Fragment fragment, String key) {
-        return Objects.requireNonNull(fragment.getActivity()).getIntent().getParcelableExtra(key);
+        return fragment.requireActivity().getIntent().getParcelableExtra(key);
     }
 }
