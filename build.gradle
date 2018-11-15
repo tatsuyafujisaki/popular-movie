@@ -16,12 +16,8 @@ allprojects {
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             doLast {
-                options.compilerArgs.add('-Xlint:unchecked')
+                options.compilerArgs.add('-Xlint:deprecation')
             }
         }
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
