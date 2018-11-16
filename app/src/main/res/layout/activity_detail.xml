@@ -19,13 +19,13 @@
 
             <!--
                 Use app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
-                because the title of the current theme ("?attr/actionBarTheme" a.k.a. "@style/TextAppearance.AppCompat.Widget.ActionBar.Title")
+                because the title of the current theme ("?actionBarTheme" a.k.a. "@style/TextAppearance.AppCompat.Widget.ActionBar.Title")
                 is too small in landscape.
             -->
             <android.support.design.widget.CollapsingToolbarLayout
                 style="@style/match_parents"
                 app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="?colorPrimary"
                 app:expandedTitleMarginBottom="@dimen/collapsing_toolbar_title_margin_bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="@{movie.originalTitle}">
@@ -42,7 +42,7 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="?actionBarSize"
                     android:layout_marginBottom="@dimen/toolbar_margin_bottom"
                     app:layout_collapseMode="pin" />
 
@@ -50,7 +50,7 @@
                     android:id="@+id/tab_layout"
                     style="@style/default_layout"
                     android:layout_gravity="bottom"
-                    app:tabIndicatorColor="?attr/colorAccent" />
+                    app:tabIndicatorColor="?colorAccent" />
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 

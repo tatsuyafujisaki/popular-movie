@@ -16,7 +16,8 @@ allprojects {
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             doLast {
-                options.compilerArgs.add('-Xlint:deprecation')
+                // Assigning a collection requires an equals sign
+                options.compilerArgs += ['-Xlint:deprecation', '-Xlint:unchecked']
             }
         }
     }
