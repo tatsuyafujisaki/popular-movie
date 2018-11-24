@@ -13,15 +13,11 @@ import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.ui.adapter.MyFragmentPagerAdapter;
-import com.example.android.popularmovie.ui.fragment.OverviewFragment;
-import com.example.android.popularmovie.ui.fragment.ReviewFragment;
-import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 import com.example.android.popularmovie.util.NetworkUtils;
 import com.example.android.popularmovie.util.ui.IntentBuilder;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 
@@ -54,14 +50,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(getString(R.string.overview_tab),
-                        getString(R.string.trailers_tab),
-                        getString(R.string.reviews_tabs)),
-                Arrays.asList(new OverviewFragment(),
-                        new TrailerFragment(),
-                        new ReviewFragment())));
-
+        binding.viewPager.setAdapter(new MyFragmentPagerAdapter(this, getSupportFragmentManager()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
         Objects.requireNonNull(binding.tabLayout.getTabAt(0)).setIcon(R.drawable.ic_home);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="fab_margin_end">16dp</dimen>
-    <dimen name="card_margin">8dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
     <dimen name="collapsing_toolbar_title_margin_bottom">72dp</dimen>
     <dimen name="app_bar_layout_height">600dp</dimen>
     <dimen name="toolbar_margin_bottom">56dp</dimen>
