@@ -1,24 +1,33 @@
 package com.example.android.popularmovie.ui.activity;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.ActivityDetailBinding;
 import com.example.android.popularmovie.room.entity.Movie;
-import com.example.android.popularmovie.ui.adapter.MyFragmentPagerAdapter;
+import com.example.android.popularmovie.ui.fragment.OverviewFragment;
+import com.example.android.popularmovie.ui.fragment.ReviewFragment;
+import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 import com.example.android.popularmovie.util.NetworkUtils;
 import com.example.android.popularmovie.util.ui.IntentBuilder;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -92,5 +101,33 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setFabImage(FloatingActionButton fab) {
         fab.setImageResource(movie.isFavorite ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
+    }
+
+    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        private final Context context;
+        private final List<Pair<Fragment, Integer>> pairs =
+                Arrays.asList(Pair.create(new OverviewFragment(), R.string.overview_tab),
+                        Pair.create(new TrailerFragment(), R.string.trailers_tab),
+                        Pair.create(new ReviewFragment(), R.string.reviews_tabs));
+
+        private MyFragmentPagerAdapter(Context context, FragmentManager fragmentManager) {
+            super(fragmentManager);
+            this.context = context;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return pairs.get(position).first;
+        }
+
+        @Override
+        public int getCount() {
+            return pairs.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return context.getString(pairs.get(position).second);
+        }
     }
 }

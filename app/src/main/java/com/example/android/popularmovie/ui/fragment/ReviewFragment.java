@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.FragmentReviewBinding;
+import com.example.android.popularmovie.databinding.ReviewViewHolderBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
-import com.example.android.popularmovie.ui.adapter.ReviewAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
@@ -54,9 +56,48 @@ public class ReviewFragment extends Fragment {
         if (response.isSuccessful) {
             response.data.observe(this, reviews -> {
                 if (!Objects.requireNonNull(reviews).isEmpty()) {
-                    binding.recyclerView.setAdapter(new ReviewAdapter(reviews));
+                    binding.recyclerView.setAdapter(new Adapter(reviews));
                 }
             });
+        }
+    }
+
+    private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+        private final List<Review> reviews;
+        private Context context;
+
+        private Adapter(List<Review> reviews) {
+            this.reviews = reviews;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            context = parent.getContext();
+            return new ViewHolder(ReviewViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            Review review = reviews.get(position);
+
+            holder.binding.reviewLabelTextView.setText(context.getString(R.string.review_label_format, position + 1, review.author));
+            holder.binding.reviewContentTextView.setText(review.content);
+            holder.binding.reviewUrlTextView.setText(review.url);
+        }
+
+        @Override
+        public int getItemCount() {
+            return reviews.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            final ReviewViewHolderBinding binding;
+
+            ViewHolder(ReviewViewHolderBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+            }
         }
     }
 }

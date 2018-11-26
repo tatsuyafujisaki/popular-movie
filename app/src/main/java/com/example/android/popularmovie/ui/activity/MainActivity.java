@@ -1,5 +1,6 @@
 package com.example.android.popularmovie.ui.activity;
 
+import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,17 +9,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.databinding.ActivityMainBinding;
+import com.example.android.popularmovie.databinding.MovieViewHolderBinding;
 import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
-import com.example.android.popularmovie.ui.adapter.MovieAdapter;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
+import com.example.android.popularmovie.util.ui.IntentBuilder;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
@@ -29,6 +35,8 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+
+import static com.example.android.popularmovie.ui.activity.DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY;
 
 public class MainActivity extends AppCompatActivity {
     public static final String MOVIE_ID_INT_EXTRA_KEY = null;
@@ -108,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                         movies.remove(movie);
                     }
                 }
-                binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+                binding.recyclerView.setAdapter(new Adapter(this, movies));
             } else {
                 for (Movie movie : movies) {
                     if (movie.id == movieId) {
@@ -136,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(movies).isEmpty()) {
                     this.movies = (ArrayList<Movie>) movies;
-                    binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+                    binding.recyclerView.setAdapter(new Adapter(this, movies));
                     response.data.removeObservers(this);
                 }
             });
@@ -147,5 +155,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+        private final Activity activity;
+        private final List<Movie> movies;
+
+        private Adapter(final Activity activity, final List<Movie> movies) {
+            this.activity = activity;
+            this.movies = movies;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+            return new ViewHolder(MovieViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+            NetworkUtils.picasso(movies.get(position).posterPath).into(holder.binding.movieImageView);
+        }
+
+        @Override
+        public int getItemCount() {
+            return movies.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            final MovieViewHolderBinding binding;
+
+            ViewHolder(final MovieViewHolderBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+                binding.getRoot().setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(final View v) {
+                final Intent intent = new IntentBuilder(v.getContext(), DetailActivity.class)
+                        .putParcelable(MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition()))
+                        .build();
+
+                activity.startActivityForResult(intent, v.getResources().getInteger(R.integer.activity_request_code));
+            }
+        }
     }
 }
