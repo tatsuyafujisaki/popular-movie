@@ -33,11 +33,13 @@ public class ReviewFragment extends Fragment {
     @Inject
     MovieViewModel movieViewModel;
 
+    private Context context;
     private FragmentReviewBinding binding;
 
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
+        this.context = context;
         super.onAttach(context);
     }
 
@@ -51,7 +53,7 @@ public class ReviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(((Movie)IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY)).id);
+        ApiResponse<LiveData<List<Review>>> response = movieViewModel.getReviews(((Movie) IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY)).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, reviews -> {
@@ -64,7 +66,6 @@ public class ReviewFragment extends Fragment {
 
     private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private final List<Review> reviews;
-        private Context context;
 
         private Adapter(List<Review> reviews) {
             this.reviews = reviews;
@@ -73,7 +74,6 @@ public class ReviewFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            context = parent.getContext();
             return new ViewHolder(ReviewViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
         }
 

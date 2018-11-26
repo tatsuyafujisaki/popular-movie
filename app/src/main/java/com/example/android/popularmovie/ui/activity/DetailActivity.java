@@ -1,6 +1,5 @@
 package com.example.android.popularmovie.ui.activity;
 
-import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
@@ -56,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        binding.viewPager.setAdapter(new MyFragmentPagerAdapter(this, getSupportFragmentManager()));
+        binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
         Objects.requireNonNull(binding.tabLayout.getTabAt(0)).setIcon(R.drawable.ic_home);
@@ -104,15 +103,13 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        private final Context context;
         private final List<Pair<Fragment, Integer>> pairs =
                 Arrays.asList(Pair.create(new OverviewFragment(), R.string.overview_tab),
                         Pair.create(new TrailerFragment(), R.string.trailers_tab),
                         Pair.create(new ReviewFragment(), R.string.reviews_tabs));
 
-        private MyFragmentPagerAdapter(Context context, FragmentManager fragmentManager) {
+        private MyFragmentPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
-            this.context = context;
         }
 
         @Override
@@ -127,7 +124,7 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return context.getString(pairs.get(position).second);
+            return getString(pairs.get(position).second);
         }
     }
 }

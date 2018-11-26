@@ -36,11 +36,13 @@ public class TrailerFragment extends Fragment {
     @Inject
     MovieViewModel movieViewModel;
 
+    private Context context;
     private FragmentTrailerBinding binding;
 
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
+        this.context = context;
         super.onAttach(context);
     }
 
@@ -54,7 +56,7 @@ public class TrailerFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(((Movie)IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY)).id);
+        ApiResponse<LiveData<List<Trailer>>> response = movieViewModel.getTrailers(((Movie) IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY)).id);
 
         if (response.isSuccessful) {
             response.data.observe(this, trailers -> {
@@ -67,7 +69,6 @@ public class TrailerFragment extends Fragment {
 
     private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private final List<Trailer> trailers;
-        private Context context;
 
         private Adapter(List<Trailer> trailers) {
             this.trailers = trailers;
@@ -76,7 +77,6 @@ public class TrailerFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            context = parent.getContext();
             return new ViewHolder(TrailerViewHolderBinding.inflate(LayoutInflater.from(context), parent, false));
         }
 
