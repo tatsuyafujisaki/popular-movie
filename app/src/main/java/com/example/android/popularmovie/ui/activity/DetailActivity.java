@@ -55,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        binding.viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
+        binding.viewPager.setAdapter(new Adapter(getSupportFragmentManager()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
         Objects.requireNonNull(binding.tabLayout.getTabAt(0)).setIcon(R.drawable.ic_home);
@@ -102,13 +102,13 @@ public class DetailActivity extends AppCompatActivity {
         fab.setImageResource(movie.isFavorite ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
     }
 
-    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+    private class Adapter extends FragmentPagerAdapter {
         private final List<Pair<Fragment, Integer>> pairs =
                 Arrays.asList(Pair.create(new OverviewFragment(), R.string.overview_tab),
                         Pair.create(new TrailerFragment(), R.string.trailers_tab),
                         Pair.create(new ReviewFragment(), R.string.reviews_tabs));
 
-        private MyFragmentPagerAdapter(FragmentManager fragmentManager) {
+        private Adapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
