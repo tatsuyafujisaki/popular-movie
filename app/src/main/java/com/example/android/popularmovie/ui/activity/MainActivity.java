@@ -23,7 +23,6 @@ import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
 import com.example.android.popularmovie.util.ApiResponse;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.IntentBuilder;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
@@ -184,11 +183,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(final View v) {
-                final Intent intent = new IntentBuilder(v.getContext(), DetailActivity.class)
-                        .putParcelable(MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition()))
-                        .build();
-
-                startActivityForResult(intent, v.getResources().getInteger(R.integer.activity_request_code));
+                startActivityForResult(
+                        new Intent(v.getContext(), DetailActivity.class).putExtra(MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition())),
+                        v.getResources().getInteger(R.integer.activity_request_code));
             }
         }
     }

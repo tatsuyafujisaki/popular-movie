@@ -1,5 +1,6 @@
 package com.example.android.popularmovie.ui.activity;
 
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
@@ -21,7 +22,6 @@ import com.example.android.popularmovie.ui.fragment.OverviewFragment;
 import com.example.android.popularmovie.ui.fragment.ReviewFragment;
 import com.example.android.popularmovie.ui.fragment.TrailerFragment;
 import com.example.android.popularmovie.util.NetworkUtils;
-import com.example.android.popularmovie.util.ui.IntentBuilder;
 import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
@@ -86,7 +86,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && originalFavorite != movie.isFavorite) {
-            setResult(RESULT_OK, new IntentBuilder().putExtra(MOVIE_ID_INT_EXTRA_KEY, movie.id).build());
+            setResult(RESULT_OK, new Intent().putExtra(MOVIE_ID_INT_EXTRA_KEY, movie.id));
         }
 
         return super.onOptionsItemSelected(item);
