@@ -1,6 +1,7 @@
 package com.example.android.popularmovie.room.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
@@ -14,7 +15,6 @@ import com.example.android.popularmovie.util.TmdbService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,14 +23,12 @@ import retrofit2.Response;
 public class ReviewRepository {
     private final TmdbService tmdbService;
     private final ReviewDao reviewDao;
-    private final Executor executor;
     private String errorMessage;
     private final SparseArray<Long> lastUpdates = new SparseArray<>();
 
-    public ReviewRepository(TmdbService tmdbService, ReviewDao reviewDao, Executor executor) {
+    public ReviewRepository(TmdbService tmdbService, ReviewDao reviewDao) {
         this.tmdbService = tmdbService;
         this.reviewDao = reviewDao;
-        this.executor = executor;
     }
 
     public ApiResponse<LiveData<List<Review>>> getReviews(int movieId) {
@@ -47,7 +45,7 @@ public class ReviewRepository {
                             review.movieId = movieId;
                         }
 
-                        executor.execute(() -> {
+                        AsyncTask.execute(() -> {
                             reviewDao.save(reviews);
                             lastUpdates.put(movieId, System.currentTimeMillis());
                         });

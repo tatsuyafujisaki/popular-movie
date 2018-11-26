@@ -1,6 +1,7 @@
 package com.example.android.popularmovie.room.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.util.ArraySet;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Executor;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,16 +32,14 @@ public class MovieRepository {
     private final TmdbService tmdbService;
     private final MovieDao movieDao;
     private final String posterBaseUrl;
-    private final Executor executor;
     private String errorMessage;
 
     private final Map<MovieType, Long> lastUpdates = new ArrayMap<>();
 
-    public MovieRepository(TmdbService tmdbService, MovieDao movieDao, String posterBaseUrl, Executor executor) {
+    public MovieRepository(TmdbService tmdbService, MovieDao movieDao, String posterBaseUrl) {
         this.tmdbService = tmdbService;
         this.movieDao = movieDao;
         this.posterBaseUrl = posterBaseUrl;
-        this.executor = executor;
     }
 
     public ApiResponse<LiveData<List<Movie>>> getMovies(MovieType movieType) {
@@ -67,7 +65,7 @@ public class MovieRepository {
                     if (response.isSuccessful()) {
                         List<Movie> movies = response.body();
 
-                        executor.execute(() -> {
+                        AsyncTask.execute(() -> {
                             Set<Integer> topRatedMovieIds = new ArraySet<>(movieDao.getTopRatedMovieIds());
                             Set<Integer> favoriteMovieIds = new ArraySet<>(movieDao.getFavoriteMovieIds());
 
@@ -113,7 +111,7 @@ public class MovieRepository {
                     if (response.isSuccessful()) {
                         List<Movie> movies = response.body();
 
-                        executor.execute(() -> {
+                        AsyncTask.execute(() -> {
                             Set<Integer> popularRatedMovieIds = new ArraySet<>(movieDao.getPopularMovieIds());
                             Set<Integer> favoriteMovieIds = new ArraySet<>(movieDao.getFavoriteMovieIds());
 

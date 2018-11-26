@@ -2,6 +2,7 @@ package com.example.android.popularmovie.ui.activity;
 
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,6 @@ import com.example.android.popularmovie.util.ui.IntentUtils;
 import com.example.android.popularmovie.viewmodel.MovieViewModel;
 
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -32,9 +32,6 @@ public class DetailActivity extends AppCompatActivity {
 
     @Inject
     MovieViewModel movieViewModel;
-
-    @Inject
-    Executor executor;
 
     private Movie movie;
     private boolean originalFavorite;
@@ -70,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(view -> {
             movie.isFavorite = !movie.isFavorite;
             setFabImage((FloatingActionButton) view);
-            executor.execute(() -> movieViewModel.updateFavorite(movie.id, movie.isFavorite));
+            AsyncTask.execute(() -> movieViewModel.updateFavorite(movie.id, movie.isFavorite));
         });
 
         setSupportActionBar(binding.toolbar);

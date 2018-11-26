@@ -27,8 +27,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -40,12 +38,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class ApplicationModule {
-    @Singleton
-    @Provides
-    static Executor provideExecutor() {
-        return Executors.newSingleThreadExecutor();
-    }
-
     @Singleton
     @Provides
     static Context provideContext(Application application) {
@@ -166,25 +158,20 @@ public class ApplicationModule {
     @Provides
     static MovieRepository provideMovieRepository(Context context,
                                                   @Named("TmdbServiceWithMovieArrayAdapter") TmdbService tmdbService,
-                                                  MovieDao movieDao,
-                                                  Executor executor) {
-        return new MovieRepository(tmdbService, movieDao, context.getString(R.string.tmdb_image_base_url), executor);
+                                                  MovieDao movieDao) {
+        return new MovieRepository(tmdbService, movieDao, context.getString(R.string.tmdb_image_base_url));
     }
 
     @Singleton
     @Provides
-    static TrailerRepository provideTrailerRepository(@Named("TmdbServiceWithTrailerArrayAdapter") TmdbService tmdbService,
-                                                      TrailerDao trailerDao,
-                                                      Executor executor) {
-        return new TrailerRepository(tmdbService, trailerDao, executor);
+    static TrailerRepository provideTrailerRepository(@Named("TmdbServiceWithTrailerArrayAdapter") TmdbService tmdbService, TrailerDao trailerDao) {
+        return new TrailerRepository(tmdbService, trailerDao);
     }
 
     @Singleton
     @Provides
-    static ReviewRepository provideReviewRepository(@Named("TmdbServiceWithReviewArrayAdapter") TmdbService tmdbService,
-                                                    ReviewDao reviewDao,
-                                                    Executor executor) {
-        return new ReviewRepository(tmdbService, reviewDao, executor);
+    static ReviewRepository provideReviewRepository(@Named("TmdbServiceWithReviewArrayAdapter") TmdbService tmdbService, ReviewDao reviewDao) {
+        return new ReviewRepository(tmdbService, reviewDao);
     }
 
     @Singleton
