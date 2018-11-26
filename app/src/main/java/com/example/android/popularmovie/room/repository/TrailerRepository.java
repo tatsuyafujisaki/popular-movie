@@ -45,10 +45,9 @@ public class TrailerRepository {
                             trailer.movieId = movieId;
                         }
 
-                        AsyncTask.execute(() -> {
-                            TrailerDao.save(trailers);
-                            lastUpdates.put(movieId, System.currentTimeMillis());
-                        });
+                        AsyncTask.execute(() -> TrailerDao.save(trailers));
+
+                        lastUpdates.put(movieId, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();

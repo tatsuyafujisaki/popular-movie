@@ -79,9 +79,9 @@ public class MovieRepository {
                             // Delete previously popular movies unless they are top rated or favorite
                             movieDao.deleteIfNotTopRatedNorFavorite();
                             movieDao.save(movies);
-
-                            lastUpdates.put(POPULAR, System.currentTimeMillis());
                         });
+
+                        lastUpdates.put(POPULAR, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
@@ -125,9 +125,9 @@ public class MovieRepository {
                             // Delete previously top rated movies unless they are popular or favorite
                             movieDao.deleteIfNotPopularNorFavorite();
                             movieDao.save(movies);
-
-                            lastUpdates.put(TOP_RATED, System.currentTimeMillis());
                         });
+
+                        lastUpdates.put(TOP_RATED, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();

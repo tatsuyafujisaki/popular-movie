@@ -45,10 +45,9 @@ public class ReviewRepository {
                             review.movieId = movieId;
                         }
 
-                        AsyncTask.execute(() -> {
-                            reviewDao.save(reviews);
-                            lastUpdates.put(movieId, System.currentTimeMillis());
-                        });
+                        AsyncTask.execute(() -> reviewDao.save(reviews));
+
+                        lastUpdates.put(movieId, System.currentTimeMillis());
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();
