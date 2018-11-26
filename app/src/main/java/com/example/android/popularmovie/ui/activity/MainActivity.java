@@ -1,6 +1,5 @@
 package com.example.android.popularmovie.ui.activity;
 
-import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         movies.remove(movie);
                     }
                 }
-                binding.recyclerView.setAdapter(new Adapter(this, movies));
+                binding.recyclerView.setAdapter(new Adapter());
             } else {
                 for (Movie movie : movies) {
                     if (movie.id == movieId) {
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(movies).isEmpty()) {
                     this.movies = (ArrayList<Movie>) movies;
-                    binding.recyclerView.setAdapter(new Adapter(this, movies));
+                    binding.recyclerView.setAdapter(new Adapter());
                     response.data.removeObservers(this);
                 }
             });
@@ -158,14 +157,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-        private final Activity activity;
-        private final List<Movie> movies;
-
-        private Adapter(final Activity activity, final List<Movie> movies) {
-            this.activity = activity;
-            this.movies = movies;
-        }
-
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
@@ -197,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         .putParcelable(MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition()))
                         .build();
 
-                activity.startActivityForResult(intent, v.getResources().getInteger(R.integer.activity_request_code));
+                startActivityForResult(intent, v.getResources().getInteger(R.integer.activity_request_code));
             }
         }
     }
