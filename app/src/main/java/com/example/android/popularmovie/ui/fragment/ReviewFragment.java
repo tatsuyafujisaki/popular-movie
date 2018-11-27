@@ -38,9 +38,9 @@ public class ReviewFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
+        super.onAttach(context);
         AndroidSupportInjection.inject(this);
         this.context = context;
-        super.onAttach(context);
     }
 
     @Override

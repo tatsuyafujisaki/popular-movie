@@ -37,8 +37,8 @@ public class OverviewFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        AndroidSupportInjection.inject(this);
         super.onAttach(context);
+        AndroidSupportInjection.inject(this);
     }
 
     @Override
