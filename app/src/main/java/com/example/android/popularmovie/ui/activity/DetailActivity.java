@@ -64,7 +64,11 @@ public class DetailActivity extends AppCompatActivity {
 
         movie = IntentUtils.getParcelableExtra(this, MOVIE_PARCELABLE_EXTRA_KEY);
 
-        if (savedInstanceState != null) {
+        /*
+         * savedInstanceState.containsKey(null) is required to skip the case that network was unavailable and then the device was rotated,
+         * In the case, savedInstanceState is not null but contains no key.
+         */
+        if (savedInstanceState != null && savedInstanceState.containsKey(null)) {
             movie.isFavorite = savedInstanceState.getBoolean(null);
         }
 

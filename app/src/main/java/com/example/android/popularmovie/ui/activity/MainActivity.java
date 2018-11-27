@@ -37,7 +37,7 @@ import dagger.android.AndroidInjection;
 import static com.example.android.popularmovie.ui.activity.DetailActivity.MOVIE_PARCELABLE_EXTRA_KEY;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String MOVIE_ID_INT_EXTRA_KEY = null;
+    static final String MOVIE_ID_INT_EXTRA_KEY = null;
 
     @Inject
     Resources resources;
@@ -66,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        movieType = savedInstanceState != null ? (MovieType) savedInstanceState.getSerializable(null) : MovieType.POPULAR;
+        /*
+         * savedInstanceState.containsKey(null) is required to skip the case that network was unavailable and then the device was rotated,
+         * In the case, savedInstanceState is not null but contains no key.
+         */
+        movieType = savedInstanceState != null && savedInstanceState.containsKey(null)
+                ? (MovieType) savedInstanceState.getSerializable(null)
+                : MovieType.POPULAR;
 
         setMovies(movieViewModel.getMovies(movieType));
     }
@@ -128,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(null, movieType);
+        if (movieType != null) {
+            outState.putSerializable(null, movieType);
+        }
         super.onSaveInstanceState(outState);
     }
 
@@ -158,12 +166,12 @@ public class MainActivity extends AppCompatActivity {
     private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new ViewHolder(MovieViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             NetworkUtils.picasso(movies.get(position).posterPath).into(holder.binding.movieImageView);
         }
 
@@ -175,14 +183,14 @@ public class MainActivity extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             final MovieViewHolderBinding binding;
 
-            ViewHolder(final MovieViewHolderBinding binding) {
+            ViewHolder(MovieViewHolderBinding binding) {
                 super(binding.getRoot());
                 this.binding = binding;
                 binding.getRoot().setOnClickListener(this);
             }
 
             @Override
-            public void onClick(final View v) {
+            public void onClick(View v) {
                 startActivityForResult(
                         new Intent(v.getContext(), DetailActivity.class).putExtra(MOVIE_PARCELABLE_EXTRA_KEY, movies.get(getAdapterPosition())),
                         v.getResources().getInteger(R.integer.activity_request_code));
