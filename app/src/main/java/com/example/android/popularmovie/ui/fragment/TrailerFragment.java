@@ -43,7 +43,7 @@ public class TrailerFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         AndroidSupportInjection.inject(this);
-        this.context = context;s
+        this.context = context;
     }
 
     @Override
