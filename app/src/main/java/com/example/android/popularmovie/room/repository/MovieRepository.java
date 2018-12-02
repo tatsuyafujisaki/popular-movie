@@ -59,7 +59,7 @@ public class MovieRepository {
         errorMessage = null;
 
         if (hasExpired(POPULAR)) {
-            tmdbService.getPopularMovies(BuildConfig.TMDB_API_KEY).enqueue(new Callback<List<Movie>>() {
+            tmdbService.getPopularMovies(BuildConfig.THE_MOVIE_DATABASE_API_KEY).enqueue(new Callback<List<Movie>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Movie>> call, @NonNull Response<List<Movie>> response) {
                     if (response.isSuccessful()) {
@@ -105,7 +105,7 @@ public class MovieRepository {
         errorMessage = null;
 
         if (hasExpired(TOP_RATED)) {
-            tmdbService.getTopRatedMovies(BuildConfig.TMDB_API_KEY).enqueue(new Callback<List<Movie>>() {
+            tmdbService.getTopRatedMovies(BuildConfig.THE_MOVIE_DATABASE_API_KEY).enqueue(new Callback<List<Movie>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Movie>> call, @NonNull Response<List<Movie>> response) {
                     if (response.isSuccessful()) {

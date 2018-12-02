@@ -35,7 +35,7 @@ public class ReviewRepository {
         errorMessage = null;
 
         if (hasExpired(movieId)) {
-            tmdbService.getReviews(movieId, BuildConfig.TMDB_API_KEY).enqueue(new Callback<List<Review>>() {
+            tmdbService.getReviews(movieId, BuildConfig.THE_MOVIE_DATABASE_API_KEY).enqueue(new Callback<List<Review>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Review>> call, @NonNull Response<List<Review>> response) {
                     if (response.isSuccessful()) {

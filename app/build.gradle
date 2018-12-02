@@ -10,7 +10,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName '1.0'
-        buildConfigField('String', 'TMDB_API_KEY', TMDB_API_KEY)
+        buildConfigField 'String', 'THE_MOVIE_DATABASE_API_KEY', TheMovieDatabaseApiKey
     }
     dataBinding {
         enabled true
