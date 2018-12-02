@@ -3,5 +3,5 @@
 2. Find your API key at https://www.themoviedb.org/settings/api
 3. Append the following to `gradle.properties`
 ```
-API_KEY = "Your API key"
+TheMovieDatabaseApiKey="Your API key comes here"
 ```
