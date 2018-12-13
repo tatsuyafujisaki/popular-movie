@@ -1,9 +1,9 @@
 package com.example.android.popularmovie.util;
 
-import android.arch.persistence.room.TypeConverter;
-import android.support.annotation.NonNull;
-
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.room.TypeConverter;
 
 public class DateConverter {
     @TypeConverter

@@ -1,12 +1,8 @@
 package com.example.android.popularmovie.dagger.module;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.app.FragmentActivity;
 
 import com.example.android.popularmovie.R;
 import com.example.android.popularmovie.room.MovieDatabase;
@@ -31,6 +27,10 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;

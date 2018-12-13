@@ -3,7 +3,7 @@ package com.example.android.popularmovie.util.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 public class IntentUtils {
     public static int getIntExtra(Intent intent, String key) {

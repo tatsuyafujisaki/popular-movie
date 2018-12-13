@@ -1,8 +1,6 @@
 package com.example.android.popularmovie.room.repository;
 
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.example.android.popularmovie.BuildConfig;
@@ -16,6 +14,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,10 +1,6 @@
 package com.example.android.popularmovie.room.repository;
 
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.util.ArraySet;
 
 import com.example.android.popularmovie.BuildConfig;
 import com.example.android.popularmovie.room.dao.MovieDao;
@@ -19,6 +15,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
+import androidx.collection.ArrayMap;
+import androidx.collection.ArraySet;
+import androidx.lifecycle.LiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +34,7 @@ public class MovieRepository {
     private final String posterBaseUrl;
     private String errorMessage;
 
-    private final Map<MovieType, Long> lastUpdates = new ArrayMap<>();
+    private final Map<MovieType, Long> lastUpdates = new ArrayMap<MovieType, Long>();
 
     public MovieRepository(TmdbService tmdbService, MovieDao movieDao, String posterBaseUrl) {
         this.tmdbService = tmdbService;

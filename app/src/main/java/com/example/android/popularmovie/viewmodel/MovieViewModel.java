@@ -1,8 +1,5 @@
 package com.example.android.popularmovie.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-import android.support.v4.util.ArrayMap;
 import android.util.SparseArray;
 
 import com.example.android.popularmovie.room.entity.Movie;
@@ -18,6 +15,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.collection.ArrayMap;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
 import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType;
 import static com.example.android.popularmovie.room.repository.MovieRepository.MovieType.FAVORITE;
 
@@ -26,7 +27,7 @@ public class MovieViewModel extends ViewModel {
     private final TrailerRepository trailerRepository;
     private final ReviewRepository reviewRepository;
 
-    private final Map<MovieType, LiveData<List<Movie>>> movies = new ArrayMap<>();
+    private final Map<MovieType, LiveData<List<Movie>>> movies = new ArrayMap<MovieType, LiveData<List<Movie>>>();
     private final SparseArray<LiveData<List<Trailer>>> trailers = new SparseArray<>();
     private final SparseArray<LiveData<List<Review>>> reviews = new SparseArray<>();
 

@@ -1,9 +1,5 @@
 package com.example.android.popularmovie.room;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.example.android.popularmovie.R;
@@ -14,6 +10,11 @@ import com.example.android.popularmovie.room.entity.Movie;
 import com.example.android.popularmovie.room.entity.Review;
 import com.example.android.popularmovie.room.entity.Trailer;
 import com.example.android.popularmovie.util.DateConverter;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 @Database(entities = {Movie.class, Trailer.class, Review.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
