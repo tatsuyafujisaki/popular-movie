@@ -15,6 +15,10 @@ The Movie Database(https://www.themoviedb.org) から映画情報を取得し、
 
 を表示できます。
 
+# デモ
+適当にブラウズした後、ゴジラの映画をお気に入りに追加し、YouTubeの予告編を見るまでのデモです。
+![screencast.gif](screencast.gif)
+
 # How to run this app
 1. Create an account at https://www.themoviedb.org
 2. Find your API key at https://www.themoviedb.org/settings/api
