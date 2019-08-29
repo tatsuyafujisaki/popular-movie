@@ -11,7 +11,7 @@ The Movie Database(https://www.themoviedb.org) から映画情報を取得し、
 各映画につき、
 * タイトル、公開日、平均投票点、概要
 * YouTubeの予告編(複数)
-* レビュー一覧
+* 批評一覧
 
 を表示できます。
 
