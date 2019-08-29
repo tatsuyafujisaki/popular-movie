@@ -1,5 +1,5 @@
 # 概要
-The Movie Database(https://www.themoviedb.org) から映画情報を取得し、表示するアプリです。
+The Movie Database (themoviedb.org) から映画情報を取得し、表示するアプリです。
 
 映画情報は
 * 人気順
