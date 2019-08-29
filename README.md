@@ -1,3 +1,20 @@
+# 概要
+The Movie Database(https://www.themoviedb.org) から映画情報を取得し、表示するアプリです。
+
+映画情報は
+* 人気順
+* 評価順
+* ブックマークのみ
+
+を表示することが可能です。
+
+各映画につき、
+* タイトル、公開日、平均投票点、概要
+* YouTubeの予告編(複数)
+* レビュー一覧
+
+を表示できます。
+
 # How to run this app
 1. Create an account at https://www.themoviedb.org
 2. Find your API key at https://www.themoviedb.org/settings/api
