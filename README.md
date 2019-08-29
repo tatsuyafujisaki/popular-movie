@@ -16,7 +16,7 @@ The Movie Database(https://www.themoviedb.org) から映画情報を取得し、
 を表示できます。
 
 # デモ
-各映画のポスターを眺めた後、ゴジラの映画をお気に入りに追加し、YouTubeの予告編を見るまでのデモです。
+以下はゴジラの映画をお気に入りに追加し、YouTubeの予告編を見るまでのデモです。
 ![screencast.gif](screencast.gif)
 
 # How to run this app
