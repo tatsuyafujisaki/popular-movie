@@ -24,7 +24,7 @@ The Movie Database (themoviedb.org) から映画情報を取得し、表示す�
 5. ゴジラのポスターをタップし、詳細情報を見る
 6. ゴジラのYouTubeの予告編を見る
 
-![screencast.gif](screencast.gif)
+![demo.gif](demo.gif)
 
 # How to run this app
 1. Create an account at https://www.themoviedb.org
